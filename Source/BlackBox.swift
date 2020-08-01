@@ -19,7 +19,7 @@ public class BlackBox {
 }
 
 // MARK: - Instance
-extension BlackBox: BBLogProtocol {
+extension BlackBox: BBProtocol {
     public func log(_ error: Error,
                     file: StaticString = #file,
                     function: StaticString = #function,
