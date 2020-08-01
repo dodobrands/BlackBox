@@ -1,5 +1,5 @@
 //
-//  BBLogProtocol.swift
+//  BBProtocol.swift
 //  DFoundation
 //
 //  Created by Алексей Берёзка on 31.07.2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol BBLogProtocol {
+public protocol BBProtocol {
     func log(_ error: Error,
              file: StaticString,
              function: StaticString,
