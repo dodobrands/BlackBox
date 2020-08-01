@@ -24,7 +24,8 @@ extension BlackBox {
                 logger: OSLog.logger(for: file),
                 file: file,
                 function: function,
-                logType: .error)
+                logType: .error,
+                signpostType: nil)
         }
         
         public func log(_ message: String,
@@ -39,7 +40,8 @@ extension BlackBox {
                 logger: OSLog.logger(for: file),
                 file: file,
                 function: function,
-                logType: logLevel.osLogType)
+                logType: logLevel.osLogType,
+                signpostType: eventType?.osSignpostType)
         }
     }
 }
@@ -51,17 +53,27 @@ extension BlackBox.OSLogger {
                      logger: OSLog,
                      file: StaticString,
                      function: StaticString,
-                     logType: OSLogType) {
+                     logType: OSLogType,
+                     signpostType: OSSignpostType?) {
         let userInfo = userInfo?.bbLogDescription ?? "nil"
         let message = message + "\n\n" + "[User Info]:" + "\n" + userInfo
         
         os_log(logType,
                log: logger,
                "%{public}@\n%{public}@", function.description, message)
+        
+        if let signpostType = signpostType {
+            let name: StaticString = function
+            
+            os_signpost(signpostType,
+                        log: logger,
+                        name: name,
+                        "%{public}@", message)
+        }
     }
 }
 
-fileprivate extension BBLogLevel {
+extension BBLogLevel {
     var osLogType: OSLogType {
         switch self {
         case .debug:    return .debug
@@ -69,6 +81,17 @@ fileprivate extension BBLogLevel {
         case .warning:  return .error
         case .error:    return .error
         case .default:  return .default
+        }
+    }
+}
+
+extension BBEventType {
+    var osSignpostType: OSSignpostType {
+        switch self {
+        case .begin:
+            return .begin
+        case .end:
+            return .end
         }
     }
 }
