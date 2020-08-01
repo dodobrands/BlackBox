@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = "BlackBox"
-    s.version = "0.0.5"
+    s.version = "0.0.6"
     s.summary = "Logging library for iOS"
 
     s.source = { :git => "git@github.com:dodopizza/BlackBox.git", :tag => s.version }

@@ -73,6 +73,7 @@ extension BlackBox.OSLogger {
     }
 }
 
+@available(iOS 12.0, *)
 extension BBLogLevel {
     var osLogType: OSLogType {
         switch self {
@@ -85,6 +86,7 @@ extension BBLogLevel {
     }
 }
 
+@available(iOS 12.0, *)
 extension BBEventType {
     var osSignpostType: OSSignpostType {
         switch self {
