@@ -10,6 +10,13 @@
 		9C623E1124D5E007006803E6 /* BlackBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C623E0724D5E006006803E6 /* BlackBox.framework */; };
 		9C623E1624D5E007006803E6 /* BlackBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E1524D5E007006803E6 /* BlackBoxTests.swift */; };
 		9C623E1824D5E007006803E6 /* BlackBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C623E0A24D5E006006803E6 /* BlackBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C623E2224D5E104006803E6 /* BlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2124D5E104006803E6 /* BlackBox.swift */; };
+		9C623E2424D5E108006803E6 /* BBLogProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2324D5E108006803E6 /* BBLogProtocol.swift */; };
+		9C623E2D24D5E114006803E6 /* BBHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2624D5E114006803E6 /* BBHelpers.swift */; };
+		9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2824D5E114006803E6 /* FSLogger.swift */; };
+		9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */; };
+		9C623E3024D5E114006803E6 /* OSLog+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */; };
+		9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2C24D5E114006803E6 /* OSLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,13 @@
 		9C623E1024D5E007006803E6 /* BlackBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C623E1524D5E007006803E6 /* BlackBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxTests.swift; sourceTree = "<group>"; };
 		9C623E1724D5E007006803E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C623E2124D5E104006803E6 /* BlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBox.swift; sourceTree = "<group>"; };
+		9C623E2324D5E108006803E6 /* BBLogProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLogProtocol.swift; sourceTree = "<group>"; };
+		9C623E2624D5E114006803E6 /* BBHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBHelpers.swift; sourceTree = "<group>"; };
+		9C623E2824D5E114006803E6 /* FSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSLogger.swift; sourceTree = "<group>"; };
+		9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLoggerProtocol.swift; sourceTree = "<group>"; };
+		9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OSLog+Helpers.swift"; sourceTree = "<group>"; };
+		9C623E2C24D5E114006803E6 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +85,11 @@
 		9C623E0924D5E006006803E6 /* BlackBox */ = {
 			isa = PBXGroup;
 			children = (
+				9C623E2524D5E114006803E6 /* Helpers */,
+				9C623E2724D5E114006803E6 /* Loggers */,
 				9C623E0A24D5E006006803E6 /* BlackBox.h */,
+				9C623E2124D5E104006803E6 /* BlackBox.swift */,
+				9C623E2324D5E108006803E6 /* BBLogProtocol.swift */,
 				9C623E0B24D5E006006803E6 /* Info.plist */,
 			);
 			path = BlackBox;
@@ -84,6 +102,33 @@
 				9C623E1724D5E007006803E6 /* Info.plist */,
 			);
 			path = BlackBoxTests;
+			sourceTree = "<group>";
+		};
+		9C623E2524D5E114006803E6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9C623E2624D5E114006803E6 /* BBHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		9C623E2724D5E114006803E6 /* Loggers */ = {
+			isa = PBXGroup;
+			children = (
+				9C623E2824D5E114006803E6 /* FSLogger.swift */,
+				9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */,
+				9C623E2A24D5E114006803E6 /* OSLogger */,
+			);
+			path = Loggers;
+			sourceTree = "<group>";
+		};
+		9C623E2A24D5E114006803E6 /* OSLogger */ = {
+			isa = PBXGroup;
+			children = (
+				9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */,
+				9C623E2C24D5E114006803E6 /* OSLogger.swift */,
+			);
+			path = OSLogger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +193,7 @@
 				TargetAttributes = {
 					9C623E0624D5E006006803E6 = {
 						CreatedOnToolsVersion = 11.6;
+						LastSwiftMigration = 1160;
 					};
 					9C623E0F24D5E007006803E6 = {
 						CreatedOnToolsVersion = 11.6;
@@ -195,6 +241,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C623E2424D5E108006803E6 /* BBLogProtocol.swift in Sources */,
+				9C623E2D24D5E114006803E6 /* BBHelpers.swift in Sources */,
+				9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */,
+				9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */,
+				9C623E3024D5E114006803E6 /* OSLog+Helpers.swift in Sources */,
+				9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */,
+				9C623E2224D5E104006803E6 /* BlackBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +393,7 @@
 		9C623E1C24D5E007006803E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -355,6 +409,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodopizza.BlackBox;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -363,6 +419,7 @@
 		9C623E1D24D5E007006803E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -378,6 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodopizza.BlackBox;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -386,6 +444,7 @@
 		9C623E1F24D5E007006803E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BlackBoxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -403,6 +462,7 @@
 		9C623E2024D5E007006803E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BlackBoxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
