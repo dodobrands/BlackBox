@@ -25,13 +25,15 @@ extension BlackBox {
                 file: file,
                 function: function,
                 logType: .error,
-                signpostType: nil)
+                signpostType: nil,
+                signpostId: nil)
         }
         
         public func log(_ message: String,
                         userInfo: CustomDebugStringConvertible?,
                         logLevel: BBLogLevel,
                         eventType: BBEventType?,
+                        eventId: UInt64?,
                         file: StaticString,
                         function: StaticString,
                         line: UInt) {
@@ -41,7 +43,8 @@ extension BlackBox {
                 file: file,
                 function: function,
                 logType: logLevel.osLogType,
-                signpostType: eventType?.osSignpostType)
+                signpostType: eventType?.osSignpostType,
+                signpostId: eventId.map { OSSignpostID($0) })
         }
     }
 }
@@ -54,7 +57,8 @@ extension BlackBox.OSLogger {
                      file: StaticString,
                      function: StaticString,
                      logType: OSLogType,
-                     signpostType: OSSignpostType?) {
+                     signpostType: OSSignpostType?,
+                     signpostId: OSSignpostID?) {
         let userInfo = userInfo?.bbLogDescription ?? "nil"
         let message = message + "\n\n" + "[User Info]:" + "\n" + userInfo
         
@@ -68,6 +72,7 @@ extension BlackBox.OSLogger {
             os_signpost(signpostType,
                         log: logger,
                         name: name,
+                        signpostID: signpostId ?? .exclusive,
                         "%{public}@", message)
         }
     }

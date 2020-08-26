@@ -36,6 +36,7 @@ extension BlackBox: BBProtocol {
                     userInfo: CustomDebugStringConvertible? = nil,
                     logLevel: BBLogLevel = .default,
                     eventType: BBEventType? = nil,
+                    eventId: UInt64? = nil,
                     file: StaticString = #file,
                     function: StaticString = #function,
                     line: UInt = #line) {
@@ -44,6 +45,7 @@ extension BlackBox: BBProtocol {
                        userInfo: userInfo,
                        logLevel: logLevel,
                        eventType: eventType,
+                       eventId: eventId,
                        file: file,
                        function: function,
                        line: line)
@@ -67,6 +69,7 @@ extension BlackBox {
                            userInfo: CustomDebugStringConvertible? = nil,
                            logLevel: BBLogLevel = .default,
                            eventType: BBEventType? = nil,
+                           eventId: UInt64? = nil,
                            file: StaticString = #file,
                            function: StaticString = #function,
                            line: UInt = #line) {
@@ -74,6 +77,7 @@ extension BlackBox {
                               userInfo: userInfo,
                               logLevel: logLevel,
                               eventType: eventType,
+                              eventId: eventId,
                               file: file,
                               function: function,
                               line: line)
