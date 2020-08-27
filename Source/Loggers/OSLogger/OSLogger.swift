@@ -24,9 +24,7 @@ extension BlackBox {
                 logger: OSLog.logger(for: file),
                 file: file,
                 function: function,
-                logType: .error,
-                signpostType: nil,
-                signpostId: nil)
+                logType: .error)
         }
         
         public func log(_ message: String,
@@ -42,9 +40,7 @@ extension BlackBox {
                 logger: OSLog.logger(for: file),
                 file: file,
                 function: function,
-                logType: logLevel.osLogType,
-                signpostType: eventType?.osSignpostType,
-                signpostId: eventId.map { OSSignpostID($0) })
+                logType: logLevel.osLogType)
         }
     }
 }
@@ -56,25 +52,13 @@ extension BlackBox.OSLogger {
                      logger: OSLog,
                      file: StaticString,
                      function: StaticString,
-                     logType: OSLogType,
-                     signpostType: OSSignpostType?,
-                     signpostId: OSSignpostID?) {
+                     logType: OSLogType) {
         let userInfo = userInfo?.bbLogDescription ?? "nil"
         let message = message + "\n\n" + "[User Info]:" + "\n" + userInfo
         
         os_log(logType,
                log: logger,
                "%{public}@\n%{public}@", function.description, message)
-        
-        if let signpostType = signpostType {
-            let name: StaticString = function
-            
-            os_signpost(signpostType,
-                        log: logger,
-                        name: name,
-                        signpostID: signpostId ?? .exclusive,
-                        "%{public}@", message)
-        }
     }
 }
 
@@ -87,18 +71,6 @@ extension BBLogLevel {
         case .warning:  return .error
         case .error:    return .error
         case .default:  return .default
-        }
-    }
-}
-
-@available(iOS 12.0, *)
-extension BBEventType {
-    var osSignpostType: OSSignpostType {
-        switch self {
-        case .begin:
-            return .begin
-        case .end:
-            return .end
         }
     }
 }
