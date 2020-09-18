@@ -3,19 +3,16 @@ iOS wrapper library for Unified Logging, and more.
 
 ## Installation
 
-1. Add internal cocoapods repo to the top of your Podfile
 ```
-source 'git@github.com:dodopizza/dodo_pods.git'
+1. Add BlackBox as a dependency
 ```
-2. Add BlackBox as a dependency
+pod 'BlackBox', :source => 'git@github.com:dodopizza/dodo_pods.git'
 ```
-pod 'BlackBox'
-```
-3. Import to your project
+2. Import to your project
 ```
 import BlackBox
 ```
-4. Configure instance with desired loggers
+3. Configure instance with desired loggers
 ```
 BlackBox.instance = BlackBox(loggers: [BlackBox.OSLogger()])
 ```
