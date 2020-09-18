@@ -3,7 +3,6 @@ iOS wrapper library for Unified Logging, and more.
 
 ## Installation
 
-```
 1. Add BlackBox as a dependency
 ```
 pod 'BlackBox', :source => 'git@github.com:dodopizza/dodo_pods.git'
