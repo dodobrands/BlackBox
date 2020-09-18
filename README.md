@@ -97,7 +97,7 @@ extension ParsingError: CustomNSError {
         switch self {
         case .unknownCategoryInDTO:
             return 0
-		    }
+	}
     }
 
     var errorUserInfo: [String : Any] {
