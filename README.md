@@ -4,15 +4,15 @@ iOS wrapper library for Unified Logging, and more.
 ## Installation
 
 1. Add BlackBox as a dependency
-```
+```ruby
 pod 'BlackBox', :source => 'git@github.com:dodopizza/dodo_pods.git'
 ```
 2. Import to your project
-```
+```swift
 import BlackBox
 ```
 3. Configure instance with desired loggers
-```
+```swift
 BlackBox.instance = BlackBox(loggers: [BlackBox.OSLogger()])
 ```
 
@@ -23,19 +23,19 @@ BlackBox.instance = BlackBox(loggers: [BlackBox.OSLogger()])
 
 ## Usage
 1. Simple message
-```
+```swift
 BlackBox.log("Hello world")
 ```
 2. Message with additional info
-```
+```swift
 BlackBox.log("Logged in", userInfo: ["userId": someUserId]) // keep in mind to not include sensitive info in logs
 ```
 3. Message with custom log level
-```
+```swift
 BlackBox.log("Tried to open AuthScreen multiple times", logLevel: .warning)
 ```
 4. Error
-```
+```swift
 enum ParsingError: Error {
     case unknownCategoryInDTO(rawValue: Int)
 }
@@ -43,13 +43,13 @@ enum ParsingError: Error {
 BlackBox.log(ParsingError.unknownCategoryInDTO(rawValue: 9))
 ```
 5. Time Profiler, `OSSignpostLogger` is required
-```
+```swift
 BlackBox.log("Will parse menu", eventType: .begin)
 let menuModel = MenuModel(dto: menuDto)
 BlackBox.log("Did parse menu", eventType: .end)
 ```
 6. Time Profiler with concurrent async operations
-```
+```swift
 let eventId = UInt64.random // basically any uniqie UInt64 is required
 
 BlackBox.log("Will load data for network request", eventType: .begin, eventId: eventId)
@@ -62,7 +62,7 @@ request.get() { response in
 Create your own logger and implement `BBLoggerProtocol`
 
 ### Example
-```
+```swift
 extension BlackBox {
     class CrashlyticsLogger: BBLoggerProtocol {
         func log(_ error: Error,
@@ -86,12 +86,12 @@ extension BlackBox {
 }
 ```
 And dont forget to add your custom logger to BlackBox
-```
+```swift
 BlackBox.instance = BlackBox(loggers: [BlackBox.OSLogger(), BlackBox.CrashlyticsLogger()])
 ```
 
 For better Crashlytics support implement `CustomNSError` and override both `errorCode` and `errorUserInfo` 
-```
+```swift
 extension ParsingError: CustomNSError {
     var errorCode: Int {
         switch self {
