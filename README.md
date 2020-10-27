@@ -80,7 +80,7 @@ extension BlackBox {
                  file: StaticString,
                  function: StaticString,
                  line: UInt) {
-            return
+            Crashlytics.crashlytics().log(message)
         }
     }
 }
