@@ -11,6 +11,7 @@ import Foundation
 public protocol BBLoggerProtocol {
     func log(_ error: Error,
              file: StaticString,
+             category: String?,
              function: StaticString,
              line: UInt)
     
@@ -20,6 +21,7 @@ public protocol BBLoggerProtocol {
              eventType: BBEventType?,
              eventId: UInt64?,
              file: StaticString,
+             category: String?,
              function: StaticString,
              line: UInt)
 }

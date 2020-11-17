@@ -16,12 +16,13 @@ extension BlackBox {
         
         public func log(_ error: Error,
                         file: StaticString,
+                        category: String?,
                         function: StaticString,
                         line: UInt) {
             let message = String(reflecting: error)
             log(message,
                 userInfo: nil,
-                logger: OSLog.logger(for: file),
+                logger: OSLog(file: file, category: category),
                 file: file,
                 function: function,
                 logType: .error)
@@ -33,11 +34,12 @@ extension BlackBox {
                         eventType: BBEventType?,
                         eventId: UInt64?,
                         file: StaticString,
+                        category: String?,
                         function: StaticString,
                         line: UInt) {
             log(message,
                 userInfo: userInfo,
-                logger: OSLog.logger(for: file),
+                logger: OSLog(file: file, category: category),
                 file: file,
                 function: function,
                 logType: logLevel.osLogType)

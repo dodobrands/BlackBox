@@ -22,11 +22,13 @@ public class BlackBox {
 extension BlackBox: BBProtocol {
     public func log(_ error: Error,
                     file: StaticString = #file,
+                    category: String? = nil,
                     function: StaticString = #function,
                     line: UInt = #line) {
         for logger in loggers {
             logger.log(error,
                        file: file,
+                       category: category,
                        function: function,
                        line: line)
         }
@@ -38,6 +40,7 @@ extension BlackBox: BBProtocol {
                     eventType: BBEventType? = nil,
                     eventId: UInt64? = nil,
                     file: StaticString = #file,
+                    category: String? = nil,
                     function: StaticString = #function,
                     line: UInt = #line) {
         for logger in loggers {
@@ -47,6 +50,7 @@ extension BlackBox: BBProtocol {
                        eventType: eventType,
                        eventId: eventId,
                        file: file,
+                       category: category,
                        function: function,
                        line: line)
         }
@@ -57,10 +61,12 @@ extension BlackBox: BBProtocol {
 extension BlackBox {
     public static func log(_ error: Error,
                            file: StaticString = #file,
+                           category: String? = nil,
                            function: StaticString = #function,
                            line: UInt = #line) {
         BlackBox.instance.log(error,
                               file: file,
+                              category: category,
                               function: function,
                               line: line)
     }
@@ -71,6 +77,7 @@ extension BlackBox {
                            eventType: BBEventType? = nil,
                            eventId: UInt64? = nil,
                            file: StaticString = #file,
+                           category: String? = nil,
                            function: StaticString = #function,
                            line: UInt = #line) {
         BlackBox.instance.log(message,
@@ -79,6 +86,7 @@ extension BlackBox {
                               eventType: eventType,
                               eventId: eventId,
                               file: file,
+                              category: category,
                               function: function,
                               line: line)
     }

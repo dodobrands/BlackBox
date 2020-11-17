@@ -10,6 +10,7 @@ import Foundation
 public protocol BBProtocol {
     func log(_ error: Error,
              file: StaticString,
+             category: String?,
              function: StaticString,
              line: UInt)
     
@@ -19,6 +20,7 @@ public protocol BBProtocol {
              eventType: BBEventType?,
              eventId: UInt64?,
              file: StaticString,
+             category: String?,
              function: StaticString,
              line: UInt)
 }

@@ -9,11 +9,7 @@ import os
 
 @available(iOS 12.0, *)
 extension OSLog {
-    static func logger(for file: StaticString) -> OSLog {
-        return logger(subsystem: Bundle.main.bundleIdentifier!, file: file)
-    }
-    
-    private static func logger(subsystem: String, file: StaticString) -> OSLog {
-        return OSLog(subsystem: subsystem, category: file.bbFilename)
+    public convenience init(file: StaticString, category: String?) {
+        self.init(subsystem: file.bbFilename, category: category ?? "")
     }
 }

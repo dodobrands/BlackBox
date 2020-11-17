@@ -22,6 +22,7 @@ extension BlackBox {
         
         public func log(_ error: Error,
                         file: StaticString,
+                        category: String?,
                         function: StaticString,
                         line: UInt) {
             let message = String(reflecting: error)
@@ -38,6 +39,7 @@ extension BlackBox {
                         eventType: BBEventType?,
                         eventId: UInt64?,
                         file: StaticString,
+                        category: String?,
                         function: StaticString,
                         line: UInt) {
             log(message,
