@@ -30,11 +30,15 @@ BlackBox.log("Hello world")
 ```swift
 BlackBox.log("Logged in", userInfo: ["userId": someUserId]) // keep in mind to not include sensitive info in logs
 ```
-3. Message with custom log level
+3. Message with category
+```swift
+BlackBox.log("Logged in", userInfo: ["userId": someUserId], category: "App lifecycle") // keep in mind to not include sensitive info in logs
+```
+4. Message with custom log level
 ```swift
 BlackBox.log("Tried to open AuthScreen multiple times", logLevel: .warning)
 ```
-4. Error
+5. Error
 ```swift
 enum ParsingError: Error {
     case unknownCategoryInDTO(rawValue: Int)
@@ -42,15 +46,15 @@ enum ParsingError: Error {
 
 BlackBox.log(ParsingError.unknownCategoryInDTO(rawValue: 9))
 ```
-5. Time Profiler, `OSSignpostLogger` is required
+6. Time Profiler, `OSSignpostLogger` is required
 ```swift
 BlackBox.log("Will parse menu", eventType: .begin)
 let menuModel = MenuModel(dto: menuDto)
 BlackBox.log("Did parse menu", eventType: .end)
 ```
-6. Time Profiler with concurrent async operations
+7. Time Profiler with concurrent async operations
 ```swift
-let eventId = UInt64.random // basically any uniqie UInt64 is required
+let eventId = UInt64.random // basically any unique UInt64 is required
 
 BlackBox.log("Will load data for network request", eventType: .begin, eventId: eventId)
 request.get() { response in
@@ -67,17 +71,19 @@ extension BlackBox {
     class CrashlyticsLogger: BBLoggerProtocol {
         func log(_ error: Error,
                  file: StaticString,
+                 category: String?,
                  function: StaticString,
                  line: UInt) {
             Crashlytics.crashlytics().record(error: error)
         }
-
+        
         func log(_ message: String,
                  userInfo: CustomDebugStringConvertible?,
                  logLevel: BBLogLevel,
                  eventType: BBEventType?,
                  eventId: UInt64?,
                  file: StaticString,
+                 category: String?,
                  function: StaticString,
                  line: UInt) {
             Crashlytics.crashlytics().log(message)
@@ -85,7 +91,7 @@ extension BlackBox {
     }
 }
 ```
-And dont forget to add your custom logger to BlackBox
+And dont forget to include your custom logger to BlackBox
 ```swift
 BlackBox.instance = BlackBox(loggers: [BlackBox.OSLogger(), BlackBox.CrashlyticsLogger()])
 ```
