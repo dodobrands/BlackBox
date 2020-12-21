@@ -21,12 +21,14 @@ public class BlackBox {
 // MARK: - Instance
 extension BlackBox: BBProtocol {
     public func log(_ error: Error,
+                    logLevel: BBLogLevel = .error,
                     file: StaticString = #file,
                     category: String? = nil,
                     function: StaticString = #function,
                     line: UInt = #line) {
         for logger in loggers {
             logger.log(error,
+                       logLevel: logLevel,
                        file: file,
                        category: category,
                        function: function,
@@ -60,11 +62,13 @@ extension BlackBox: BBProtocol {
 // MARK: - Static
 extension BlackBox {
     public static func log(_ error: Error,
+                           logLevel: BBLogLevel = .error,
                            file: StaticString = #file,
                            category: String? = nil,
                            function: StaticString = #function,
                            line: UInt = #line) {
         BlackBox.instance.log(error,
+                              logLevel: logLevel,
                               file: file,
                               category: category,
                               function: function,

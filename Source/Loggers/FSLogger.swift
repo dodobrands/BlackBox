@@ -21,6 +21,7 @@ extension BlackBox {
         }
         
         public func log(_ error: Error,
+                        logLevel: BBLogLevel,
                         file: StaticString,
                         category: String?,
                         function: StaticString,
@@ -30,7 +31,7 @@ extension BlackBox {
                 userInfo: nil,
                 file: file,
                 function: function,
-                logLevel: .error)
+                logLevel: logLevel)
         }
         
         public func log(_ message: String,

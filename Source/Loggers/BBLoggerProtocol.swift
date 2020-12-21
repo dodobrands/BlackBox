@@ -10,6 +10,7 @@ import Foundation
 
 public protocol BBLoggerProtocol {
     func log(_ error: Error,
+             logLevel: BBLogLevel,
              file: StaticString,
              category: String?,
              function: StaticString,

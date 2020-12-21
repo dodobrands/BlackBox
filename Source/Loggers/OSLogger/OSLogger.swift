@@ -15,6 +15,7 @@ extension BlackBox {
         public init(){}
         
         public func log(_ error: Error,
+                        logLevel: BBLogLevel,
                         file: StaticString,
                         category: String?,
                         function: StaticString,
@@ -25,7 +26,7 @@ extension BlackBox {
                 logger: OSLog(file: file, category: category),
                 file: file,
                 function: function,
-                logType: .error)
+                logType: logLevel.osLogType)
         }
         
         public func log(_ message: String,
