@@ -84,20 +84,3 @@ extension BlackBox.FSLogger {
         }
     }
 }
-
-extension BBLogLevel {
-    var icon: String {
-        switch self {
-        case .debug:
-            return "🛠"
-        case .error:
-            return "❌"
-        case .warning:
-            return "⚠️"
-        case .info:
-            return "ℹ️"
-        case .default:
-            return "📝"
-        }
-    }
-}

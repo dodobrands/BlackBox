@@ -27,10 +27,9 @@ public protocol BBLoggerProtocol {
              line: UInt)
 }
 
-public enum BBLogLevel {
-    case `default`, debug, info, warning, error
-}
+
 
 public enum BBEventType {
     case begin, end
 }
+

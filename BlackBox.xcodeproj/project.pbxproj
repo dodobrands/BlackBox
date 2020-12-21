@@ -17,6 +17,7 @@
 		9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */; };
 		9C623E3024D5E114006803E6 /* OSLog+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */; };
 		9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2C24D5E114006803E6 /* OSLogger.swift */; };
+		9C6BB70825907E0F00631AAE /* BBLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6BB70725907E0F00631AAE /* BBLogLevel.swift */; };
 		9CF0463924F785D00018D8F9 /* OSSignpostLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLoggerProtocol.swift; sourceTree = "<group>"; };
 		9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OSLog+Helpers.swift"; sourceTree = "<group>"; };
 		9C623E2C24D5E114006803E6 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
+		9C6BB70725907E0F00631AAE /* BBLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BBLogLevel.swift; path = Source/BBLogLevel.swift; sourceTree = SOURCE_ROOT; };
 		9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSignpostLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 				9C623E2524D5E114006803E6 /* Helpers */,
 				9C623E2724D5E114006803E6 /* Loggers */,
 				9C623E0A24D5E006006803E6 /* BlackBox.h */,
+				9C6BB70725907E0F00631AAE /* BBLogLevel.swift */,
 				9C623E2124D5E104006803E6 /* BlackBox.swift */,
 				9C623E2324D5E108006803E6 /* BBProtocol.swift */,
 				9C623E0B24D5E006006803E6 /* Info.plist */,
@@ -249,6 +252,7 @@
 				9CF0463924F785D00018D8F9 /* OSSignpostLogger.swift in Sources */,
 				9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */,
 				9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */,
+				9C6BB70825907E0F00631AAE /* BBLogLevel.swift in Sources */,
 				9C623E3024D5E114006803E6 /* OSLog+Helpers.swift in Sources */,
 				9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */,
 				9C623E2224D5E104006803E6 /* BlackBox.swift in Sources */,
