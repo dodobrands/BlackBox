@@ -74,7 +74,19 @@ extension BlackBox {
                  category: String?,
                  function: StaticString,
                  line: UInt) {
-            Crashlytics.crashlytics().record(error: error)
+            if true {
+                Crashlytics.crashlytics().record(error: error)
+            }
+            
+            log(String(reflecting: error),
+                userInfo: nil,
+                logLevel: .error,
+                eventType: nil,
+                eventId: nil,
+                file: file,
+                category: category,
+                function: function,
+                line: line)
         }
         
         func log(_ message: String,
@@ -86,7 +98,19 @@ extension BlackBox {
                  category: String?,
                  function: StaticString,
                  line: UInt) {
-            Crashlytics.crashlytics().log(message)
+            Crashlytics.crashlytics().log(message(from: message,
+                                                  with: logLevel))
+        }
+    }
+}
+
+extension BlackBox.CrashlyticsLogger {
+    private func message(from message: String, with logLevel: BBLogLevel) -> String {
+        switch logLevel {
+        case .debug, .info, .default:
+            return message
+        case .error, .warning:
+            return logLevel.icon + " " + message
         }
     }
 }
