@@ -98,8 +98,9 @@ extension BlackBox {
                  category: String?,
                  function: StaticString,
                  line: UInt) {
-            Crashlytics.crashlytics().log(message(from: message,
-                                                  with: logLevel))
+            let message = self.message(from: message,
+                                       with: logLevel)
+            Crashlytics.crashlytics().log(message)
         }
     }
 }
