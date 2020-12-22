@@ -70,17 +70,19 @@ Create your own logger and implement `BBLoggerProtocol`
 extension BlackBox {
     class CrashlyticsLogger: BBLoggerProtocol {
         func log(_ error: Error,
+                 logLevel: BBLogLevel,
                  file: StaticString,
                  category: String?,
                  function: StaticString,
                  line: UInt) {
-            if true {
+            if logLevel == .error {
                 Crashlytics.crashlytics().record(error: error)
             }
             
-            log(String(reflecting: error),
+            log(message(from: String(reflecting: error),
+                        with: logLevel),
                 userInfo: nil,
-                logLevel: .error,
+                logLevel: logLevel,
                 eventType: nil,
                 eventId: nil,
                 file: file,
@@ -98,8 +100,6 @@ extension BlackBox {
                  category: String?,
                  function: StaticString,
                  line: UInt) {
-            let message = self.message(from: message,
-                                       with: logLevel)
             Crashlytics.crashlytics().log(message)
         }
     }
@@ -128,13 +128,30 @@ extension ParsingError: CustomNSError {
         switch self {
         case .unknownCategoryInDTO:
             return 0
-	}
+    }
     }
 
     var errorUserInfo: [String : Any] {
         switch self {
         case .unknownCategoryInDTO(let rawValue):
             return ["rawValue": rawValue]
+        }
+    }
+}
+```
+
+Each Swift.Error is logged with `.error` log level by default.
+Implement `BBLogLevelProvider` to provide custom log levels for your errors
+```swift
+extension ParsingError: BBLogLevelProvider {
+    var logLevel: BBLogLevel {
+        switch self {
+        case .unknownCategoryInDTO(let rawValue):
+            if rawValue == 2 { // deprecated category, may be present in orders created before 2019
+                return .warning
+            } else { // unsupported category
+                return .error
+            }
         }
     }
 }

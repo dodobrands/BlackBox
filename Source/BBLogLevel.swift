@@ -28,3 +28,7 @@ extension BBLogLevel {
         }
     }
 }
+
+public protocol BBLogLevelProvider where Self: Swift.Error {
+    var logLevel: BBLogLevel { get }
+}
