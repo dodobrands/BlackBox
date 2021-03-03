@@ -23,7 +23,7 @@ extension BlackBox {
             let message = String(reflecting: error)
             log(message,
                 userInfo: nil,
-                logger: OSLog(file: file, category: category),
+                logger: logger(file: file, category: category),
                 file: file,
                 function: function,
                 logType: logLevel.osLogType)
@@ -40,10 +40,14 @@ extension BlackBox {
                         line: UInt) {
             log(message,
                 userInfo: userInfo,
-                logger: OSLog(file: file, category: category),
+                logger: logger(file: file, category: category),
                 file: file,
                 function: function,
                 logType: logLevel.osLogType)
+        }
+        
+        private func logger(file: StaticString, category: String?) -> OSLog {
+            OSLog(subsystem: file.bbFilename, category: category ?? "")
         }
     }
 }

@@ -34,8 +34,12 @@ extension BlackBox {
                         line: UInt) {
             guard let signpostType = eventType?.osSignpostType else { return }
             
+            let filename = file.bbFilename
+            
+            let logger = OSLog(subsystem: filename, category: category ?? filename)
+            
             log(message,
-                logger: OSLog(file: file, category: category),
+                logger: logger,
                 function: function,
                 signpostType: signpostType,
                 signpostId: eventId.map { OSSignpostID($0) })

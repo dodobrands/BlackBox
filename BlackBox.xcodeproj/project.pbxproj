@@ -15,7 +15,6 @@
 		9C623E2D24D5E114006803E6 /* BBHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2624D5E114006803E6 /* BBHelpers.swift */; };
 		9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2824D5E114006803E6 /* FSLogger.swift */; };
 		9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */; };
-		9C623E3024D5E114006803E6 /* OSLog+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */; };
 		9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2C24D5E114006803E6 /* OSLogger.swift */; };
 		9C6BB70825907E0F00631AAE /* BBLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6BB70725907E0F00631AAE /* BBLogLevel.swift */; };
 		9CF0463924F785D00018D8F9 /* OSSignpostLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */; };
@@ -43,7 +42,6 @@
 		9C623E2624D5E114006803E6 /* BBHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBHelpers.swift; sourceTree = "<group>"; };
 		9C623E2824D5E114006803E6 /* FSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSLogger.swift; sourceTree = "<group>"; };
 		9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLoggerProtocol.swift; sourceTree = "<group>"; };
-		9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OSLog+Helpers.swift"; sourceTree = "<group>"; };
 		9C623E2C24D5E114006803E6 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
 		9C6BB70725907E0F00631AAE /* BBLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BBLogLevel.swift; path = Source/BBLogLevel.swift; sourceTree = SOURCE_ROOT; };
 		9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSignpostLogger.swift; sourceTree = "<group>"; };
@@ -130,7 +128,6 @@
 		9C623E2A24D5E114006803E6 /* OSLogger */ = {
 			isa = PBXGroup;
 			children = (
-				9C623E2B24D5E114006803E6 /* OSLog+Helpers.swift */,
 				9C623E2C24D5E114006803E6 /* OSLogger.swift */,
 				9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */,
 			);
@@ -194,7 +191,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Dodo Pizza Engineering";
 				TargetAttributes = {
 					9C623E0624D5E006006803E6 = {
@@ -253,7 +250,6 @@
 				9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */,
 				9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */,
 				9C6BB70825907E0F00631AAE /* BBLogLevel.swift in Sources */,
-				9C623E3024D5E114006803E6 /* OSLog+Helpers.swift in Sources */,
 				9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */,
 				9C623E2224D5E104006803E6 /* BlackBox.swift in Sources */,
 			);
@@ -416,7 +412,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodopizza.BlackBox;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -443,7 +439,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodopizza.BlackBox;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
