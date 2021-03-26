@@ -21,28 +21,38 @@ extension BlackBox {
         }
         
         public func log(_ error: Error,
-                        logLevel: BBLogLevel,
-                        file: StaticString,
-                        category: String?,
-                        function: StaticString,
-                        line: UInt) {
-            let message = String(reflecting: error)
-            log(message,
-                userInfo: nil,
-                file: file,
-                function: function,
-                logLevel: logLevel)
-        }
-        
-        public func log(_ message: String,
-                        userInfo: CustomDebugStringConvertible?,
-                        logLevel: BBLogLevel,
-                        eventType: BBEventType?,
+                        eventType: BBEventType,
                         eventId: UInt64?,
                         file: StaticString,
                         category: String?,
                         function: StaticString,
                         line: UInt) {
+            guard logLevels.contains(.error) else { return }
+            
+            let message = String(reflecting: error)
+            
+            log(message,
+                userInfo: nil,
+                logLevel: .error,
+                eventType: eventType,
+                eventId: eventId,
+                file: file,
+                category: category,
+                function: function,
+                line: line)
+        }
+        
+        public func log(_ message: String,
+                        userInfo: CustomDebugStringConvertible?,
+                        logLevel: BBLogLevel,
+                        eventType: BBEventType,
+                        eventId: UInt64?,
+                        file: StaticString,
+                        category: String?,
+                        function: StaticString,
+                        line: UInt) {
+            guard logLevels.contains(logLevel) else { return }
+            
             log(message,
                 userInfo: userInfo,
                 file: file,
@@ -58,8 +68,6 @@ extension BlackBox.FSLogger {
                      file: StaticString,
                      function: StaticString,
                      logLevel: BBLogLevel) {
-        guard logLevels.contains(logLevel) else { return }
-        
         let userInfo = userInfo?.bbLogDescription ?? "nil"
         
         let title = logLevel.icon + " " + String(describing: Date())

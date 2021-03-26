@@ -10,7 +10,8 @@ import Foundation
 
 public protocol BBLoggerProtocol {
     func log(_ error: Error,
-             logLevel: BBLogLevel,
+             eventType: BBEventType,
+             eventId: UInt64?,
              file: StaticString,
              category: String?,
              function: StaticString,
@@ -19,7 +20,7 @@ public protocol BBLoggerProtocol {
     func log(_ message: String,
              userInfo: CustomDebugStringConvertible?,
              logLevel: BBLogLevel,
-             eventType: BBEventType?,
+             eventType: BBEventType,
              eventId: UInt64?,
              file: StaticString,
              category: String?,
@@ -31,5 +32,6 @@ public protocol BBLoggerProtocol {
 
 public enum BBEventType {
     case begin, end
+    case event
 }
 
