@@ -21,13 +21,16 @@ public class BlackBox {
 // MARK: - Instance
 extension BlackBox: BBProtocol {
     public func log(_ error: Error,
+                    eventType: BBEventType = .event,
+                    eventId: UInt64? = nil,
                     file: StaticString = #file,
                     category: String? = nil,
                     function: StaticString = #function,
                     line: UInt = #line) {
         for logger in loggers {
             logger.log(error,
-                       logLevel: error.logLevel,
+                       eventType: eventType,
+                       eventId: eventId,
                        file: file,
                        category: category,
                        function: function,
@@ -38,7 +41,7 @@ extension BlackBox: BBProtocol {
     public func log(_ message: String,
                     userInfo: CustomDebugStringConvertible? = nil,
                     logLevel: BBLogLevel = .default,
-                    eventType: BBEventType? = nil,
+                    eventType: BBEventType = .event,
                     eventId: UInt64? = nil,
                     file: StaticString = #file,
                     category: String? = nil,
@@ -61,6 +64,8 @@ extension BlackBox: BBProtocol {
 // MARK: - Static
 extension BlackBox {
     public static func log(_ error: Error,
+                           eventType: BBEventType = .event,
+                           eventId: UInt64? = nil,
                            file: StaticString = #file,
                            category: String? = nil,
                            function: StaticString = #function,
@@ -75,7 +80,7 @@ extension BlackBox {
     public static func log(_ message: String,
                            userInfo: CustomDebugStringConvertible? = nil,
                            logLevel: BBLogLevel = .default,
-                           eventType: BBEventType? = nil,
+                           eventType: BBEventType = .event,
                            eventId: UInt64? = nil,
                            file: StaticString = #file,
                            category: String? = nil,
@@ -90,15 +95,5 @@ extension BlackBox {
                               category: category,
                               function: function,
                               line: line)
-    }
-}
-
-extension Swift.Error {
-    var logLevel: BBLogLevel {
-        if let logLevelError = self as? BBLogLevelProvider {
-            return logLevelError.logLevel
-        } else {
-            return .error
-        }
     }
 }

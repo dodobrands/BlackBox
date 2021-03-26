@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum BBLogLevel {
+public enum BBLogLevel: CaseIterable {
     case `default`, debug, info, warning, error
 }
 

@@ -12,42 +12,51 @@ import os
 @available(iOS 12.0, *)
 extension BlackBox {
     public class OSLogger: BBLoggerProtocol {
-        public init(){}
+        let logLevels: [BBLogLevel]
         
-        public func log(_ error: Error,
-                        logLevel: BBLogLevel,
-                        file: StaticString,
-                        category: String?,
-                        function: StaticString,
-                        line: UInt) {
-            let message = String(reflecting: error)
-            log(message,
-                userInfo: nil,
-                logger: logger(file: file, category: category),
-                file: file,
-                function: function,
-                logType: logLevel.osLogType)
+        public init(logLevels: [BBLogLevel] = BBLogLevel.allCases){
+            self.logLevels = logLevels
         }
         
-        public func log(_ message: String,
-                        userInfo: CustomDebugStringConvertible?,
-                        logLevel: BBLogLevel,
-                        eventType: BBEventType?,
+        public func log(_ error: Error,
+                        eventType: BBEventType,
                         eventId: UInt64?,
                         file: StaticString,
                         category: String?,
                         function: StaticString,
                         line: UInt) {
+            guard logLevels.contains(.error) else { return }
+            
+            let message = String(reflecting: error)
+            
             log(message,
-                userInfo: userInfo,
-                logger: logger(file: file, category: category),
+                userInfo: nil,
+                logLevel: .error,
+                eventType: eventType,
+                eventId: eventId,
                 file: file,
+                category: category,
                 function: function,
-                logType: logLevel.osLogType)
+                line: line)
         }
         
-        private func logger(file: StaticString, category: String?) -> OSLog {
-            OSLog(subsystem: file.bbFilename, category: category ?? "")
+        public func log(_ message: String,
+                        userInfo: CustomDebugStringConvertible?,
+                        logLevel: BBLogLevel,
+                        eventType: BBEventType,
+                        eventId: UInt64?,
+                        file: StaticString,
+                        category: String?,
+                        function: StaticString,
+                        line: UInt) {
+            guard logLevels.contains(logLevel) else { return }
+            
+            log(message,
+                userInfo: userInfo,
+                logger: OSLog(file: file, category: category),
+                file: file,
+                function: function,
+                logType: OSLogType(logLevel))
         }
     }
 }
@@ -70,14 +79,26 @@ extension BlackBox.OSLogger {
 }
 
 @available(iOS 12.0, *)
-extension BBLogLevel {
-    var osLogType: OSLogType {
-        switch self {
-        case .debug:    return .debug
-        case .info:     return .info
-        case .warning:  return .error
-        case .error:    return .error
-        case .default:  return .default
+extension OSLog {
+    convenience init(file: StaticString, category: String?) {
+        self.init(subsystem: file.bbFilename, category: category ?? "")
+    }
+}
+
+@available(iOS 12.0, *)
+extension OSLogType {
+    init(_ logLevel: BBLogLevel) {
+        switch logLevel {
+        case .debug:
+            self = .debug
+        case .info:
+            self = .info
+        case .warning:
+            self = .error
+        case .error:
+            self = .error
+        case .default:
+            self = .default
         }
     }
 }
