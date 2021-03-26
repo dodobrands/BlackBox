@@ -40,7 +40,7 @@ extension BlackBox: BBProtocol {
     
     public func log(_ message: String,
                     userInfo: CustomDebugStringConvertible? = nil,
-                    logLevel: BBLogLevel = .default,
+                    logLevel: BBLogLevel = .debug,
                     eventType: BBEventType = .event,
                     eventId: UInt64? = nil,
                     file: StaticString = #file,
@@ -79,7 +79,7 @@ extension BlackBox {
     
     public static func log(_ message: String,
                            userInfo: CustomDebugStringConvertible? = nil,
-                           logLevel: BBLogLevel = .default,
+                           logLevel: BBLogLevel = .debug,
                            eventType: BBEventType = .event,
                            eventId: UInt64? = nil,
                            file: StaticString = #file,

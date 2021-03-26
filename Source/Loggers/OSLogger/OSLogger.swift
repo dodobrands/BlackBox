@@ -14,7 +14,7 @@ extension BlackBox {
     public class OSLogger: BBLoggerProtocol {
         let logLevels: [BBLogLevel]
         
-        public init(logLevels: [BBLogLevel] = BBLogLevel.allCases){
+        public init(logLevels: [BBLogLevel]){
             self.logLevels = logLevels
         }
         
@@ -90,15 +90,15 @@ extension OSLogType {
     init(_ logLevel: BBLogLevel) {
         switch logLevel {
         case .debug:
-            self = .debug
+            self = .default // .debug won't be shown in Console.app, so switching to .default instead
+        case .default:
+            self = .default
         case .info:
             self = .info
         case .warning:
             self = .error
         case .error:
-            self = .error
-        case .default:
-            self = .default
+            self = .fault
         }
     }
 }

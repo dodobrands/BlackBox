@@ -14,7 +14,7 @@ extension BlackBox {
     public class OSSignpostLogger: BBLoggerProtocol {
         let logLevels: [BBLogLevel]
         
-        public init(logLevels: [BBLogLevel] = BBLogLevel.allCases){
+        public init(logLevels: [BBLogLevel]){
             self.logLevels = logLevels
         }
         

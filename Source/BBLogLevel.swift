@@ -9,7 +9,7 @@
 import Foundation
 
 public enum BBLogLevel: CaseIterable {
-    case `default`, debug, info, warning, error
+    case debug, `default`, info, warning, error
 }
 
 extension BBLogLevel {
@@ -17,14 +17,14 @@ extension BBLogLevel {
         switch self {
         case .debug:
             return "🛠"
-        case .error:
-            return "❌"
-        case .warning:
-            return "⚠️"
-        case .info:
-            return "ℹ️"
         case .default:
             return "📝"
+        case .info:
+            return "ℹ️"
+        case .warning:
+            return "⚠️"
+        case .error:
+            return "❌"
         }
     }
 }
