@@ -1,11 +1,3 @@
-//
-//  BBLogLevel.swift
-//  BlackBox
-//
-//  Created by Алексей Берёзка on 21.12.2020.
-//  Copyright © 2020 Dodo Pizza Engineering. All rights reserved.
-//
-
 import Foundation
 
 public enum BBLogLevel: CaseIterable {
@@ -31,4 +23,14 @@ extension BBLogLevel {
 
 public protocol BBLogLevelProvider where Self: Swift.Error {
     var logLevel: BBLogLevel { get }
+}
+
+public extension Swift.Error {
+    var logLevel: BBLogLevel {
+        if let logLevelError = self as? BBLogLevelProvider {
+            return logLevelError.logLevel
+        } else {
+            return .error
+        }
+    }
 }

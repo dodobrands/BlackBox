@@ -1,11 +1,3 @@
-//
-//  OSLogger.swift
-//  DodoPizza
-//
-//  Created by Алексей Берёзка on 27.02.2020.
-//  Copyright © 2020 Dodo Pizza. All rights reserved.
-//
-
 import Foundation
 import os
 
@@ -31,7 +23,7 @@ extension BlackBox {
             
             log(message,
                 userInfo: nil,
-                logLevel: .error,
+                logLevel: error.logLevel,
                 eventType: eventType,
                 eventId: eventId,
                 file: file,
