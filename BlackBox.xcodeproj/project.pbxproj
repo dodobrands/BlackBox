@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C43489726AA9A4600505954 /* BBLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C43489626AA9A4600505954 /* BBLogLevel.swift */; };
 		9C623E1124D5E007006803E6 /* BlackBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C623E0724D5E006006803E6 /* BlackBox.framework */; };
 		9C623E1624D5E007006803E6 /* BlackBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E1524D5E007006803E6 /* BlackBoxTests.swift */; };
 		9C623E1824D5E007006803E6 /* BlackBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C623E0A24D5E006006803E6 /* BlackBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -16,7 +17,6 @@
 		9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2824D5E114006803E6 /* FSLogger.swift */; };
 		9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */; };
 		9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C623E2C24D5E114006803E6 /* OSLogger.swift */; };
-		9C6BB70825907E0F00631AAE /* BBLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6BB70725907E0F00631AAE /* BBLogLevel.swift */; };
 		9CF0463924F785D00018D8F9 /* OSSignpostLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C43489626AA9A4600505954 /* BBLogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLogLevel.swift; sourceTree = "<group>"; };
 		9C623E0724D5E006006803E6 /* BlackBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlackBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C623E0A24D5E006006803E6 /* BlackBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackBox.h; sourceTree = "<group>"; };
 		9C623E0B24D5E006006803E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		9C623E2824D5E114006803E6 /* FSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSLogger.swift; sourceTree = "<group>"; };
 		9C623E2924D5E114006803E6 /* BBLoggerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLoggerProtocol.swift; sourceTree = "<group>"; };
 		9C623E2C24D5E114006803E6 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
-		9C6BB70725907E0F00631AAE /* BBLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BBLogLevel.swift; path = Source/BBLogLevel.swift; sourceTree = SOURCE_ROOT; };
 		9CF0463824F785D00018D8F9 /* OSSignpostLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSignpostLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,10 +66,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C43489826AA9A8300505954 /* BlackBox */ = {
+			isa = PBXGroup;
+			children = (
+				9C623E2524D5E114006803E6 /* Helpers */,
+				9C623E2724D5E114006803E6 /* Loggers */,
+				9C623E0A24D5E006006803E6 /* BlackBox.h */,
+				9C43489626AA9A4600505954 /* BBLogLevel.swift */,
+				9C623E2124D5E104006803E6 /* BlackBox.swift */,
+				9C623E2324D5E108006803E6 /* BBProtocol.swift */,
+				9C623E0B24D5E006006803E6 /* Info.plist */,
+			);
+			path = BlackBox;
+			sourceTree = "<group>";
+		};
+		9C43489926AA9AAA00505954 /* BlackBoxTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C623E1524D5E007006803E6 /* BlackBoxTests.swift */,
+				9C623E1724D5E007006803E6 /* Info.plist */,
+			);
+			path = BlackBoxTests;
+			sourceTree = "<group>";
+		};
 		9C623DFD24D5E006006803E6 = {
 			isa = PBXGroup;
 			children = (
-				9C623E0924D5E006006803E6 /* Source */,
+				9C623E0924D5E006006803E6 /* Sources */,
 				9C623E1424D5E007006803E6 /* Tests */,
 				9C623E0824D5E006006803E6 /* Products */,
 			);
@@ -84,25 +107,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9C623E0924D5E006006803E6 /* Source */ = {
+		9C623E0924D5E006006803E6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9C623E2524D5E114006803E6 /* Helpers */,
-				9C623E2724D5E114006803E6 /* Loggers */,
-				9C623E0A24D5E006006803E6 /* BlackBox.h */,
-				9C6BB70725907E0F00631AAE /* BBLogLevel.swift */,
-				9C623E2124D5E104006803E6 /* BlackBox.swift */,
-				9C623E2324D5E108006803E6 /* BBProtocol.swift */,
-				9C623E0B24D5E006006803E6 /* Info.plist */,
+				9C43489826AA9A8300505954 /* BlackBox */,
 			);
-			path = Source;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		9C623E1424D5E007006803E6 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9C623E1524D5E007006803E6 /* BlackBoxTests.swift */,
-				9C623E1724D5E007006803E6 /* Info.plist */,
+				9C43489926AA9AAA00505954 /* BlackBoxTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -245,11 +261,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C623E2424D5E108006803E6 /* BBProtocol.swift in Sources */,
+				9C43489726AA9A4600505954 /* BBLogLevel.swift in Sources */,
 				9C623E2D24D5E114006803E6 /* BBHelpers.swift in Sources */,
 				9CF0463924F785D00018D8F9 /* OSSignpostLogger.swift in Sources */,
 				9C623E2E24D5E114006803E6 /* FSLogger.swift in Sources */,
 				9C623E2F24D5E114006803E6 /* BBLoggerProtocol.swift in Sources */,
-				9C6BB70825907E0F00631AAE /* BBLogLevel.swift in Sources */,
 				9C623E3124D5E114006803E6 /* OSLogger.swift in Sources */,
 				9C623E2224D5E104006803E6 /* BlackBox.swift in Sources */,
 			);
@@ -405,7 +421,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/BlackBox/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -432,7 +448,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/BlackBox/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -454,7 +470,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/BlackBoxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,7 +488,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/BlackBoxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
