@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
     s.name = "BlackBox"
-    s.version = "0.3.2"
+    s.version = "0.3.3"
     s.summary = "Logging library for iOS"
 
-    s.source = { :git => "git@github.com:dodopizza/BlackBox-ios.git", :tag => s.version }
+    s.source = { :git => "https://github.com/dodopizza/BlackBox-ios.git", :tag => s.version }
     s.homepage = "https://github.com/dodopizza/BlackBox-ios"
 
     s.license = 'Apache License, Version 2.0'
