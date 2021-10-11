@@ -147,8 +147,8 @@ extension BlackBox {
     
     public static func log(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
+        userInfo: CustomDebugStringConvertible? = nil,
+        logLevel: BBLogLevel = .debug,
         file: StaticString = #file,
         category: String? = nil,
         function: StaticString = #function,
@@ -167,8 +167,8 @@ extension BlackBox {
     
     public static func logStart(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
+        userInfo: CustomDebugStringConvertible? = nil,
+        logLevel: BBLogLevel = .debug,
         file: StaticString = #file,
         category: String? = nil,
         function: StaticString = #function,
@@ -187,8 +187,8 @@ extension BlackBox {
     
     public static func logEnd(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
+        userInfo: CustomDebugStringConvertible? = nil,
+        logLevel: BBLogLevel = .debug,
         eventId: UInt64,
         file: StaticString = #file,
         category: String? = nil,
