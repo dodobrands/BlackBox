@@ -43,12 +43,35 @@ extension BlackBox {
                         line: UInt) {
             guard logLevels.contains(logLevel) else { return }
             
-            log(message,
+            let formattedMessage = formattedMessage(from: message, with: eventType)
+            
+            log(formattedMessage,
                 userInfo: userInfo,
                 logger: OSLog(file: file, category: category),
                 file: file,
                 function: function,
                 logType: OSLogType(logLevel))
+        }
+        
+        private func formattedMessage(
+            from message: String,
+            with type: BBEventType
+        ) -> String {
+            let prefix: String?
+            switch type {
+            case .event:
+                prefix = nil
+            case .start:
+                prefix = "Event start"
+            case .end:
+                prefix = "Event end"
+            }
+            
+            if let prefix = prefix {
+                return prefix + ": " + message
+            } else {
+                return message
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ public protocol BBLoggerProtocol {
 
 
 public enum BBEventType {
-    case begin, end
+    case start, end
     case event
 }
 

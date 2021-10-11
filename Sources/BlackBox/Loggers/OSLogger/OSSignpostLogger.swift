@@ -62,7 +62,7 @@ extension BlackBox {
             let filename = file.bbFilename
             
             switch eventType {
-            case .begin, .end, .none:
+            case .start, .end, .none:
                 return OSLog(subsystem: filename,
                              category: category ?? filename)
             case .event:
@@ -94,7 +94,7 @@ extension BlackBox.OSSignpostLogger {
 extension OSSignpostType {
     init(_ eventType: BBEventType) {
         switch eventType {
-        case .begin:
+        case .start:
             self = .begin
         case .end:
             self = .end
