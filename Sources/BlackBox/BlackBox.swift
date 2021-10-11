@@ -12,9 +12,12 @@ public class BlackBox {
     public static var instance = BlackBox(loggers: [])
     
     private let loggers: [BBLoggerProtocol]
+    private let queue: DispatchQueue
     
-    public init(loggers: [BBLoggerProtocol]) {
+    public init(loggers: [BBLoggerProtocol],
+                queue: DispatchQueue = .init(label: String(describing: BlackBox.self))) {
         self.loggers = loggers
+        self.queue = queue
     }
 }
 
@@ -236,14 +239,16 @@ extension BlackBox {
         function: StaticString,
         line: UInt
     ) {
-        loggers.forEach { logger in
-            logger.log(error,
-                       eventType: eventType,
-                       eventId: eventId,
-                       file: file,
-                       category: category,
-                       function: function,
-                       line: line)
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.log(error,
+                           eventType: eventType,
+                           eventId: eventId,
+                           file: file,
+                           category: category,
+                           function: function,
+                           line: line)
+            }
         }
     }
     
@@ -258,16 +263,18 @@ extension BlackBox {
         function: StaticString,
         line: UInt
     ) {
-        loggers.forEach { logger in
-            logger.log(message,
-                       userInfo: userInfo,
-                       logLevel: logLevel,
-                       eventType: eventType,
-                       eventId: eventId,
-                       file: file,
-                       category: category,
-                       function: function,
-                       line: line)
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.log(message,
+                           userInfo: userInfo,
+                           logLevel: logLevel,
+                           eventType: eventType,
+                           eventId: eventId,
+                           file: file,
+                           category: category,
+                           function: function,
+                           line: line)
+            }
         }
     }
 }
