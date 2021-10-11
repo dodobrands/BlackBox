@@ -35,22 +35,12 @@ public protocol BBProtocol {
         category: String?,
         function: StaticString,
         line: UInt
-    ) -> UInt64
+    ) -> BlackBox.LogEntry
     
     func logEnd(
-        _ message: String,
+        _ entry: BlackBox.LogEntry,
         userInfo: CustomDebugStringConvertible?,
         logLevel: BBLogLevel,
-        eventId: UInt64,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
-    )
-    
-    func logEnd(
-        _ error: Error,
-        eventId: UInt64,
         file: StaticString,
         category: String?,
         function: StaticString,
