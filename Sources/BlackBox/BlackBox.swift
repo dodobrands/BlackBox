@@ -131,10 +131,10 @@ extension BlackBox: BBProtocol {
 extension BlackBox {
     public static func log(
         _ error: Error,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
+        file: StaticString = #file,
+        category: String? = nil,
+        function: StaticString = #function,
+        line: UInt = #line
     ) {
         BlackBox.instance.log(
             error,
