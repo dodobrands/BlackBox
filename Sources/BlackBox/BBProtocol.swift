@@ -37,6 +37,16 @@ public protocol BBProtocol {
         line: UInt
     ) -> BlackBox.LogEntry
     
+    func logStart(
+        _ entry: BlackBox.LogEntry,
+        userInfo: CustomDebugStringConvertible?,
+        logLevel: BBLogLevel,
+        file: StaticString,
+        category: String?,
+        function: StaticString,
+        line: UInt
+    ) -> BlackBox.LogEntry
+    
     func logEnd(
         _ entry: BlackBox.LogEntry,
         userInfo: CustomDebugStringConvertible?,

@@ -74,6 +74,26 @@ extension BlackBox: BBProtocol {
     ) -> LogEntry {
         let entry = LogEntry(id: .random,
                              message: message)
+        return logStart(
+            entry,
+            userInfo: userInfo,
+            logLevel: logLevel,
+            file: file,
+            category: category,
+            function: function,
+            line: line
+        )
+    }
+    
+    public func logStart(
+        _ entry: BlackBox.LogEntry,
+        userInfo: CustomDebugStringConvertible?,
+        logLevel: BBLogLevel,
+        file: StaticString,
+        category: String?,
+        function: StaticString,
+        line: UInt
+    ) -> BlackBox.LogEntry {
         log(
             entry.message,
             userInfo: userInfo,
@@ -170,6 +190,26 @@ extension BlackBox {
         )
     }
     
+    public static func logStart(
+        _ entry: LogEntry,
+        userInfo: CustomDebugStringConvertible? = nil,
+        logLevel: BBLogLevel = .debug,
+        file: StaticString = #file,
+        category: String? = nil,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) -> LogEntry {
+        BlackBox.instance.logStart(
+            entry,
+            userInfo: userInfo,
+            logLevel: logLevel,
+            file: file,
+            category: category,
+            function: function,
+            line: line
+        )
+    }
+    
     public static func logEnd(
         _ entry: LogEntry,
         userInfo: CustomDebugStringConvertible? = nil,
@@ -245,6 +285,14 @@ extension BlackBox {
     public struct LogEntry {
         let id: UInt64
         let message: String
+        
+        public init(
+            id: UInt64,
+            message: String
+        ) {
+            self.id = id
+            self.message = message
+        }
     }
 }
 
