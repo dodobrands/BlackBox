@@ -29,12 +29,6 @@ extension CustomDebugStringConvertible {
     }
 }
 
-public extension StaticString {
-    var bbFilename: String {
-        return URL(fileURLWithPath: description).deletingPathExtension().lastPathComponent
-    }
-}
-
 public extension UInt64 {
     static var random: Self {
         random(in: Self.min...Self.max)

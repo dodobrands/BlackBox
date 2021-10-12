@@ -5,8 +5,8 @@ extension BlackBox {
         private let fullpath: URL
         private let logLevels: [BBLogLevel]
         
-        public init(path: URL,
-                    name: String,
+        public init(path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
+                    name: String = "BlackBox_log",
                     logLevels: [BBLogLevel]) {
             self.fullpath = path.appendingPathComponent(name)
             self.logLevels = logLevels
@@ -21,7 +21,7 @@ extension BlackBox {
             
             log(message,
                 userInfo: error.errorUserInfo,
-                file: error.file,
+                filename: error.filename,
                 function: error.function,
                 logLevel: error.logLevel)
         }
@@ -33,7 +33,7 @@ extension BlackBox {
             
             log(event.message,
                 userInfo: event.userInfo,
-                file: event.file,
+                filename: event.filename,
                 function: event.function,
                 logLevel: event.logLevel)
         }
@@ -47,7 +47,7 @@ extension BlackBox {
             
             log(formattedMessage,
                 userInfo: event.userInfo,
-                file: event.file,
+                filename: event.filename,
                 function: event.function,
                 logLevel: event.logLevel)
         }
@@ -62,7 +62,7 @@ extension BlackBox {
             
             log(formattedMessage,
                 userInfo: endEvent.userInfo,
-                file: endEvent.file,
+                filename: endEvent.filename,
                 function: endEvent.function,
                 logLevel: endEvent.logLevel)
         }
@@ -72,13 +72,13 @@ extension BlackBox {
 extension BlackBox.FSLogger {
     private func log(_ message: String,
                      userInfo: CustomDebugStringConvertible?,
-                     file: StaticString,
+                     filename: String,
                      function: StaticString,
                      logLevel: BBLogLevel) {
         let userInfo = userInfo?.bbLogDescription ?? "nil"
         
         let title = logLevel.icon + " " + String(describing: Date())
-        let subtitle = file.bbFilename + ", " + function.description
+        let subtitle = filename + ", " + function.description
         
         let content = message
         

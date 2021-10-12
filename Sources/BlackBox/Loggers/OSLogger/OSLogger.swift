@@ -19,8 +19,9 @@ extension BlackBox {
             
             log(message,
                 userInfo: error.errorUserInfo,
-                logger: OSLog(file: error.file, category: error.category),
-                file: error.file,
+                logger: OSLog(error),
+                module: error.module,
+                filename: error.filename,
                 function: error.function,
                 logType: OSLogType(error.logLevel))
         }
@@ -32,8 +33,9 @@ extension BlackBox {
             
             log(event.message,
                 userInfo: event.userInfo,
-                logger: OSLog(file: event.file, category: event.category),
-                file: event.file,
+                logger: OSLog(event),
+                module: event.module,
+                filename: event.filename,
                 function: event.function,
                 logType: OSLogType(event.logLevel))
         }
@@ -47,8 +49,9 @@ extension BlackBox {
             
             log(formattedMessage,
                 userInfo: event.userInfo,
-                logger: OSLog(file: event.file, category: event.category),
-                file: event.file,
+                logger: OSLog(event),
+                module: event.module,
+                filename: event.filename,
                 function: event.function,
                 logType: OSLogType(event.logLevel))
         }
@@ -63,8 +66,9 @@ extension BlackBox {
             
             log(formattedMessage,
                 userInfo: endEvent.userInfo,
-                logger: OSLog(file: endEvent.file, category: endEvent.category),
-                file: endEvent.file,
+                logger: OSLog(endEvent),
+                module: endEvent.module,
+                filename: endEvent.filename,
                 function: endEvent.function,
                 logType: OSLogType(endEvent.logLevel))
         }
@@ -76,11 +80,20 @@ extension BlackBox.OSLogger {
     private func log(_ message: String,
                      userInfo: CustomDebugStringConvertible?,
                      logger: OSLog,
-                     file: StaticString,
+                     module: String,
+                     filename: String,
                      function: StaticString,
                      logType: OSLogType) {
         let userInfo = userInfo?.bbLogDescription ?? "nil"
-        let message = message + "\n" + function.description + "\n\n" + "[User Info]:" + "\n" + userInfo
+        let message = message
+        + "\n\n"
+        + "[Sender]:"
+        + "\n"
+        + [module, filename, function.description].joined(separator: ".")
+        + "\n\n"
+        + "[User Info]:"
+        + "\n"
+        + userInfo
         
         os_log(logType,
                log: logger,
@@ -90,8 +103,18 @@ extension BlackBox.OSLogger {
 
 @available(iOS 12.0, *)
 extension OSLog {
-    convenience init(file: StaticString, category: String?) {
-        self.init(subsystem: file.bbFilename, category: category ?? "")
+    convenience init(_ event: BlackBox.Event) {
+        self.init(
+            subsystem: event.module,
+            category:  event.category ?? ""
+        )
+    }
+    
+    convenience init(_ error: BlackBox.Error) {
+        self.init(
+            subsystem: error.module,
+            category: error.category ?? ""
+        )
     }
 }
 

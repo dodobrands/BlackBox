@@ -25,7 +25,7 @@ public class BlackBox {
 extension BlackBox: BBProtocol {
     public func log(
         _ error: Swift.Error,
-        file: StaticString,
+        fileID: StaticString,
         category: String?,
         function: StaticString,
         line: UInt
@@ -34,7 +34,7 @@ extension BlackBox: BBProtocol {
             let error = BlackBox.Error(
                 error: error,
                 category: category,
-                file: file,
+                fileID: fileID,
                 function: function,
                 line: line
             )
@@ -49,7 +49,7 @@ extension BlackBox: BBProtocol {
         _ message: String,
         userInfo: CustomDebugStringConvertible?,
         logLevel: BBLogLevel,
-        file: StaticString,
+        fileID: StaticString,
         category: String?,
         function: StaticString,
         line: UInt
@@ -60,7 +60,7 @@ extension BlackBox: BBProtocol {
                 userInfo: userInfo,
                 logLevel: logLevel,
                 category: category,
-                file: file,
+                fileID: fileID,
                 function: function,
                 line: line
             )
@@ -75,7 +75,7 @@ extension BlackBox: BBProtocol {
         _ message: String,
         userInfo: CustomDebugStringConvertible?,
         logLevel: BBLogLevel,
-        file: StaticString,
+        fileID: StaticString,
         category: String?,
         function: StaticString,
         line: UInt
@@ -85,7 +85,7 @@ extension BlackBox: BBProtocol {
             message: message,
             userInfo: userInfo,
             category: category,
-            file: file,
+            fileID: fileID,
             function: function,
             line: line
         )
@@ -108,7 +108,7 @@ extension BlackBox: BBProtocol {
     public func logEnd(
         _ startEvent: BlackBox.Event,
         userInfo: CustomDebugStringConvertible?,
-        file: StaticString,
+        fileID: StaticString,
         category: String?,
         function: StaticString,
         line: UInt
@@ -119,7 +119,7 @@ extension BlackBox: BBProtocol {
                 userInfo: userInfo,
                 logLevel: startEvent.logLevel,
                 category: category,
-                file: file,
+                fileID: fileID,
                 function: function,
                 line: line
             )
@@ -136,14 +136,14 @@ extension BlackBox: BBProtocol {
 extension BlackBox {
     public static func log(
         _ error: Swift.Error,
-        file: StaticString = #file,
+        fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,
         line: UInt = #line
     ) {
         BlackBox.instance.log(
             error,
-            file: file,
+            fileID: fileID,
             category: category,
             function: function,
             line: line
@@ -154,7 +154,7 @@ extension BlackBox {
         _ message: String,
         userInfo: CustomDebugStringConvertible? = nil,
         logLevel: BBLogLevel = .debug,
-        file: StaticString = #file,
+        fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,
         line: UInt = #line
@@ -163,7 +163,7 @@ extension BlackBox {
             message,
             userInfo: userInfo,
             logLevel: logLevel,
-            file: file,
+            fileID: fileID,
             category: category,
             function: function,
             line: line
@@ -174,7 +174,7 @@ extension BlackBox {
         _ message: String,
         userInfo: CustomDebugStringConvertible? = nil,
         logLevel: BBLogLevel = .debug,
-        file: StaticString = #file,
+        fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,
         line: UInt = #line
@@ -183,7 +183,7 @@ extension BlackBox {
             message,
             userInfo: userInfo,
             logLevel: logLevel,
-            file: file,
+            fileID: fileID,
             category: category,
             function: function,
             line: line
@@ -200,7 +200,7 @@ extension BlackBox {
         _ event: Event,
         userInfo: CustomDebugStringConvertible? = nil,
         logLevel: BBLogLevel = .debug,
-        file: StaticString = #file,
+        fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,
         line: UInt = #line
@@ -208,10 +208,16 @@ extension BlackBox {
         BlackBox.instance.logEnd(
             event,
             userInfo: userInfo,
-            file: file,
+            fileID: fileID,
             category: category,
             function: function,
             line: line
         )
+    }
+}
+
+extension BlackBox {
+    func moduleName(from fileId: String) -> String? {
+        fileId.firstIndex(of: "/").flatMap { String(fileId[fileId.startIndex ..< $0]) }
     }
 }

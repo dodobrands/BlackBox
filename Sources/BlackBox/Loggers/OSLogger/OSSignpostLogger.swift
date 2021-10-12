@@ -19,7 +19,7 @@ extension BlackBox {
             
             let logger = self.logger(
                 eventType: .event,
-                file: error.file,
+                filename: error.filename,
                 category: error.category
             )
             
@@ -37,7 +37,7 @@ extension BlackBox {
             
             let logger = self.logger(
                 eventType: .event,
-                file: event.file,
+                filename: event.filename,
                 category: event.category
             )
             
@@ -55,7 +55,7 @@ extension BlackBox {
             guard logLevels.contains(event.logLevel) else { return }
             
             let logger = self.logger(eventType: eventType,
-                                     file: event.file,
+                                     filename: event.filename,
                                      category: event.category)
             
             let formattedMessage = "\(BBEventType.start.description): \(event.message)"
@@ -75,7 +75,7 @@ extension BlackBox {
             guard logLevels.contains(endEvent.logLevel) else { return }
             
             let logger = self.logger(eventType: eventType,
-                                     file: endEvent.file,
+                                     filename: endEvent.filename,
                                      category: endEvent.category)
             
             let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
@@ -88,10 +88,8 @@ extension BlackBox {
         }
         
         private func logger(eventType: BBEventType,
-                            file: StaticString,
+                            filename: String,
                             category: String?) -> OSLog {
-            let filename = file.bbFilename
-            
             switch eventType {
             case .start, .end:
                 return OSLog(subsystem: filename,
