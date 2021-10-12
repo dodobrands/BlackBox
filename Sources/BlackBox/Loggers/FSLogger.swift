@@ -27,44 +27,44 @@ extension BlackBox {
         }
         
         public func log(
-            _ entry: BlackBox.Event
+            _ event: BlackBox.Event
         ) {
-            guard logLevels.contains(entry.logLevel) else { return }
+            guard logLevels.contains(event.logLevel) else { return }
             
-            log(entry.message,
-                userInfo: entry.userInfo,
-                file: entry.file,
-                function: entry.function,
-                logLevel: entry.logLevel)
+            log(event.message,
+                userInfo: event.userInfo,
+                file: event.file,
+                function: event.function,
+                logLevel: event.logLevel)
         }
         
         public func logStart(
-            _ entry: BlackBox.Event
+            _ event: BlackBox.Event
         ) {
-            guard logLevels.contains(entry.logLevel) else { return }
+            guard logLevels.contains(event.logLevel) else { return }
             
-            let formattedMessage = "\(BBEventType.start.description): \(entry.message)"
+            let formattedMessage = "\(BBEventType.start.description): \(event.message)"
             
             log(formattedMessage,
-                userInfo: entry.userInfo,
-                file: entry.file,
-                function: entry.function,
-                logLevel: entry.logLevel)
+                userInfo: event.userInfo,
+                file: event.file,
+                function: event.function,
+                logLevel: event.logLevel)
         }
         
         public func logEnd(
-            startEntry: BlackBox.Event,
-            endEntry: BlackBox.Event
+            startEvent: BlackBox.Event,
+            endEvent: BlackBox.Event
         ) {
-            guard logLevels.contains(startEntry.logLevel) else { return }
+            guard logLevels.contains(startEvent.logLevel) else { return }
             
-            let formattedMessage = "\(BBEventType.end.description): \(endEntry.message)"
+            let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
             
             log(formattedMessage,
-                userInfo: endEntry.userInfo,
-                file: endEntry.file,
-                function: endEntry.function,
-                logLevel: endEntry.logLevel)
+                userInfo: endEvent.userInfo,
+                file: endEvent.file,
+                function: endEvent.function,
+                logLevel: endEvent.logLevel)
         }
     }
 }

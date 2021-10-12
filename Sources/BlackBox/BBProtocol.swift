@@ -38,11 +38,11 @@ public protocol BBProtocol {
     ) -> BlackBox.Event
     
     func logStart(
-        _ entry: BlackBox.Event
+        _ event: BlackBox.Event
     )
     
     func logEnd(
-        _ startEntry: BlackBox.Event,
+        _ startEvent: BlackBox.Event,
         userInfo: CustomDebugStringConvertible?,
         file: StaticString,
         category: String?,

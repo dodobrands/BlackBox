@@ -14,17 +14,17 @@ public protocol BBLoggerProtocol {
     )
     
     func log(
-        _ entry: BlackBox.Event
+        _ event: BlackBox.Event
     )
     
     // MARK: - Trace
     func logStart(
-        _ entry: BlackBox.Event
+        _ event: BlackBox.Event
     )
     
     func logEnd(
-        startEntry: BlackBox.Event,
-        endEntry: BlackBox.Event
+        startEvent: BlackBox.Event,
+        endEvent: BlackBox.Event
     )
 }
 

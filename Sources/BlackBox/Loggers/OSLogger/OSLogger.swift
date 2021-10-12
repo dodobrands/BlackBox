@@ -26,47 +26,47 @@ extension BlackBox {
         }
         
         public func log(
-            _ entry: BlackBox.Event
+            _ event: BlackBox.Event
         ) {
-            guard logLevels.contains(entry.logLevel) else { return }
+            guard logLevels.contains(event.logLevel) else { return }
             
-            log(entry.message,
-                userInfo: entry.userInfo,
-                logger: OSLog(file: entry.file, category: entry.category),
-                file: entry.file,
-                function: entry.function,
-                logType: OSLogType(entry.logLevel))
+            log(event.message,
+                userInfo: event.userInfo,
+                logger: OSLog(file: event.file, category: event.category),
+                file: event.file,
+                function: event.function,
+                logType: OSLogType(event.logLevel))
         }
         
         public func logStart(
-            _ entry: BlackBox.Event
+            _ event: BlackBox.Event
         ) {
-            guard logLevels.contains(entry.logLevel) else { return }
+            guard logLevels.contains(event.logLevel) else { return }
             
-            let formattedMessage = "\(BBEventType.start.description): \(entry.message)"
+            let formattedMessage = "\(BBEventType.start.description): \(event.message)"
             
             log(formattedMessage,
-                userInfo: entry.userInfo,
-                logger: OSLog(file: entry.file, category: entry.category),
-                file: entry.file,
-                function: entry.function,
-                logType: OSLogType(entry.logLevel))
+                userInfo: event.userInfo,
+                logger: OSLog(file: event.file, category: event.category),
+                file: event.file,
+                function: event.function,
+                logType: OSLogType(event.logLevel))
         }
         
         public func logEnd(
-            startEntry: BlackBox.Event,
-            endEntry: BlackBox.Event
+            startEvent: BlackBox.Event,
+            endEvent: BlackBox.Event
         ) {
-            guard logLevels.contains(endEntry.logLevel) else { return }
+            guard logLevels.contains(endEvent.logLevel) else { return }
             
-            let formattedMessage = "\(BBEventType.end.description): \(endEntry.message)"
+            let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
             
             log(formattedMessage,
-                userInfo: endEntry.userInfo,
-                logger: OSLog(file: endEntry.file, category: endEntry.category),
-                file: endEntry.file,
-                function: endEntry.function,
-                logType: OSLogType(endEntry.logLevel))
+                userInfo: endEvent.userInfo,
+                logger: OSLog(file: endEvent.file, category: endEvent.category),
+                file: endEvent.file,
+                function: endEvent.function,
+                logType: OSLogType(endEvent.logLevel))
         }
     }
 }

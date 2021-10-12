@@ -54,7 +54,7 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        let entry = BlackBox.Event(
+        let event = BlackBox.Event(
             message: message,
             userInfo: userInfo,
             logLevel: logLevel,
@@ -66,7 +66,7 @@ extension BlackBox: BBProtocol {
         
         queue.async {
             self.loggers.forEach { logger in
-                logger.log(entry)
+                logger.log(event)
             }
         }
     }
@@ -80,7 +80,7 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) -> Event {
-        let entry = Event(
+        let event = Event(
             id: .random,
             message: message,
             userInfo: userInfo,
@@ -90,33 +90,33 @@ extension BlackBox: BBProtocol {
             line: line
         )
         
-        logStart(entry)
+        logStart(event)
         
-        return entry
+        return event
     }
     
     public func logStart(
-        _ entry: BlackBox.Event
+        _ event: BlackBox.Event
     ) {
         queue.async {
             self.loggers.forEach { logger in
-                logger.logStart(entry)
+                logger.logStart(event)
             }
         }
     }
     
     public func logEnd(
-        _ startEntry: BlackBox.Event,
+        _ startEvent: BlackBox.Event,
         userInfo: CustomDebugStringConvertible?,
         file: StaticString,
         category: String?,
         function: StaticString,
         line: UInt
     ) {
-        let endEntry = Event(
-            message: startEntry.message,
+        let endEvent = Event(
+            message: startEvent.message,
             userInfo: userInfo,
-            logLevel: startEntry.logLevel,
+            logLevel: startEvent.logLevel,
             category: category,
             file: file,
             function: function,
@@ -125,8 +125,8 @@ extension BlackBox: BBProtocol {
         
         queue.async {
             self.loggers.forEach { logger in
-                logger.logEnd(startEntry: startEntry,
-                              endEntry: endEntry)
+                logger.logEnd(startEvent: startEvent,
+                              endEvent: endEvent)
             }
         }
     }
@@ -191,13 +191,13 @@ extension BlackBox {
     }
     
     public static func logStart(
-        _ entry: Event
+        _ event: Event
     ) {
-        BlackBox.instance.logStart(entry)
+        BlackBox.instance.logStart(event)
     }
     
     public static func logEnd(
-        _ entry: Event,
+        _ event: Event,
         userInfo: CustomDebugStringConvertible? = nil,
         logLevel: BBLogLevel = .debug,
         file: StaticString = #file,
@@ -206,81 +206,12 @@ extension BlackBox {
         line: UInt = #line
     ) {
         BlackBox.instance.logEnd(
-            entry,
+            event,
             userInfo: userInfo,
             file: file,
             category: category,
             function: function,
             line: line
         )
-    }
-}
-
-extension BlackBox {
-    public struct Event {
-        let id: UInt64
-        let message: String
-        let userInfo: CustomDebugStringConvertible?
-        let logLevel: BBLogLevel
-        let category: String?
-        let file: StaticString
-        let function: StaticString
-        let line: UInt
-        
-        public init(
-            id: UInt64 = .random,
-            message: String,
-            userInfo: CustomDebugStringConvertible? = nil,
-            logLevel: BBLogLevel = .debug,
-            category: String? = nil,
-            file: StaticString = #file,
-            function: StaticString = #function,
-            line: UInt = #line
-        ) {
-            self.id = id
-            self.message = message
-            self.userInfo = userInfo
-            self.logLevel = logLevel
-            self.category = category
-            self.file = file
-            self.function = function
-            self.line = line
-        }
-    }
-    
-    public struct Error {
-        let id: UInt64
-        let error: Swift.Error
-        let errorUserInfo: CustomDebugStringConvertible?
-        let logLevel: BBLogLevel
-        let category: String?
-        let file: StaticString
-        let function: StaticString
-        let line: UInt
-        
-        public init(
-            id: UInt64 = .random,
-            error: Swift.Error,
-            category: String? = nil,
-            file: StaticString = #file,
-            function: StaticString = #function,
-            line: UInt = #line
-        ) {
-            self.id = id
-            self.error = error
-            let errorUserInfo = (error as? CustomNSError)?.errorUserInfo
-            self.errorUserInfo = (errorUserInfo?.isEmpty ?? true) ? nil : errorUserInfo
-            self.logLevel = error.logLevel
-            self.category = category
-            self.file = file
-            self.function = function
-            self.line = line
-        }
-    }
-}
-
-public extension UInt64 {
-    static var random: Self {
-        random(in: Self.min...Self.max)
     }
 }

@@ -31,60 +31,60 @@ extension BlackBox {
         }
         
         public func log(
-            _ entry: BlackBox.Event
+            _ event: BlackBox.Event
         ) {
-            guard logLevels.contains(entry.logLevel) else { return }
+            guard logLevels.contains(event.logLevel) else { return }
             
             let logger = self.logger(
                 eventType: .event,
-                file: entry.file,
-                category: entry.category
+                file: event.file,
+                category: event.category
             )
             
-            log(entry.message,
+            log(event.message,
                 logger: logger,
-                function: entry.function,
+                function: event.function,
                 signpostType: .event,
-                signpostId: OSSignpostID(entry.id))
+                signpostId: OSSignpostID(event.id))
         }
         
         public func logStart(
-            _ entry: BlackBox.Event
+            _ event: BlackBox.Event
         ) {
             let eventType = BBEventType.start
-            guard logLevels.contains(entry.logLevel) else { return }
+            guard logLevels.contains(event.logLevel) else { return }
             
             let logger = self.logger(eventType: eventType,
-                                     file: entry.file,
-                                     category: entry.category)
+                                     file: event.file,
+                                     category: event.category)
             
-            let formattedMessage = "\(BBEventType.start.description): \(entry.message)"
+            let formattedMessage = "\(BBEventType.start.description): \(event.message)"
             
             log(formattedMessage,
                 logger: logger,
-                function: entry.function,
+                function: event.function,
                 signpostType: OSSignpostType(eventType),
-                signpostId: OSSignpostID(entry.id))
+                signpostId: OSSignpostID(event.id))
         }
         
         public func logEnd(
-            startEntry: BlackBox.Event,
-            endEntry: BlackBox.Event
+            startEvent: BlackBox.Event,
+            endEvent: BlackBox.Event
         ) {
             let eventType = BBEventType.end
-            guard logLevels.contains(endEntry.logLevel) else { return }
+            guard logLevels.contains(endEvent.logLevel) else { return }
             
             let logger = self.logger(eventType: eventType,
-                                     file: endEntry.file,
-                                     category: endEntry.category)
+                                     file: endEvent.file,
+                                     category: endEvent.category)
             
-            let formattedMessage = "\(BBEventType.end.description): \(endEntry.message)"
+            let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
             
             log(formattedMessage,
                 logger: logger,
-                function: startEntry.function,
+                function: startEvent.function,
                 signpostType: OSSignpostType(eventType),
-                signpostId: OSSignpostID(startEntry.id))
+                signpostId: OSSignpostID(startEvent.id))
         }
         
         private func logger(eventType: BBEventType,
