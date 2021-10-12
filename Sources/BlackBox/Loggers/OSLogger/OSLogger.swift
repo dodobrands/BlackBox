@@ -10,42 +10,38 @@ extension BlackBox {
             self.logLevels = logLevels
         }
         
-        public func log(_ error: Error,
-                        eventType: BBEventType,
-                        eventId: UInt64?,
-                        file: StaticString,
-                        category: String?,
-                        function: StaticString,
-                        line: UInt) {
-            guard logLevels.contains(.error) else { return }
+        public func log(
+            _ error: Error,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
+            guard logLevels.contains(error.logLevel) else { return }
             
             let message = String(reflecting: error)
             
             log(message,
-                userInfo: nil,
+                userInfo: (error as? CustomNSError)?.errorUserInfo,
                 logLevel: error.logLevel,
-                eventType: eventType,
-                eventId: eventId,
                 file: file,
                 category: category,
                 function: function,
                 line: line)
         }
         
-        public func log(_ message: String,
-                        userInfo: CustomDebugStringConvertible?,
-                        logLevel: BBLogLevel,
-                        eventType: BBEventType,
-                        eventId: UInt64?,
-                        file: StaticString,
-                        category: String?,
-                        function: StaticString,
-                        line: UInt) {
+        public func log(
+            _ message: String,
+            userInfo: CustomDebugStringConvertible?,
+            logLevel: BBLogLevel,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
             guard logLevels.contains(logLevel) else { return }
             
-            let formattedMessage = formattedMessage(from: message, with: eventType)
-            
-            log(formattedMessage,
+            log(message,
                 userInfo: userInfo,
                 logger: OSLog(file: file, category: category),
                 file: file,
@@ -53,25 +49,48 @@ extension BlackBox {
                 logType: OSLogType(logLevel))
         }
         
-        private func formattedMessage(
-            from message: String,
-            with type: BBEventType
-        ) -> String {
-            let prefix: String?
-            switch type {
-            case .event:
-                prefix = nil
-            case .start:
-                prefix = "Event start"
-            case .end:
-                prefix = "Event end"
-            }
+        public func logStart(
+            _ entry: BlackBox.LogEntry,
+            userInfo: CustomDebugStringConvertible?,
+            logLevel: BBLogLevel,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
+            guard logLevels.contains(logLevel) else { return }
             
-            if let prefix = prefix {
-                return prefix + ": " + message
-            } else {
-                return message
-            }
+            let formattedMessage = "\(BBEventType.start.description): \(entry.message)"
+            
+            log(formattedMessage,
+                userInfo: userInfo,
+                logLevel: logLevel,
+                file: file,
+                category: category,
+                function: function,
+                line: line)
+        }
+        
+        public func logEnd(
+            _ entry: BlackBox.LogEntry,
+            userInfo: CustomDebugStringConvertible?,
+            logLevel: BBLogLevel,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
+            guard logLevels.contains(logLevel) else { return }
+            
+            let formattedMessage = "\(BBEventType.end.description): \(entry.message)"
+            
+            log(formattedMessage,
+                userInfo: userInfo,
+                logLevel: logLevel,
+                file: file,
+                category: category,
+                function: function,
+                line: line)
         }
     }
 }
@@ -85,11 +104,11 @@ extension BlackBox.OSLogger {
                      function: StaticString,
                      logType: OSLogType) {
         let userInfo = userInfo?.bbLogDescription ?? "nil"
-        let message = message + "\n\n" + "[User Info]:" + "\n" + userInfo
+        let message = message + "\n" + function.description + "\n\n" + "[User Info]:" + "\n" + userInfo
         
         os_log(logType,
                log: logger,
-               "%{public}@\n%{public}@", function.description, message)
+               "%{public}@", message)
     }
 }
 

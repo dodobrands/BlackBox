@@ -45,7 +45,7 @@ public protocol BBProtocol {
         category: String?,
         function: StaticString,
         line: UInt
-    ) -> BlackBox.LogEntry
+    )
     
     func logEnd(
         _ entry: BlackBox.LogEntry,

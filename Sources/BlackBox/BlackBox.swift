@@ -30,15 +30,15 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        log(
-            error,
-            eventType: .event,
-            eventId: nil,
-            file: file,
-            category: category,
-            function: function,
-            line: line
-        )
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.log(error,
+                           file: file,
+                           category: category,
+                           function: function,
+                           line: line)
+            }
+        }
     }
     
     public func log(
@@ -50,17 +50,17 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        log(
-            message,
-            userInfo: userInfo,
-            logLevel: logLevel,
-            eventType: .event,
-            eventId: nil,
-            file: file,
-            category: category,
-            function: function,
-            line: line
-        )
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.log(message,
+                           userInfo: userInfo,
+                           logLevel: logLevel,
+                           file: file,
+                           category: category,
+                           function: function,
+                           line: line)
+            }
+        }
     }
     
     public func logStart(
@@ -74,7 +74,8 @@ extension BlackBox: BBProtocol {
     ) -> LogEntry {
         let entry = LogEntry(id: .random,
                              message: message)
-        return logStart(
+        
+        logStart(
             entry,
             userInfo: userInfo,
             logLevel: logLevel,
@@ -83,30 +84,30 @@ extension BlackBox: BBProtocol {
             function: function,
             line: line
         )
+        
+        return entry
     }
     
     public func logStart(
-        _ entry: BlackBox.LogEntry,
+        _ entry: LogEntry,
         userInfo: CustomDebugStringConvertible?,
         logLevel: BBLogLevel,
         file: StaticString,
         category: String?,
         function: StaticString,
         line: UInt
-    ) -> BlackBox.LogEntry {
-        log(
-            entry.message,
-            userInfo: userInfo,
-            logLevel: logLevel,
-            eventType: .start,
-            eventId: entry.id,
-            file: file,
-            category: category,
-            function: function,
-            line: line
-        )
-        
-        return entry
+    ) {
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.logStart(entry,
+                                userInfo: userInfo,
+                                logLevel: logLevel,
+                                file: file,
+                                category: category,
+                                function: function,
+                                line: line)
+            }
+        }
     }
     
     public func logEnd(
@@ -118,17 +119,17 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        log(
-            entry.message,
-            userInfo: userInfo,
-            logLevel: logLevel,
-            eventType: .end,
-            eventId: entry.id,
-            file: file,
-            category: category,
-            function: function,
-            line: line
-        )
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.logEnd(entry,
+                              userInfo: userInfo,
+                              logLevel: logLevel,
+                              file: file,
+                              category: category,
+                              function: function,
+                              line: line)
+            }
+        }
     }
 }
 
@@ -198,7 +199,7 @@ extension BlackBox {
         category: String? = nil,
         function: StaticString = #function,
         line: UInt = #line
-    ) -> LogEntry {
+    ) {
         BlackBox.instance.logStart(
             entry,
             userInfo: userInfo,
@@ -228,56 +229,6 @@ extension BlackBox {
             function: function,
             line: line
         )
-    }
-}
-
-extension BlackBox {
-    private func log(
-        _ error: Error,
-        eventType: BBEventType,
-        eventId: UInt64?,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
-    ) {
-        queue.async {
-            self.loggers.forEach { logger in
-                logger.log(error,
-                           eventType: eventType,
-                           eventId: eventId,
-                           file: file,
-                           category: category,
-                           function: function,
-                           line: line)
-            }
-        }
-    }
-    
-    private func log(
-        _ message: String,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
-        eventType: BBEventType,
-        eventId: UInt64?,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
-    ) {
-        queue.async {
-            self.loggers.forEach { logger in
-                logger.log(message,
-                           userInfo: userInfo,
-                           logLevel: logLevel,
-                           eventType: eventType,
-                           eventId: eventId,
-                           file: file,
-                           category: category,
-                           function: function,
-                           line: line)
-            }
-        }
     }
 }
 

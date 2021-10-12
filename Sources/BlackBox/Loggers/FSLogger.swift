@@ -12,37 +12,35 @@ extension BlackBox {
             self.logLevels = logLevels
         }
         
-        public func log(_ error: Error,
-                        eventType: BBEventType,
-                        eventId: UInt64?,
-                        file: StaticString,
-                        category: String?,
-                        function: StaticString,
-                        line: UInt) {
-            guard logLevels.contains(.error) else { return }
+        public func log(
+            _ error: Error,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
+            guard logLevels.contains(error.logLevel) else { return }
             
             let message = String(reflecting: error)
             
             log(message,
                 userInfo: nil,
                 logLevel: error.logLevel,
-                eventType: eventType,
-                eventId: eventId,
                 file: file,
                 category: category,
                 function: function,
                 line: line)
         }
         
-        public func log(_ message: String,
-                        userInfo: CustomDebugStringConvertible?,
-                        logLevel: BBLogLevel,
-                        eventType: BBEventType,
-                        eventId: UInt64?,
-                        file: StaticString,
-                        category: String?,
-                        function: StaticString,
-                        line: UInt) {
+        public func log(
+            _ message: String,
+            userInfo: CustomDebugStringConvertible?,
+            logLevel: BBLogLevel,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
             guard logLevels.contains(logLevel) else { return }
             
             log(message,
@@ -50,6 +48,54 @@ extension BlackBox {
                 file: file,
                 function: function,
                 logLevel: logLevel)
+        }
+        
+        public func logStart(
+            _ entry: BlackBox.LogEntry,
+            userInfo: CustomDebugStringConvertible?,
+            logLevel: BBLogLevel,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
+            guard logLevels.contains(logLevel) else { return }
+            
+            let formattedMessage = "\(BBEventType.start.description): \(entry.message)"
+            
+            log(
+                formattedMessage,
+                userInfo: userInfo,
+                logLevel: logLevel,
+                file: file,
+                category: category,
+                function: function,
+                line: line
+            )
+        }
+        
+        public func logEnd(
+            _ entry: BlackBox.LogEntry,
+            userInfo: CustomDebugStringConvertible?,
+            logLevel: BBLogLevel,
+            file: StaticString,
+            category: String?,
+            function: StaticString,
+            line: UInt
+        ) {
+            guard logLevels.contains(logLevel) else { return }
+            
+            let formattedMessage = "\(BBEventType.end.description): \(entry.message)"
+            
+            log(
+                formattedMessage,
+                userInfo: userInfo,
+                logLevel: logLevel,
+                file: file,
+                category: category,
+                function: function,
+                line: line
+            )
         }
     }
 }
