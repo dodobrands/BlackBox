@@ -33,7 +33,7 @@ public enum BBEventType {
     case event
 }
 
-extension BBEventType {
+public extension BBEventType {
     var description: String {
         switch self {
         case .start:
