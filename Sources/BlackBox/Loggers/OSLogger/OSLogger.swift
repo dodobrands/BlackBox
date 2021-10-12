@@ -11,86 +11,62 @@ extension BlackBox {
         }
         
         public func log(
-            _ error: Error,
-            file: StaticString,
-            category: String?,
-            function: StaticString,
-            line: UInt
+            _ error: BlackBox.Error
         ) {
             guard logLevels.contains(error.logLevel) else { return }
             
-            let message = String(reflecting: error)
+            let message = String(reflecting: error.error)
             
             log(message,
-                userInfo: (error as? CustomNSError)?.errorUserInfo,
-                logLevel: error.logLevel,
-                file: file,
-                category: category,
-                function: function,
-                line: line)
+                userInfo: error.errorUserInfo,
+                logger: OSLog(file: error.file, category: error.category),
+                file: error.file,
+                function: error.function,
+                logType: OSLogType(error.logLevel))
         }
         
         public func log(
-            _ message: String,
-            userInfo: CustomDebugStringConvertible?,
-            logLevel: BBLogLevel,
-            file: StaticString,
-            category: String?,
-            function: StaticString,
-            line: UInt
+            _ entry: BlackBox.Event
         ) {
-            guard logLevels.contains(logLevel) else { return }
+            guard logLevels.contains(entry.logLevel) else { return }
             
-            log(message,
-                userInfo: userInfo,
-                logger: OSLog(file: file, category: category),
-                file: file,
-                function: function,
-                logType: OSLogType(logLevel))
+            log(entry.message,
+                userInfo: entry.userInfo,
+                logger: OSLog(file: entry.file, category: entry.category),
+                file: entry.file,
+                function: entry.function,
+                logType: OSLogType(entry.logLevel))
         }
         
         public func logStart(
-            _ entry: BlackBox.LogEntry,
-            userInfo: CustomDebugStringConvertible?,
-            logLevel: BBLogLevel,
-            file: StaticString,
-            category: String?,
-            function: StaticString,
-            line: UInt
+            _ entry: BlackBox.Event
         ) {
-            guard logLevels.contains(logLevel) else { return }
+            guard logLevels.contains(entry.logLevel) else { return }
             
             let formattedMessage = "\(BBEventType.start.description): \(entry.message)"
             
             log(formattedMessage,
-                userInfo: userInfo,
-                logLevel: logLevel,
-                file: file,
-                category: category,
-                function: function,
-                line: line)
+                userInfo: entry.userInfo,
+                logger: OSLog(file: entry.file, category: entry.category),
+                file: entry.file,
+                function: entry.function,
+                logType: OSLogType(entry.logLevel))
         }
         
         public func logEnd(
-            _ entry: BlackBox.LogEntry,
-            userInfo: CustomDebugStringConvertible?,
-            logLevel: BBLogLevel,
-            file: StaticString,
-            category: String?,
-            function: StaticString,
-            line: UInt
+            startEntry: BlackBox.Event,
+            endEntry: BlackBox.Event
         ) {
-            guard logLevels.contains(logLevel) else { return }
+            guard logLevels.contains(endEntry.logLevel) else { return }
             
-            let formattedMessage = "\(BBEventType.end.description): \(entry.message)"
+            let formattedMessage = "\(BBEventType.end.description): \(endEntry.message)"
             
             log(formattedMessage,
-                userInfo: userInfo,
-                logLevel: logLevel,
-                file: file,
-                category: category,
-                function: function,
-                line: line)
+                userInfo: endEntry.userInfo,
+                logger: OSLog(file: endEntry.file, category: endEntry.category),
+                file: endEntry.file,
+                function: endEntry.function,
+                logType: OSLogType(endEntry.logLevel))
         }
     }
 }

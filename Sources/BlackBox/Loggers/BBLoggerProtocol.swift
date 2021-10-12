@@ -10,42 +10,21 @@ import Foundation
 
 public protocol BBLoggerProtocol {
     func log(
-        _ error: Error,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
+        _ error: BlackBox.Error
     )
     
     func log(
-        _ message: String,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
+        _ entry: BlackBox.Event
     )
     
     // MARK: - Trace
     func logStart(
-        _ entry: BlackBox.LogEntry,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
+        _ entry: BlackBox.Event
     )
     
     func logEnd(
-        _ entry: BlackBox.LogEntry,
-        userInfo: CustomDebugStringConvertible?,
-        logLevel: BBLogLevel,
-        file: StaticString,
-        category: String?,
-        function: StaticString,
-        line: UInt
+        startEntry: BlackBox.Event,
+        endEntry: BlackBox.Event
     )
 }
 
@@ -58,9 +37,9 @@ extension BBEventType {
     var description: String {
         switch self {
         case .start:
-            return "Event start"
+            return "Start"
         case .end:
-            return "Event end"
+            return "End"
         case .event:
             return "Event"
         }
