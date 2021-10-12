@@ -9,15 +9,15 @@ import Foundation
 
 extension BlackBox {
     public struct Event {
-        let id: UInt64
-        let message: String
-        let userInfo: CustomDebugStringConvertible?
-        let logLevel: BBLogLevel
-        let category: String?
-        let module: String
-        let filename: String
-        let function: StaticString
-        let line: UInt
+        public let id: UInt64
+        public let message: String
+        public let userInfo: CustomDebugStringConvertible?
+        public let logLevel: BBLogLevel
+        public let category: String?
+        public let module: String
+        public let filename: String
+        public let function: StaticString
+        public let line: UInt
         
         public init(
             id: UInt64 = .random,
@@ -44,15 +44,15 @@ extension BlackBox {
 
 extension BlackBox {
     public struct Error {
-        let id: UInt64
-        let error: Swift.Error
-        let errorUserInfo: CustomDebugStringConvertible?
-        let logLevel: BBLogLevel
-        let category: String?
-        let module: String
-        let filename: String
-        let function: StaticString
-        let line: UInt
+        public let id: UInt64
+        public let error: Swift.Error
+        public let errorUserInfo: CustomDebugStringConvertible?
+        public let logLevel: BBLogLevel
+        public let category: String?
+        public let module: String
+        public let filename: String
+        public let function: StaticString
+        public let line: UInt
         
         public init(
             id: UInt64 = .random,
