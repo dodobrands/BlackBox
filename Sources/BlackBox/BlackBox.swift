@@ -30,15 +30,15 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        let error = BlackBox.Error(
-            error: error,
-            category: category,
-            file: file,
-            function: function,
-            line: line
-        )
-        
         queue.async {
+            let error = BlackBox.Error(
+                error: error,
+                category: category,
+                file: file,
+                function: function,
+                line: line
+            )
+            
             self.loggers.forEach { logger in
                 logger.log(error)
             }
@@ -54,17 +54,17 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        let event = BlackBox.Event(
-            message: message,
-            userInfo: userInfo,
-            logLevel: logLevel,
-            category: category,
-            file: file,
-            function: function,
-            line: line
-        )
-        
         queue.async {
+            let event = BlackBox.Event(
+                message: message,
+                userInfo: userInfo,
+                logLevel: logLevel,
+                category: category,
+                file: file,
+                function: function,
+                line: line
+            )
+            
             self.loggers.forEach { logger in
                 logger.log(event)
             }
@@ -113,17 +113,17 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) {
-        let endEvent = Event(
-            message: startEvent.message,
-            userInfo: userInfo,
-            logLevel: startEvent.logLevel,
-            category: category,
-            file: file,
-            function: function,
-            line: line
-        )
-        
         queue.async {
+            let endEvent = Event(
+                message: startEvent.message,
+                userInfo: userInfo,
+                logLevel: startEvent.logLevel,
+                category: category,
+                file: file,
+                function: function,
+                line: line
+            )
+            
             self.loggers.forEach { logger in
                 logger.logEnd(startEvent: startEvent,
                               endEvent: endEvent)
