@@ -287,7 +287,7 @@ extension BlackBox {
         let message: String
         
         public init(
-            id: UInt64,
+            id: UInt64 = .random,
             message: String
         ) {
             self.id = id
