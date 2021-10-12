@@ -287,7 +287,7 @@ extension BlackBox {
         let message: String
         
         public init(
-            id: UInt64,
+            id: UInt64 = .random,
             message: String
         ) {
             self.id = id
@@ -296,7 +296,7 @@ extension BlackBox {
     }
 }
 
-fileprivate extension UInt64 {
+public extension UInt64 {
     static var random: Self {
         random(in: Self.min...Self.max)
     }
