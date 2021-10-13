@@ -37,7 +37,7 @@ extension BlackBox.FSLogger {
         let userInfo = event.userInfo?.bbLogDescription ?? "nil"
         
         let title = event.logLevel.icon + " " + String(describing: Date())
-        let subtitle = event.filename + ", " + event.function.description
+        let subtitle = event.source.filename + ", " + event.source.function.description
         
         let content = event.message
         

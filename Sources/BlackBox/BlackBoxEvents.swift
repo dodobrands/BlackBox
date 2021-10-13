@@ -17,10 +17,7 @@ extension BlackBox {
         public let userInfo: BBUserInfo?
         public let logLevel: BBLogLevel
         public let category: String?
-        public let module: String
-        public let filename: String
-        public let function: StaticString
-        public let line: UInt
+        public let source: Source
         
         public init(
             id: UInt64 = .random,
@@ -37,10 +34,11 @@ extension BlackBox {
             self.userInfo = userInfo
             self.logLevel = logLevel
             self.category = category
-            self.module = fileID.description.module
-            self.filename = fileID.description.filename
-            self.function = function
-            self.line = line
+            self.source = .init(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
         }
     }
 }
@@ -141,5 +139,27 @@ fileprivate extension String {
     
     var module: String {
         firstIndex(of: "/").flatMap { String(self[self.startIndex ..< $0]) } ?? ""
+    }
+}
+
+public extension BlackBox.GenericEvent {
+    struct Source {
+        public init(
+            fileID: StaticString = #fileID,
+            function: StaticString = #function,
+            line: UInt = #line
+        ) {
+            self.fileID = fileID
+            self.module = fileID.description.module
+            self.filename = fileID.description.filename
+            self.function = function
+            self.line = line
+        }
+        
+        public let fileID: StaticString
+        public let module: String
+        public let filename: String
+        public let function: StaticString
+        public let line: UInt
     }
 }

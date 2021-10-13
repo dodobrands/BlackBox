@@ -53,12 +53,12 @@ extension BlackBox.OSSignpostLogger {
     private func function(from event: BlackBox.GenericEvent) -> StaticString {
         switch event {
         case let endEvent as BlackBox.EndEvent:
-            return endEvent.startEvent.function
+            return endEvent.startEvent.source.function
         case _ as BlackBox.StartEvent,
             _ as BlackBox.ErrorEvent: // maybe should return .exclusive for errors and default cases
-            return event.function
+            return event.source.function
         default:
-            return event.function
+            return event.source.function
         }
     }
 }
@@ -100,13 +100,13 @@ extension OSLog {
                      event: BlackBox.GenericEvent) {
         switch signpostType {
         case .begin, .end:
-            self.init(subsystem: event.module,
-                      category: event.category ?? event.filename)
+            self.init(subsystem: event.source.module,
+                      category: event.category ?? event.source.filename)
         case .event:
-            self.init(subsystem: event.module,
+            self.init(subsystem: event.source.module,
                       category: .pointsOfInterest)
         default:
-            self.init(subsystem: event.module,
+            self.init(subsystem: event.source.module,
                       category: .pointsOfInterest)
         }
     }

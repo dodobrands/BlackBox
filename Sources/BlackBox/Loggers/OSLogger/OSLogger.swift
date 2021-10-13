@@ -34,11 +34,16 @@ extension BlackBox.OSLogger {
         guard logLevels.contains(event.logLevel) else { return }
         
         let userInfo = event.userInfo?.bbLogDescription ?? "nil"
+        
+        let source = [event.source.module,
+                      event.source.filename,
+                      event.source.function.description].joined(separator: ".")
+        
         let message = event.message
         + "\n\n"
         + "[Sender]:"
         + "\n"
-        + [event.module, event.filename, event.function.description].joined(separator: ".")
+        + source
         + "\n\n"
         + "[User Info]:"
         + "\n"
@@ -57,7 +62,7 @@ extension BlackBox.OSLogger {
 extension OSLog {
     convenience init(_ event: BlackBox.GenericEvent) {
         self.init(
-            subsystem: event.module,
+            subsystem: event.source.module,
             category:  event.category ?? ""
         )
     }
