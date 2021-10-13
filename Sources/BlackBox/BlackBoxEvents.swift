@@ -11,7 +11,6 @@ public typealias BBUserInfo = [String: Any]
 
 extension BlackBox {
     public class GenericEvent {
-        // EventProtocol
         public let id: UInt64
         public let message: String
         public let userInfo: BBUserInfo?
@@ -123,6 +122,28 @@ extension BlackBox {
                        fileID: fileID,
                        function: function,
                        line: line)
+        }
+        
+        public init(
+            id: UInt64 = .random,
+            message: String,
+            startEvent: StartEvent,
+            userInfo: BBUserInfo? = nil,
+            logLevel: BBLogLevel = .debug,
+            category: String? = nil,
+            source: Source
+        ) {
+            self.rawMessage = message
+            self.startEvent = startEvent
+            
+            super.init(id: id,
+                       "End: \(message)",
+                       userInfo: userInfo,
+                       logLevel: logLevel,
+                       category: category,
+                       fileID: source.fileID,
+                       function: source.function,
+                       line: source.line)
         }
     }
 }

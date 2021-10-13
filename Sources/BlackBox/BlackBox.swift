@@ -107,6 +107,7 @@ extension BlackBox: BBProtocol {
     
     public func logEnd(
         _ startEvent: BlackBox.StartEvent,
+        alternateMessage: String?,
         userInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
@@ -115,7 +116,7 @@ extension BlackBox: BBProtocol {
     ) {
         queue.async {
             let event = EndEvent(
-                message: startEvent.rawMessage,
+                message: alternateMessage ?? startEvent.rawMessage,
                 startEvent: startEvent,
                 userInfo: userInfo,
                 logLevel: startEvent.logLevel,
@@ -198,6 +199,7 @@ extension BlackBox {
     
     public static func logEnd(
         _ event: StartEvent,
+        alternateMessage: String? = nil,
         userInfo: BBUserInfo? = nil,
         fileID: StaticString = #fileID,
         category: String? = nil,
@@ -206,17 +208,12 @@ extension BlackBox {
     ) {
         BlackBox.instance.logEnd(
             event,
+            alternateMessage: alternateMessage,
             userInfo: userInfo,
             fileID: fileID,
             category: category,
             function: function,
             line: line
         )
-    }
-}
-
-extension BlackBox {
-    func moduleName(from fileId: String) -> String? {
-        fileId.firstIndex(of: "/").flatMap { String(fileId[fileId.startIndex ..< $0]) }
     }
 }

@@ -43,6 +43,7 @@ public protocol BBProtocol {
     
     func logEnd(
         _ startEvent: BlackBox.StartEvent,
+        alternateMessage: String?,
         userInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
