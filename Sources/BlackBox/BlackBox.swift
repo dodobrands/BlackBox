@@ -47,7 +47,7 @@ extension BlackBox: BBProtocol {
     
     public func log(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
+        userInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -73,7 +73,7 @@ extension BlackBox: BBProtocol {
     
     public func logStart(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
+        userInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -107,7 +107,7 @@ extension BlackBox: BBProtocol {
     
     public func logEnd(
         _ startEvent: BlackBox.StartEvent,
-        userInfo: CustomDebugStringConvertible?,
+        userInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
         function: StaticString,
@@ -152,7 +152,7 @@ extension BlackBox {
     
     public static func log(
         _ message: String,
-        userInfo: CustomDebugStringConvertible? = nil,
+        userInfo: BBUserInfo? = nil,
         logLevel: BBLogLevel = .debug,
         fileID: StaticString = #fileID,
         category: String? = nil,
@@ -172,7 +172,7 @@ extension BlackBox {
     
     public static func logStart(
         _ message: String,
-        userInfo: CustomDebugStringConvertible? = nil,
+        userInfo: BBUserInfo? = nil,
         logLevel: BBLogLevel = .debug,
         fileID: StaticString = #fileID,
         category: String? = nil,
@@ -198,7 +198,7 @@ extension BlackBox {
     
     public static func logEnd(
         _ event: StartEvent,
-        userInfo: CustomDebugStringConvertible? = nil,
+        userInfo: BBUserInfo? = nil,
         fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,

@@ -7,12 +7,14 @@
 
 import Foundation
 
+public typealias BBUserInfo = [String: Any]
+
 extension BlackBox {
     public class GenericEvent {
         // EventProtocol
         public let id: UInt64
         public let message: String
-        public let userInfo: CustomDebugStringConvertible?
+        public let userInfo: BBUserInfo?
         public let logLevel: BBLogLevel
         public let category: String?
         public let module: String
@@ -23,7 +25,7 @@ extension BlackBox {
         public init(
             id: UInt64 = .random,
             _ message: String,
-            userInfo: CustomDebugStringConvertible? = nil,
+            userInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -50,7 +52,7 @@ extension BlackBox {
         public init(
             id: UInt64 = .random,
             error: Swift.Error,
-            userInfo: CustomDebugStringConvertible? = nil,
+            userInfo: BBUserInfo? = nil,
             category: String? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
@@ -76,7 +78,7 @@ extension BlackBox {
         public override init(
             id: UInt64 = .random,
             _ message: String,
-            userInfo: CustomDebugStringConvertible? = nil,
+            userInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -105,7 +107,7 @@ extension BlackBox {
             id: UInt64 = .random,
             message: String,
             startEvent: StartEvent,
-            userInfo: CustomDebugStringConvertible? = nil,
+            userInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,

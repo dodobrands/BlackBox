@@ -19,16 +19,6 @@ extension Dictionary where Key == String, Value == Any {
     }
 }
 
-extension CustomDebugStringConvertible {
-    var bbLogDescription: String {
-        if let json = self as? [String: Any] {
-            return json.bbLogDescription
-        }
-        
-        return String(describing: self)
-    }
-}
-
 public extension UInt64 {
     static var random: Self {
         random(in: Self.min...Self.max)

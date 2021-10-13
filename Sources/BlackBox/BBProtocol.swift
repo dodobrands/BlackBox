@@ -18,7 +18,7 @@ public protocol BBProtocol {
     
     func log(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
+        userInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -29,7 +29,7 @@ public protocol BBProtocol {
     // MARK: - Trace
     func logStart(
         _ message: String,
-        userInfo: CustomDebugStringConvertible?,
+        userInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -43,7 +43,7 @@ public protocol BBProtocol {
     
     func logEnd(
         _ startEvent: BlackBox.StartEvent,
-        userInfo: CustomDebugStringConvertible?,
+        userInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
         function: StaticString,
