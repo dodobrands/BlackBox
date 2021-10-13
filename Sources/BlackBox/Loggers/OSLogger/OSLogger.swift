@@ -10,90 +10,42 @@ extension BlackBox {
             self.logLevels = logLevels
         }
         
-        public func log(
-            _ error: BlackBox.Error
-        ) {
-            guard logLevels.contains(error.logLevel) else { return }
-            
-            let message = String(reflecting: error.error)
-            
-            log(message,
-                userInfo: error.errorUserInfo,
-                logger: OSLog(error),
-                module: error.module,
-                filename: error.filename,
-                function: error.function,
-                logType: OSLogType(error.logLevel))
+        public func log(_ event: BlackBox.ErrorEvent) {
+            osLog(event: event)
         }
         
-        public func log(
-            _ event: BlackBox.Event
-        ) {
-            guard logLevels.contains(event.logLevel) else { return }
-            
-            log(event.message,
-                userInfo: event.userInfo,
-                logger: OSLog(event),
-                module: event.module,
-                filename: event.filename,
-                function: event.function,
-                logType: OSLogType(event.logLevel))
+        public func log(_ event: BlackBox.GenericEvent) {
+            osLog(event: event)
         }
         
-        public func logStart(
-            _ event: BlackBox.Event
-        ) {
-            guard logLevels.contains(event.logLevel) else { return }
-            
-            let formattedMessage = "\(BBEventType.start.description): \(event.message)"
-            
-            log(formattedMessage,
-                userInfo: event.userInfo,
-                logger: OSLog(event),
-                module: event.module,
-                filename: event.filename,
-                function: event.function,
-                logType: OSLogType(event.logLevel))
+        public func logStart(_ event: BlackBox.StartEvent) {
+            osLog(event: event)
         }
         
-        public func logEnd(
-            startEvent: BlackBox.Event,
-            endEvent: BlackBox.Event
-        ) {
-            guard logLevels.contains(endEvent.logLevel) else { return }
-            
-            let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
-            
-            log(formattedMessage,
-                userInfo: endEvent.userInfo,
-                logger: OSLog(endEvent),
-                module: endEvent.module,
-                filename: endEvent.filename,
-                function: endEvent.function,
-                logType: OSLogType(endEvent.logLevel))
+        public func logEnd(_ event: BlackBox.EndEvent) {
+            osLog(event: event)
         }
     }
 }
 
 @available(iOS 12.0, *)
 extension BlackBox.OSLogger {
-    private func log(_ message: String,
-                     userInfo: CustomDebugStringConvertible?,
-                     logger: OSLog,
-                     module: String,
-                     filename: String,
-                     function: StaticString,
-                     logType: OSLogType) {
-        let userInfo = userInfo?.bbLogDescription ?? "nil"
-        let message = message
+    private func osLog(event: BlackBox.GenericEvent) {
+        guard logLevels.contains(event.logLevel) else { return }
+        
+        let userInfo = event.userInfo?.bbLogDescription ?? "nil"
+        let message = event.message
         + "\n\n"
         + "[Sender]:"
         + "\n"
-        + [module, filename, function.description].joined(separator: ".")
+        + [event.module, event.filename, event.function.description].joined(separator: ".")
         + "\n\n"
         + "[User Info]:"
         + "\n"
         + userInfo
+        
+        let logType = OSLogType(event.logLevel)
+        let logger = OSLog(event)
         
         os_log(logType,
                log: logger,
@@ -103,17 +55,10 @@ extension BlackBox.OSLogger {
 
 @available(iOS 12.0, *)
 extension OSLog {
-    convenience init(_ event: BlackBox.Event) {
+    convenience init(_ event: BlackBox.GenericEvent) {
         self.init(
             subsystem: event.module,
             category:  event.category ?? ""
-        )
-    }
-    
-    convenience init(_ error: BlackBox.Error) {
-        self.init(
-            subsystem: error.module,
-            category: error.category ?? ""
         )
     }
 }

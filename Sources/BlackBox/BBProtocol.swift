@@ -35,14 +35,14 @@ public protocol BBProtocol {
         category: String?,
         function: StaticString,
         line: UInt
-    ) -> BlackBox.Event
+    ) -> BlackBox.StartEvent
     
     func logStart(
-        _ event: BlackBox.Event
+        _ event: BlackBox.StartEvent
     )
     
     func logEnd(
-        _ startEvent: BlackBox.Event,
+        _ startEvent: BlackBox.StartEvent,
         userInfo: CustomDebugStringConvertible?,
         fileID: StaticString,
         category: String?,

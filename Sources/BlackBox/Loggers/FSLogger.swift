@@ -12,75 +12,34 @@ extension BlackBox {
             self.logLevels = logLevels
         }
         
-        public func log(
-            _ error: BlackBox.Error
-        ) {
-            guard logLevels.contains(error.logLevel) else { return }
-            
-            let message = String(reflecting: error.error)
-            
-            log(message,
-                userInfo: error.errorUserInfo,
-                filename: error.filename,
-                function: error.function,
-                logLevel: error.logLevel)
+        public func log(_ event: BlackBox.ErrorEvent) {
+            fsLog(event)
         }
         
-        public func log(
-            _ event: BlackBox.Event
-        ) {
-            guard logLevels.contains(event.logLevel) else { return }
-            
-            log(event.message,
-                userInfo: event.userInfo,
-                filename: event.filename,
-                function: event.function,
-                logLevel: event.logLevel)
+        public func log(_ event: BlackBox.GenericEvent) {
+            fsLog(event)
         }
         
-        public func logStart(
-            _ event: BlackBox.Event
-        ) {
-            guard logLevels.contains(event.logLevel) else { return }
-            
-            let formattedMessage = "\(BBEventType.start.description): \(event.message)"
-            
-            log(formattedMessage,
-                userInfo: event.userInfo,
-                filename: event.filename,
-                function: event.function,
-                logLevel: event.logLevel)
+        public func logStart(_ event: BlackBox.StartEvent) {
+            fsLog(event)
         }
         
-        public func logEnd(
-            startEvent: BlackBox.Event,
-            endEvent: BlackBox.Event
-        ) {
-            guard logLevels.contains(startEvent.logLevel) else { return }
-            
-            let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
-            
-            log(formattedMessage,
-                userInfo: endEvent.userInfo,
-                filename: endEvent.filename,
-                function: endEvent.function,
-                logLevel: endEvent.logLevel)
+        public func logEnd(_ event: BlackBox.EndEvent) {
+            fsLog(event)
         }
     }
 }
 
 extension BlackBox.FSLogger {
-    private func log(_ message: String,
-                     userInfo: CustomDebugStringConvertible?,
-                     filename: String,
-                     function: StaticString,
-                     logLevel: BBLogLevel) {
-        let userInfo = userInfo?.bbLogDescription ?? "nil"
+    private func fsLog(_ event: BlackBox.GenericEvent) {
+        guard logLevels.contains(event.logLevel) else { return }
         
-        let title = logLevel.icon + " " + String(describing: Date())
-        let subtitle = filename + ", " + function.description
+        let userInfo = event.userInfo?.bbLogDescription ?? "nil"
         
-        let content = message
+        let title = event.logLevel.icon + " " + String(describing: Date())
+        let subtitle = event.filename + ", " + event.function.description
+        
+        let content = event.message
         
         let footer = "[User Info]:" + "\n" + userInfo
         

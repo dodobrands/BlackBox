@@ -10,125 +10,104 @@ extension BlackBox {
             self.logLevels = logLevels
         }
         
-        public func log(
-            _ error: BlackBox.Error
-        ) {
-            guard logLevels.contains(error.logLevel) else { return }
-            
-            let message = String(reflecting: error.error)
-            
-            let logger = self.logger(
-                eventType: .event,
-                filename: error.filename,
-                category: error.category
-            )
-            
-            log(message,
-                logger: logger,
-                function: error.function,
-                signpostType: .event,
-                signpostId: OSSignpostID(error.id))
+        public func log(_ event: BlackBox.ErrorEvent) {
+            signpostLog(event: event)
         }
         
-        public func log(
-            _ event: BlackBox.Event
-        ) {
-            guard logLevels.contains(event.logLevel) else { return }
-            
-            let logger = self.logger(
-                eventType: .event,
-                filename: event.filename,
-                category: event.category
-            )
-            
-            log(event.message,
-                logger: logger,
-                function: event.function,
-                signpostType: .event,
-                signpostId: OSSignpostID(event.id))
+        public func log(_ event: BlackBox.GenericEvent) {
+            signpostLog(event: event)
         }
         
-        public func logStart(
-            _ event: BlackBox.Event
-        ) {
-            let eventType = BBEventType.start
-            guard logLevels.contains(event.logLevel) else { return }
-            
-            let logger = self.logger(eventType: eventType,
-                                     filename: event.filename,
-                                     category: event.category)
-            
-            let formattedMessage = "\(BBEventType.start.description): \(event.message)"
-            
-            log(formattedMessage,
-                logger: logger,
-                function: event.function,
-                signpostType: OSSignpostType(eventType),
-                signpostId: OSSignpostID(event.id))
+        public func logStart(_ event: BlackBox.StartEvent) {
+            signpostLog(event: event)
         }
         
-        public func logEnd(
-            startEvent: BlackBox.Event,
-            endEvent: BlackBox.Event
-        ) {
-            let eventType = BBEventType.end
-            guard logLevels.contains(endEvent.logLevel) else { return }
-            
-            let logger = self.logger(eventType: eventType,
-                                     filename: endEvent.filename,
-                                     category: endEvent.category)
-            
-            let formattedMessage = "\(BBEventType.end.description): \(endEvent.message)"
-            
-            log(formattedMessage,
-                logger: logger,
-                function: startEvent.function,
-                signpostType: OSSignpostType(eventType),
-                signpostId: OSSignpostID(startEvent.id))
-        }
-        
-        private func logger(eventType: BBEventType,
-                            filename: String,
-                            category: String?) -> OSLog {
-            switch eventType {
-            case .start, .end:
-                return OSLog(subsystem: filename,
-                             category: category ?? filename)
-            case .event:
-                return OSLog(subsystem: filename,
-                             category: .pointsOfInterest)
-            }
+        public func logEnd(_ event: BlackBox.EndEvent) {
+            signpostLog(event: event)
         }
     }
 }
 
 @available(iOS 12.0, *)
 extension BlackBox.OSSignpostLogger {
-    private func log(_ message: String,
-                     logger: OSLog,
-                     function: StaticString,
-                     signpostType: OSSignpostType,
-                     signpostId: OSSignpostID?) {
-        let name: StaticString = function
+    private func signpostLog(
+        event: BlackBox.GenericEvent
+    ) {
+        guard logLevels.contains(event.logLevel) else { return }
+        
+        let signpostType = OSSignpostType(event)
+        
+        let log = OSLog(signpostType: signpostType,
+                        event: event)
+        
+        let name = function(from: event)
+        let signpostId = OSSignpostID(event)
         
         os_signpost(signpostType,
-                    log: logger,
+                    log: log,
                     name: name,
-                    signpostID: signpostId ?? .exclusive,
-                    "%{public}@", message)
+                    signpostID: signpostId,
+                    "%{public}@", event.message)
+    }
+    
+    private func function(from event: BlackBox.GenericEvent) -> StaticString {
+        switch event {
+        case let endEvent as BlackBox.EndEvent:
+            return endEvent.startEvent.function
+        case _ as BlackBox.StartEvent,
+            _ as BlackBox.ErrorEvent: // maybe should return .exclusive for errors and default cases
+            return event.function
+        default:
+            return event.function
+        }
     }
 }
 
 @available(iOS 12.0, *)
 extension OSSignpostType {
-    init(_ eventType: BBEventType) {
-        switch eventType {
-        case .start:
+    init(_ event: BlackBox.GenericEvent) {
+        switch event {
+        case _ as BlackBox.StartEvent:
             self = .begin
-        case .end:
+        case _ as BlackBox.EndEvent:
             self = .end
-        case .event:
+        case _ as BlackBox.ErrorEvent:
             self = .event
+        default:
+            self = .event
+        }
+    }
+}
+
+@available(iOS 12.0, *)
+extension OSSignpostID {
+    init(_ event: BlackBox.GenericEvent) {
+        switch event {
+        case let endEvent as BlackBox.EndEvent:
+            self = OSSignpostID(endEvent.startEvent.id)
+        case _ as BlackBox.StartEvent,
+            _ as BlackBox.ErrorEvent:
+            self = OSSignpostID(event.id)
+        default:
+            self = OSSignpostID(event.id)
+        }
+    }
+}
+
+@available(iOS 12.0, *)
+extension OSLog {
+    convenience init(signpostType: OSSignpostType,
+                     event: BlackBox.GenericEvent) {
+        switch signpostType {
+        case .begin, .end:
+            self.init(subsystem: event.module,
+                      category: event.category ?? event.filename)
+        case .event:
+            self.init(subsystem: event.module,
+                      category: .pointsOfInterest)
+        default:
+            self.init(subsystem: event.module,
+                      category: .pointsOfInterest)
         }
     }
 }
