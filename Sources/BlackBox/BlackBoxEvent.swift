@@ -71,6 +71,7 @@ extension BlackBox {
 
 extension BlackBox {
     public class StartEvent: GenericEvent {
+        internal var rawMessage: String
         public override init(
             id: UInt64 = .random,
             _ message: String,
@@ -81,6 +82,7 @@ extension BlackBox {
             function: StaticString = #function,
             line: UInt = #line
         ) {
+            self.rawMessage = message
             super.init(id: id,
                        "Start: \(message)",
                        userInfo: userInfo,

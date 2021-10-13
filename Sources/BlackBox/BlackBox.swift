@@ -115,7 +115,7 @@ extension BlackBox: BBProtocol {
     ) {
         queue.async {
             let event = EndEvent(
-                message: startEvent.message,
+                message: startEvent.rawMessage,
                 startEvent: startEvent,
                 userInfo: userInfo,
                 logLevel: startEvent.logLevel,
