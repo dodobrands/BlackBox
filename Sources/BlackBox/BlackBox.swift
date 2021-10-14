@@ -119,7 +119,7 @@ extension BlackBox: BBProtocol {
     
     public func logEnd(
         _ startEvent: BlackBox.StartEvent,
-        alternateMessage: String?,
+        message: String?,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         category: String?,
@@ -130,7 +130,7 @@ extension BlackBox: BBProtocol {
     ) {
         queue.async {
             let event = EndEvent(
-                message: alternateMessage ?? startEvent.rawMessage,
+                message: message ?? startEvent.rawMessage,
                 startEvent: startEvent,
                 userInfo: userInfo,
                 serviceInfo: serviceInfo,
@@ -227,7 +227,7 @@ extension BlackBox {
     
     public static func logEnd(
         _ event: StartEvent,
-        alternateMessage: String? = nil,
+        message: String? = nil,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
         category: String? = nil,
@@ -238,7 +238,7 @@ extension BlackBox {
     ) {
         BlackBox.instance.logEnd(
             event,
-            alternateMessage: alternateMessage,
+            message: message,
             userInfo: userInfo,
             serviceInfo: serviceInfo,
             category: category,

@@ -49,7 +49,7 @@ public protocol BBProtocol {
     
     func logEnd(
         _ startEvent: BlackBox.StartEvent,
-        alternateMessage: String?,
+        message: String?,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         category: String?,
