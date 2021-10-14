@@ -10,6 +10,7 @@ import Foundation
 public protocol BBProtocol {
     func log(
         _ error: Error,
+        serviceInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
         function: StaticString,
@@ -19,6 +20,7 @@ public protocol BBProtocol {
     func log(
         _ message: String,
         userInfo: BBUserInfo?,
+        serviceInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -30,6 +32,7 @@ public protocol BBProtocol {
     func logStart(
         _ message: String,
         userInfo: BBUserInfo?,
+        serviceInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -45,6 +48,7 @@ public protocol BBProtocol {
         _ startEvent: BlackBox.StartEvent,
         alternateMessage: String?,
         userInfo: BBUserInfo?,
+        serviceInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
         function: StaticString,

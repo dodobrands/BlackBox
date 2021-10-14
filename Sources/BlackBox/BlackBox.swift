@@ -25,6 +25,7 @@ public class BlackBox {
 extension BlackBox: BBProtocol {
     public func log(
         _ error: Error,
+        serviceInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
         function: StaticString,
@@ -33,6 +34,7 @@ extension BlackBox: BBProtocol {
         queue.async {
             let error = BlackBox.ErrorEvent(
                 error: error,
+                serviceInfo: serviceInfo,
                 category: category,
                 fileID: fileID,
                 function: function,
@@ -48,6 +50,7 @@ extension BlackBox: BBProtocol {
     public func log(
         _ message: String,
         userInfo: BBUserInfo?,
+        serviceInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -58,6 +61,7 @@ extension BlackBox: BBProtocol {
             let event = BlackBox.GenericEvent(
                 message,
                 userInfo: userInfo,
+                serviceInfo: serviceInfo,
                 logLevel: logLevel,
                 category: category,
                 fileID: fileID,
@@ -74,6 +78,7 @@ extension BlackBox: BBProtocol {
     public func logStart(
         _ message: String,
         userInfo: BBUserInfo?,
+        serviceInfo: BBUserInfo?,
         logLevel: BBLogLevel,
         fileID: StaticString,
         category: String?,
@@ -83,6 +88,7 @@ extension BlackBox: BBProtocol {
         let event = StartEvent(
             message,
             userInfo: userInfo,
+            serviceInfo: serviceInfo,
             logLevel: logLevel,
             category: category,
             fileID: fileID,
@@ -109,6 +115,7 @@ extension BlackBox: BBProtocol {
         _ startEvent: BlackBox.StartEvent,
         alternateMessage: String?,
         userInfo: BBUserInfo?,
+        serviceInfo: BBUserInfo?,
         fileID: StaticString,
         category: String?,
         function: StaticString,
@@ -119,6 +126,7 @@ extension BlackBox: BBProtocol {
                 message: alternateMessage ?? startEvent.rawMessage,
                 startEvent: startEvent,
                 userInfo: userInfo,
+                serviceInfo: serviceInfo,
                 logLevel: startEvent.logLevel,
                 category: category,
                 fileID: fileID,
@@ -137,6 +145,7 @@ extension BlackBox: BBProtocol {
 extension BlackBox {
     public static func log(
         _ error: Swift.Error,
+        serviceInfo: BBUserInfo? = nil,
         fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,
@@ -144,6 +153,7 @@ extension BlackBox {
     ) {
         BlackBox.instance.log(
             error,
+            serviceInfo: serviceInfo,
             fileID: fileID,
             category: category,
             function: function,
@@ -154,6 +164,7 @@ extension BlackBox {
     public static func log(
         _ message: String,
         userInfo: BBUserInfo? = nil,
+        serviceInfo: BBUserInfo? = nil,
         logLevel: BBLogLevel = .debug,
         fileID: StaticString = #fileID,
         category: String? = nil,
@@ -163,6 +174,7 @@ extension BlackBox {
         BlackBox.instance.log(
             message,
             userInfo: userInfo,
+            serviceInfo: serviceInfo,
             logLevel: logLevel,
             fileID: fileID,
             category: category,
@@ -174,6 +186,7 @@ extension BlackBox {
     public static func logStart(
         _ message: String,
         userInfo: BBUserInfo? = nil,
+        serviceInfo: BBUserInfo? = nil,
         logLevel: BBLogLevel = .debug,
         fileID: StaticString = #fileID,
         category: String? = nil,
@@ -183,6 +196,7 @@ extension BlackBox {
         BlackBox.instance.logStart(
             message,
             userInfo: userInfo,
+            serviceInfo: serviceInfo,
             logLevel: logLevel,
             fileID: fileID,
             category: category,
@@ -201,6 +215,7 @@ extension BlackBox {
         _ event: StartEvent,
         alternateMessage: String? = nil,
         userInfo: BBUserInfo? = nil,
+        serviceInfo: BBUserInfo? = nil,
         fileID: StaticString = #fileID,
         category: String? = nil,
         function: StaticString = #function,
@@ -210,6 +225,7 @@ extension BlackBox {
             event,
             alternateMessage: alternateMessage,
             userInfo: userInfo,
+            serviceInfo: serviceInfo,
             fileID: fileID,
             category: category,
             function: function,

@@ -13,7 +13,10 @@ extension BlackBox {
     public class GenericEvent {
         public let id: UInt64
         public let message: String
+        /// Default info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
+        /// Place any additional data here. For example, per-event instructions for your custom loggers.
+        public let serviceInfo: BBUserInfo?
         public let logLevel: BBLogLevel
         public let category: String?
         public let source: Source
@@ -22,6 +25,7 @@ extension BlackBox {
             id: UInt64 = .random,
             _ message: String,
             userInfo: BBUserInfo? = nil,
+            serviceInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -31,6 +35,7 @@ extension BlackBox {
             self.id = id
             self.message = message
             self.userInfo = userInfo
+            self.serviceInfo = serviceInfo
             self.logLevel = logLevel
             self.category = category
             self.source = .init(
@@ -50,6 +55,7 @@ extension BlackBox {
             id: UInt64 = .random,
             error: Swift.Error,
             userInfo: BBUserInfo? = nil,
+            serviceInfo: BBUserInfo? = nil,
             category: String? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
@@ -59,6 +65,7 @@ extension BlackBox {
             super.init(id: id,
                        String(reflecting: error),
                        userInfo: userInfo,
+                       serviceInfo: serviceInfo,
                        logLevel: error.logLevel,
                        category: category,
                        fileID: fileID,
@@ -76,6 +83,7 @@ extension BlackBox {
             id: UInt64 = .random,
             _ message: String,
             userInfo: BBUserInfo? = nil,
+            serviceInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -86,6 +94,7 @@ extension BlackBox {
             super.init(id: id,
                        "Start: \(message)",
                        userInfo: userInfo,
+                       serviceInfo: serviceInfo,
                        logLevel: logLevel,
                        category: category,
                        fileID: fileID,
@@ -105,6 +114,7 @@ extension BlackBox {
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
+            serviceInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -117,6 +127,7 @@ extension BlackBox {
             super.init(id: id,
                        "End: \(message)",
                        userInfo: userInfo,
+                       serviceInfo: serviceInfo,
                        logLevel: logLevel,
                        category: category,
                        fileID: fileID,
@@ -129,6 +140,7 @@ extension BlackBox {
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
+            serviceInfo: BBUserInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             source: Source
@@ -139,6 +151,7 @@ extension BlackBox {
             super.init(id: id,
                        "End: \(message)",
                        userInfo: userInfo,
+                       serviceInfo: serviceInfo,
                        logLevel: logLevel,
                        category: category,
                        fileID: source.fileID,
