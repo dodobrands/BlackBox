@@ -20,6 +20,7 @@ extension BlackBox {
         public let serviceInfo: BBServiceInfo?
         public let logLevel: BBLogLevel
         public let category: String?
+        public let parentEvent: GenericEvent?
         public let source: Source
         
         public init(
@@ -29,6 +30,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
+            parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
             line: UInt = #line
@@ -39,6 +41,7 @@ extension BlackBox {
             self.serviceInfo = serviceInfo
             self.logLevel = logLevel
             self.category = category
+            self.parentEvent = parentEvent
             self.source = .init(
                 fileID: fileID,
                 function: function,
@@ -58,6 +61,7 @@ extension BlackBox {
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
             category: String? = nil,
+            parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
             line: UInt = #line
@@ -69,6 +73,7 @@ extension BlackBox {
                        serviceInfo: serviceInfo,
                        logLevel: error.logLevel,
                        category: category,
+                       parentEvent: parentEvent,
                        fileID: fileID,
                        function: function,
                        line: line)
@@ -87,6 +92,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
+            parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
             line: UInt = #line
@@ -98,6 +104,7 @@ extension BlackBox {
                        serviceInfo: serviceInfo,
                        logLevel: logLevel,
                        category: category,
+                       parentEvent: parentEvent,
                        fileID: fileID,
                        function: function,
                        line: line)
@@ -118,6 +125,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
+            parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
             line: UInt = #line
@@ -131,6 +139,7 @@ extension BlackBox {
                        serviceInfo: serviceInfo,
                        logLevel: logLevel,
                        category: category,
+                       parentEvent: parentEvent,
                        fileID: fileID,
                        function: function,
                        line: line)
@@ -144,6 +153,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
+            parentEvent: GenericEvent? = nil,
             source: Source
         ) {
             self.rawMessage = message
@@ -155,6 +165,7 @@ extension BlackBox {
                        serviceInfo: serviceInfo,
                        logLevel: logLevel,
                        category: category,
+                       parentEvent: parentEvent,
                        fileID: source.fileID,
                        function: source.function,
                        line: source.line)

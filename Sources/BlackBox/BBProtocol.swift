@@ -11,8 +11,9 @@ public protocol BBProtocol {
     func log(
         _ error: Error,
         serviceInfo: BBServiceInfo?,
-        fileID: StaticString,
         category: String?,
+        parentEvent: BlackBox.GenericEvent?,
+        fileID: StaticString,
         function: StaticString,
         line: UInt
     )
@@ -22,8 +23,9 @@ public protocol BBProtocol {
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         logLevel: BBLogLevel,
-        fileID: StaticString,
         category: String?,
+        parentEvent: BlackBox.GenericEvent?,
+        fileID: StaticString,
         function: StaticString,
         line: UInt
     )
@@ -34,8 +36,9 @@ public protocol BBProtocol {
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         logLevel: BBLogLevel,
-        fileID: StaticString,
         category: String?,
+        parentEvent: BlackBox.GenericEvent?,
+        fileID: StaticString,
         function: StaticString,
         line: UInt
     ) -> BlackBox.StartEvent
@@ -49,8 +52,9 @@ public protocol BBProtocol {
         alternateMessage: String?,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
-        fileID: StaticString,
         category: String?,
+        parentEvent: BlackBox.GenericEvent?,
+        fileID: StaticString,
         function: StaticString,
         line: UInt
     )
