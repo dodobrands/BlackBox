@@ -136,7 +136,7 @@ extension BlackBox: BBProtocol {
                 serviceInfo: serviceInfo,
                 logLevel: startEvent.logLevel,
                 category: category,
-                parentEvent: parentEvent,
+                parentEvent: parentEvent ?? startEvent.parentEvent,
                 fileID: fileID,
                 function: function,
                 line: line
