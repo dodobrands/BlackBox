@@ -8,6 +8,7 @@
 import Foundation
 
 public typealias BBUserInfo = [String: Any]
+public typealias BBServiceInfo = Any
 
 extension BlackBox {
     public class GenericEvent {
@@ -16,7 +17,7 @@ extension BlackBox {
         /// Default info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
         /// Place any additional data here. For example, per-event instructions for your custom loggers.
-        public let serviceInfo: BBUserInfo?
+        public let serviceInfo: BBServiceInfo?
         public let logLevel: BBLogLevel
         public let category: String?
         public let source: Source
@@ -25,7 +26,7 @@ extension BlackBox {
             id: UInt64 = .random,
             _ message: String,
             userInfo: BBUserInfo? = nil,
-            serviceInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -55,7 +56,7 @@ extension BlackBox {
             id: UInt64 = .random,
             error: Swift.Error,
             userInfo: BBUserInfo? = nil,
-            serviceInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
             category: String? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
@@ -83,7 +84,7 @@ extension BlackBox {
             id: UInt64 = .random,
             _ message: String,
             userInfo: BBUserInfo? = nil,
-            serviceInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -114,7 +115,7 @@ extension BlackBox {
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
-            serviceInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             fileID: StaticString = #fileID,
@@ -140,7 +141,7 @@ extension BlackBox {
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
-            serviceInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             source: Source
