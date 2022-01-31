@@ -14,9 +14,9 @@
 		1E4AC26F27A7F221009F0981 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26327A7F221009F0981 /* OSLogger.swift */; };
 		1E4AC27027A7F221009F0981 /* BBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26427A7F221009F0981 /* BBProtocol.swift */; };
 		1E4AC27127A7F221009F0981 /* BlackBoxEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */; };
-		1E4AC27227A7F221009F0981 /* BlackBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E4AC26627A7F221009F0981 /* BlackBox.h */; };
 		1E4AC27327A7F221009F0981 /* BBHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26827A7F221009F0981 /* BBHelpers.swift */; };
 		1E4AC27427A7F221009F0981 /* BlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26927A7F221009F0981 /* BlackBox.swift */; };
+		1E4AC29127A7FE52009F0981 /* BlackBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E4AC28F27A7FE52009F0981 /* BlackBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,10 +27,10 @@
 		1E4AC26327A7F221009F0981 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
 		1E4AC26427A7F221009F0981 /* BBProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBProtocol.swift; sourceTree = "<group>"; };
 		1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBoxEvents.swift; sourceTree = "<group>"; };
-		1E4AC26627A7F221009F0981 /* BlackBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBox.h; sourceTree = "<group>"; };
 		1E4AC26827A7F221009F0981 /* BBHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBHelpers.swift; sourceTree = "<group>"; };
 		1E4AC26927A7F221009F0981 /* BlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBox.swift; sourceTree = "<group>"; };
-		1E4AC28D27A7F362009F0981 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E4AC28F27A7FE52009F0981 /* BlackBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBox.h; sourceTree = SOURCE_ROOT; };
+		1E4AC29027A7FE52009F0981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		9B8F3BBF27428EA8000B4702 /* NSpry.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NSpry.xcframework; path = ../Carthage/Build/NSpry.xcframework; sourceTree = "<group>"; };
 		9B8F3C18274299A8000B4702 /* BlackBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlackBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -59,11 +59,11 @@
 			isa = PBXGroup;
 			children = (
 				1E4AC25D27A7F221009F0981 /* BBLogLevel.swift */,
+				1E4AC28F27A7FE52009F0981 /* BlackBox.h */,
+				1E4AC29027A7FE52009F0981 /* Info.plist */,
 				1E4AC25E27A7F221009F0981 /* Loggers */,
 				1E4AC26427A7F221009F0981 /* BBProtocol.swift */,
 				1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */,
-				1E4AC26627A7F221009F0981 /* BlackBox.h */,
-				1E4AC28D27A7F362009F0981 /* Info.plist */,
 				1E4AC26727A7F221009F0981 /* Helpers */,
 				1E4AC26927A7F221009F0981 /* BlackBox.swift */,
 			);
@@ -129,7 +129,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E4AC27227A7F221009F0981 /* BlackBox.h in Headers */,
+				1E4AC29127A7FE52009F0981 /* BlackBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,18 +343,18 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = U8743T8Z48;
+				DEVELOPMENT_TEAM = AVGCX5Z5VU;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = NQueue/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.maxkazakov.NQueue;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dodopizza.blackbox;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -367,18 +367,18 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = U8743T8Z48;
+				DEVELOPMENT_TEAM = AVGCX5Z5VU;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = NQueue/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.maxkazakov.NQueue;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dodopizza.blackbox;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
