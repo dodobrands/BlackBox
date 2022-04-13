@@ -21,6 +21,6 @@ extension Dictionary where Key == String, Value == Any {
 
 public extension UInt64 {
     static var random: Self {
-        random(in: Self.min...Self.max)
+        random(in: min...max)
     }
 }
