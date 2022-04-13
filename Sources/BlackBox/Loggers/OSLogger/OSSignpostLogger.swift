@@ -82,15 +82,23 @@ extension OSSignpostType {
 @available(iOS 12.0, *)
 extension OSSignpostID {
     init(_ event: BlackBox.GenericEvent) {
+        let id: UUID
         switch event {
         case let endEvent as BlackBox.EndEvent:
-            self = OSSignpostID(endEvent.startEvent.id)
+            id = endEvent.startEvent.id
         case _ as BlackBox.StartEvent,
             _ as BlackBox.ErrorEvent:
-            self = OSSignpostID(event.id)
+            id = event.id
         default:
-            self = OSSignpostID(event.id)
+            id = event.id
         }
+        
+        self = OSSignpostID(id)
+    }
+    
+    init(_ uuid: UUID) {
+        let value = UInt64(abs(uuid.hashValue)) // uniqueness not guaranteed, but chances are ridiculous
+        self = OSSignpostID(value)
     }
 }
 

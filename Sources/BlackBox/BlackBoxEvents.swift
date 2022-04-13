@@ -12,7 +12,7 @@ public typealias BBServiceInfo = Any
 
 extension BlackBox {
     public class GenericEvent {
-        public let id: UInt64
+        public let id: UUID
         public let message: String
         /// Default info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
@@ -24,7 +24,7 @@ extension BlackBox {
         public let source: Source
         
         public init(
-            id: UInt64 = .random,
+            id: UUID = .init(),
             _ message: String,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -56,7 +56,7 @@ extension BlackBox {
         public let error: Swift.Error
         
         public init(
-            id: UInt64 = .random,
+            id: UUID = .init(),
             error: Swift.Error,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -86,7 +86,7 @@ extension BlackBox {
         public var rawMessage: String
         
         public override init(
-            id: UInt64 = .random,
+            id: UUID = .init(),
             _ message: String,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -118,7 +118,7 @@ extension BlackBox {
         public let startEvent: StartEvent
         
         public init(
-            id: UInt64 = .random,
+            id: UUID = .init(),
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
@@ -146,7 +146,7 @@ extension BlackBox {
         }
         
         public init(
-            id: UInt64 = .random,
+            id: UUID = .init(),
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
