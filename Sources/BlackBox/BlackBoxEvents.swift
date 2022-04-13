@@ -33,9 +33,7 @@ extension BlackBox {
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            fileID: StaticString = #fileID,
-            function: StaticString = #function,
-            line: UInt = #line
+            source: Source
         ) {
             self.id = id
             self.timestamp = timestamp
@@ -45,11 +43,7 @@ extension BlackBox {
             self.logLevel = logLevel
             self.category = category
             self.parentEvent = parentEvent
-            self.source = .init(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
+            self.source = source
         }
     }
 }
@@ -66,9 +60,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            fileID: StaticString = #fileID,
-            function: StaticString = #function,
-            line: UInt = #line
+            source: Source
         ) {
             self.error = error
             super.init(id: id,
@@ -79,9 +71,7 @@ extension BlackBox {
                        logLevel: error.logLevel,
                        category: category,
                        parentEvent: parentEvent,
-                       fileID: fileID,
-                       function: function,
-                       line: line)
+                       source: source)
         }
     }
 }
@@ -99,9 +89,7 @@ extension BlackBox {
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            fileID: StaticString = #fileID,
-            function: StaticString = #function,
-            line: UInt = #line
+            source: Source
         ) {
             self.rawMessage = message
             super.init(id: id,
@@ -112,9 +100,7 @@ extension BlackBox {
                        logLevel: logLevel,
                        category: category,
                        parentEvent: parentEvent,
-                       fileID: fileID,
-                       function: function,
-                       line: line)
+                       source: source)
         }
     }
 }
@@ -134,9 +120,7 @@ extension BlackBox {
             logLevel: BBLogLevel = .debug,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            fileID: StaticString = #fileID,
-            function: StaticString = #function,
-            line: UInt = #line
+            source: Source
         ) {
             self.rawMessage = message
             self.startEvent = startEvent
@@ -149,35 +133,7 @@ extension BlackBox {
                        logLevel: logLevel,
                        category: category,
                        parentEvent: parentEvent,
-                       fileID: fileID,
-                       function: function,
-                       line: line)
-        }
-        
-        public convenience init(
-            id: UUID = .init(),
-            timestamp: Date = .init(),
-            message: String,
-            startEvent: StartEvent,
-            userInfo: BBUserInfo? = nil,
-            serviceInfo: BBServiceInfo? = nil,
-            logLevel: BBLogLevel = .debug,
-            category: String? = nil,
-            parentEvent: GenericEvent? = nil,
-            source: Source
-        ) {
-            self.init(id: id,
-                      timestamp: timestamp,
-                      message: "End: \(message)",
-                      startEvent: startEvent,
-                      userInfo: userInfo,
-                      serviceInfo: serviceInfo,
-                      logLevel: logLevel,
-                      category: category,
-                      parentEvent: parentEvent,
-                      fileID: source.fileID,
-                      function: source.function,
-                      line: source.line)
+                       source: source)
         }
     }
 }

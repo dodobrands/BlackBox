@@ -33,14 +33,17 @@ extension BlackBox: BBProtocol {
         line: UInt
     ) {
         queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
             let error = BlackBox.ErrorEvent(
                 error: error,
                 serviceInfo: serviceInfo,
                 category: category,
                 parentEvent: parentEvent,
-                fileID: fileID,
-                function: function,
-                line: line
+                source: source
             )
             
             self.loggers.forEach { logger in
@@ -61,6 +64,11 @@ extension BlackBox: BBProtocol {
         line: UInt
     ) {
         queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
             let event = BlackBox.GenericEvent(
                 message,
                 userInfo: userInfo,
@@ -68,9 +76,7 @@ extension BlackBox: BBProtocol {
                 logLevel: logLevel,
                 category: category,
                 parentEvent: parentEvent,
-                fileID: fileID,
-                function: function,
-                line: line
+                source: source
             )
             
             self.loggers.forEach { logger in
@@ -90,6 +96,11 @@ extension BlackBox: BBProtocol {
         function: StaticString,
         line: UInt
     ) -> BlackBox.StartEvent {
+        let source = GenericEvent.Source(
+            fileID: fileID,
+            function: function,
+            line: line
+        )
         let event = StartEvent(
             message,
             userInfo: userInfo,
@@ -97,9 +108,7 @@ extension BlackBox: BBProtocol {
             logLevel: logLevel,
             category: category,
             parentEvent: parentEvent,
-            fileID: fileID,
-            function: function,
-            line: line
+            source: source
         )
         
         logStart(event)
@@ -129,6 +138,11 @@ extension BlackBox: BBProtocol {
         line: UInt
     ) {
         queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
             let event = EndEvent(
                 message: message ?? startEvent.rawMessage,
                 startEvent: startEvent,
@@ -137,9 +151,7 @@ extension BlackBox: BBProtocol {
                 logLevel: startEvent.logLevel,
                 category: category,
                 parentEvent: parentEvent ?? startEvent.parentEvent,
-                fileID: fileID,
-                function: function,
-                line: line
+                source: source
             )
             
             self.loggers.forEach { logger in
