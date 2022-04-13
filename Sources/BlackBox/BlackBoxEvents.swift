@@ -45,6 +45,36 @@ extension BlackBox {
             self.parentEvent = parentEvent
             self.source = source
         }
+        
+        public convenience init(
+            id: UUID = .init(),
+            timestamp: Date = .init(),
+            _ message: String,
+            userInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
+            logLevel: BBLogLevel = .debug,
+            category: String? = nil,
+            parentEvent: GenericEvent? = nil,
+            fileID: StaticString = #fileID,
+            function: StaticString = #function,
+            line: UInt = #line
+        ) {
+            self.init(
+                id: id,
+                timestamp: timestamp,
+                message,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: .init(
+                    fileID: fileID,
+                    function: function,
+                    line: line
+                )
+            )
+        }
     }
 }
 
@@ -63,15 +93,45 @@ extension BlackBox {
             source: Source
         ) {
             self.error = error
-            super.init(id: id,
-                       timestamp: timestamp,
-                       String(reflecting: error),
-                       userInfo: userInfo,
-                       serviceInfo: serviceInfo,
-                       logLevel: error.logLevel,
-                       category: category,
-                       parentEvent: parentEvent,
-                       source: source)
+            super.init(
+                id: id,
+                timestamp: timestamp,
+                String(reflecting: error),
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: error.logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: source
+            )
+        }
+        
+        public convenience init(
+            id: UUID = .init(),
+            timestamp: Date = .init(),
+            error: Swift.Error,
+            userInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
+            category: String? = nil,
+            parentEvent: GenericEvent? = nil,
+            fileID: StaticString = #fileID,
+            function: StaticString = #function,
+            line: UInt = #line
+        ) {
+            self.init(
+                id: id,
+                timestamp: timestamp,
+                error: error,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                category: category,
+                parentEvent: parentEvent,
+                source: .init(
+                    fileID: fileID,
+                    function: function,
+                    line: line
+                )
+            )
         }
     }
 }
@@ -92,15 +152,47 @@ extension BlackBox {
             source: Source
         ) {
             self.rawMessage = message
-            super.init(id: id,
-                       timestamp: timestamp,
-                       "Start: \(message)",
-                       userInfo: userInfo,
-                       serviceInfo: serviceInfo,
-                       logLevel: logLevel,
-                       category: category,
-                       parentEvent: parentEvent,
-                       source: source)
+            super.init(
+                id: id,
+                timestamp: timestamp,
+                "Start: \(message)",
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: source
+            )
+        }
+        
+        public convenience init(
+            id: UUID = .init(),
+            timestamp: Date = .init(),
+            _ message: String,
+            userInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
+            logLevel: BBLogLevel = .debug,
+            category: String? = nil,
+            parentEvent: GenericEvent? = nil,
+            fileID: StaticString = #fileID,
+            function: StaticString = #function,
+            line: UInt = #line
+        ) {
+            self.init(
+                id: id,
+                timestamp: timestamp,
+                message,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: .init(
+                    fileID: fileID,
+                    function: function,
+                    line: line
+                )
+            )
         }
     }
 }
@@ -125,15 +217,49 @@ extension BlackBox {
             self.rawMessage = message
             self.startEvent = startEvent
             
-            super.init(id: id,
-                       timestamp: timestamp,
-                       "End: \(message)",
-                       userInfo: userInfo,
-                       serviceInfo: serviceInfo,
-                       logLevel: logLevel,
-                       category: category,
-                       parentEvent: parentEvent,
-                       source: source)
+            super.init(
+                id: id,
+                timestamp: timestamp,
+                "End: \(message)",
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: source
+            )
+        }
+        
+        public convenience init(
+            id: UUID = .init(),
+            timestamp: Date = .init(),
+            message: String,
+            startEvent: StartEvent,
+            userInfo: BBUserInfo? = nil,
+            serviceInfo: BBServiceInfo? = nil,
+            logLevel: BBLogLevel = .debug,
+            category: String? = nil,
+            parentEvent: GenericEvent? = nil,
+            fileID: StaticString = #fileID,
+            function: StaticString = #function,
+            line: UInt = #line
+        ) {
+            self.init(
+                id: id,
+                timestamp: timestamp,
+                message: message,
+                startEvent: startEvent,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: .init(
+                    fileID: fileID,
+                    function: function,
+                    line: line
+                )
+            )
         }
     }
 }
@@ -155,6 +281,12 @@ fileprivate extension String {
 
 public extension BlackBox.GenericEvent {
     struct Source {
+        public let fileID: StaticString
+        public let module: String
+        public let filename: String
+        public let function: StaticString
+        public let line: UInt
+        
         public init(
             fileID: StaticString = #fileID,
             function: StaticString = #function,
@@ -166,11 +298,5 @@ public extension BlackBox.GenericEvent {
             self.function = function
             self.line = line
         }
-        
-        public let fileID: StaticString
-        public let module: String
-        public let filename: String
-        public let function: StaticString
-        public let line: UInt
     }
 }
