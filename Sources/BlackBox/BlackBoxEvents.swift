@@ -13,6 +13,7 @@ public typealias BBServiceInfo = Any
 extension BlackBox {
     public class GenericEvent {
         public let id: UUID
+        public let timestamp: Date
         public let message: String
         /// Default info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
@@ -25,6 +26,7 @@ extension BlackBox {
         
         public init(
             id: UUID = .init(),
+            timestamp: Date = .init(),
             _ message: String,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -36,6 +38,7 @@ extension BlackBox {
             line: UInt = #line
         ) {
             self.id = id
+            self.timestamp = timestamp
             self.message = message
             self.userInfo = userInfo
             self.serviceInfo = serviceInfo
@@ -57,6 +60,7 @@ extension BlackBox {
         
         public init(
             id: UUID = .init(),
+            timestamp: Date = .init(),
             error: Swift.Error,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -68,6 +72,7 @@ extension BlackBox {
         ) {
             self.error = error
             super.init(id: id,
+                       timestamp: timestamp,
                        String(reflecting: error),
                        userInfo: userInfo,
                        serviceInfo: serviceInfo,
@@ -87,6 +92,7 @@ extension BlackBox {
         
         public override init(
             id: UUID = .init(),
+            timestamp: Date = .init(),
             _ message: String,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -99,6 +105,7 @@ extension BlackBox {
         ) {
             self.rawMessage = message
             super.init(id: id,
+                       timestamp: timestamp,
                        "Start: \(message)",
                        userInfo: userInfo,
                        serviceInfo: serviceInfo,
@@ -119,6 +126,7 @@ extension BlackBox {
         
         public init(
             id: UUID = .init(),
+            timestamp: Date = .init(),
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
@@ -134,6 +142,7 @@ extension BlackBox {
             self.startEvent = startEvent
             
             super.init(id: id,
+                       timestamp: timestamp,
                        "End: \(message)",
                        userInfo: userInfo,
                        serviceInfo: serviceInfo,
@@ -145,8 +154,9 @@ extension BlackBox {
                        line: line)
         }
         
-        public init(
+        public convenience init(
             id: UUID = .init(),
+            timestamp: Date = .init(),
             message: String,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
@@ -156,19 +166,18 @@ extension BlackBox {
             parentEvent: GenericEvent? = nil,
             source: Source
         ) {
-            self.rawMessage = message
-            self.startEvent = startEvent
-            
-            super.init(id: id,
-                       "End: \(message)",
-                       userInfo: userInfo,
-                       serviceInfo: serviceInfo,
-                       logLevel: logLevel,
-                       category: category,
-                       parentEvent: parentEvent,
-                       fileID: source.fileID,
-                       function: source.function,
-                       line: source.line)
+            self.init(id: id,
+                      timestamp: timestamp,
+                      message: "End: \(message)",
+                      startEvent: startEvent,
+                      userInfo: userInfo,
+                      serviceInfo: serviceInfo,
+                      logLevel: logLevel,
+                      category: category,
+                      parentEvent: parentEvent,
+                      fileID: source.fileID,
+                      function: source.function,
+                      line: source.line)
         }
     }
 }
