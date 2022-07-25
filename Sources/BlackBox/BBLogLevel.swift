@@ -1,6 +1,6 @@
 import Foundation
 
-public enum BBLogLevel: CaseIterable {
+public enum BBLogLevel: String, CaseIterable {
     case debug, `default`, info, warning, error
 }
 
