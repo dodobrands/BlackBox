@@ -9,11 +9,18 @@
 import Foundation
 
 public class BlackBox {
+    /// Instance that holds loggers
+    ///
+    /// Create instance with required loggers and replace this one
     public static var instance = BlackBox(loggers: [])
     
     private let loggers: [BBLoggerProtocol]
     private let queue: DispatchQueue
     
+    /// Creates `BlackBox` instance
+    /// - Parameters:
+    ///   - loggers: Instances to receive logs from `BlackBox`
+    ///   - queue: Queue to receive logs on from `BlackBox`
     public init(loggers: [BBLoggerProtocol],
                 queue: DispatchQueue = .init(label: String(describing: BlackBox.self))) {
         self.loggers = loggers
@@ -23,35 +30,6 @@ public class BlackBox {
 
 // MARK: - Instance
 extension BlackBox: BBProtocol {
-    public func log(
-        _ error: Error,
-        serviceInfo: BBServiceInfo?,
-        category: String?,
-        parentEvent: GenericEvent?,
-        fileID: StaticString,
-        function: StaticString,
-        line: UInt
-    ) {
-        queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let error = BlackBox.ErrorEvent(
-                error: error,
-                serviceInfo: serviceInfo,
-                category: category,
-                parentEvent: parentEvent,
-                source: source
-            )
-            
-            self.loggers.forEach { logger in
-                logger.log(error)
-            }
-        }
-    }
-    
     public func log(
         _ message: String,
         userInfo: BBUserInfo?,
@@ -74,6 +52,35 @@ extension BlackBox: BBProtocol {
                 userInfo: userInfo,
                 serviceInfo: serviceInfo,
                 logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: source
+            )
+            
+            self.loggers.forEach { logger in
+                logger.log(event)
+            }
+        }
+    }
+    
+    public func log(
+        _ error: Error,
+        serviceInfo: BBServiceInfo?,
+        category: String?,
+        parentEvent: GenericEvent?,
+        fileID: StaticString,
+        function: StaticString,
+        line: UInt
+    ) {
+        queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+            let event = BlackBox.ErrorEvent(
+                error: error,
+                serviceInfo: serviceInfo,
                 category: category,
                 parentEvent: parentEvent,
                 source: source
@@ -164,26 +171,6 @@ extension BlackBox: BBProtocol {
 // MARK: - Static
 extension BlackBox {
     public static func log(
-        _ error: Swift.Error,
-        serviceInfo: BBServiceInfo? = nil,
-        category: String? = nil,
-        parentEvent: GenericEvent? = nil,
-        fileID: StaticString = #fileID,
-        function: StaticString = #function,
-        line: UInt = #line
-    ) {
-        BlackBox.instance.log(
-            error,
-            serviceInfo: serviceInfo,
-            category: category,
-            parentEvent: parentEvent,
-            fileID: fileID,
-            function: function,
-            line: line
-        )
-    }
-    
-    public static func log(
         _ message: String,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
@@ -199,6 +186,26 @@ extension BlackBox {
             userInfo: userInfo,
             serviceInfo: serviceInfo,
             logLevel: logLevel,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+    }
+    
+    public static func log(
+        _ error: Swift.Error,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) {
+        BlackBox.instance.log(
+            error,
+            serviceInfo: serviceInfo,
             category: category,
             parentEvent: parentEvent,
             fileID: fileID,
