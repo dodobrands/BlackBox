@@ -28,146 +28,6 @@ public class BlackBox {
     }
 }
 
-// MARK: - Instance
-extension BlackBox {
-    func log(
-        _ message: String,
-        userInfo: BBUserInfo?,
-        serviceInfo: BBServiceInfo?,
-        logLevel: BBLogLevel,
-        category: String?,
-        parentEvent: GenericEvent?,
-        fileID: StaticString,
-        function: StaticString,
-        line: UInt
-    ) {
-        queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let event = BlackBox.GenericEvent(
-                message,
-                userInfo: userInfo,
-                serviceInfo: serviceInfo,
-                logLevel: logLevel,
-                category: category,
-                parentEvent: parentEvent,
-                source: source
-            )
-            
-            self.loggers.forEach { logger in
-                logger.log(event)
-            }
-        }
-    }
-    
-    func log(
-        _ error: Error,
-        serviceInfo: BBServiceInfo?,
-        category: String?,
-        parentEvent: GenericEvent?,
-        fileID: StaticString,
-        function: StaticString,
-        line: UInt
-    ) {
-        queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let event = BlackBox.ErrorEvent(
-                error: error,
-                serviceInfo: serviceInfo,
-                category: category,
-                parentEvent: parentEvent,
-                source: source
-            )
-            
-            self.loggers.forEach { logger in
-                logger.log(event)
-            }
-        }
-    }
-    
-    func logStart(
-        _ message: String,
-        userInfo: BBUserInfo?,
-        serviceInfo: BBServiceInfo?,
-        logLevel: BBLogLevel,
-        category: String?,
-        parentEvent: GenericEvent?,
-        fileID: StaticString,
-        function: StaticString,
-        line: UInt
-    ) -> BlackBox.StartEvent {
-        let source = GenericEvent.Source(
-            fileID: fileID,
-            function: function,
-            line: line
-        )
-        let event = StartEvent(
-            message,
-            userInfo: userInfo,
-            serviceInfo: serviceInfo,
-            logLevel: logLevel,
-            category: category,
-            parentEvent: parentEvent,
-            source: source
-        )
-        
-        logStart(event)
-        
-        return event
-    }
-    
-    func logStart(
-        _ event: BlackBox.StartEvent
-    ) {
-        queue.async {
-            self.loggers.forEach { logger in
-                logger.logStart(event)
-            }
-        }
-    }
-    
-    func logEnd(
-        _ startEvent: BlackBox.StartEvent,
-        message: String?,
-        userInfo: BBUserInfo?,
-        serviceInfo: BBServiceInfo?,
-        category: String?,
-        parentEvent: GenericEvent?,
-        fileID: StaticString,
-        function: StaticString,
-        line: UInt
-    ) {
-        queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let event = EndEvent(
-                message: message ?? startEvent.rawMessage,
-                startEvent: startEvent,
-                userInfo: userInfo,
-                serviceInfo: serviceInfo,
-                logLevel: startEvent.logLevel,
-                category: category,
-                parentEvent: parentEvent ?? startEvent.parentEvent,
-                source: source
-            )
-            
-            self.loggers.forEach { logger in
-                logger.logEnd(event)
-            }
-        }
-    }
-}
-
 // MARK: - Static
 extension BlackBox {
     /// Logs plain message
@@ -312,5 +172,145 @@ extension BlackBox {
             function: function,
             line: line
         )
+    }
+}
+
+// MARK: - Instance
+extension BlackBox {
+    func log(
+        _ message: String,
+        userInfo: BBUserInfo?,
+        serviceInfo: BBServiceInfo?,
+        logLevel: BBLogLevel,
+        category: String?,
+        parentEvent: GenericEvent?,
+        fileID: StaticString,
+        function: StaticString,
+        line: UInt
+    ) {
+        queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+            let event = BlackBox.GenericEvent(
+                message,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: logLevel,
+                category: category,
+                parentEvent: parentEvent,
+                source: source
+            )
+            
+            self.loggers.forEach { logger in
+                logger.log(event)
+            }
+        }
+    }
+    
+    func log(
+        _ error: Error,
+        serviceInfo: BBServiceInfo?,
+        category: String?,
+        parentEvent: GenericEvent?,
+        fileID: StaticString,
+        function: StaticString,
+        line: UInt
+    ) {
+        queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+            let event = BlackBox.ErrorEvent(
+                error: error,
+                serviceInfo: serviceInfo,
+                category: category,
+                parentEvent: parentEvent,
+                source: source
+            )
+            
+            self.loggers.forEach { logger in
+                logger.log(event)
+            }
+        }
+    }
+    
+    func logStart(
+        _ message: String,
+        userInfo: BBUserInfo?,
+        serviceInfo: BBServiceInfo?,
+        logLevel: BBLogLevel,
+        category: String?,
+        parentEvent: GenericEvent?,
+        fileID: StaticString,
+        function: StaticString,
+        line: UInt
+    ) -> BlackBox.StartEvent {
+        let source = GenericEvent.Source(
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        let event = StartEvent(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            logLevel: logLevel,
+            category: category,
+            parentEvent: parentEvent,
+            source: source
+        )
+        
+        logStart(event)
+        
+        return event
+    }
+    
+    func logStart(
+        _ event: BlackBox.StartEvent
+    ) {
+        queue.async {
+            self.loggers.forEach { logger in
+                logger.logStart(event)
+            }
+        }
+    }
+    
+    func logEnd(
+        _ startEvent: BlackBox.StartEvent,
+        message: String?,
+        userInfo: BBUserInfo?,
+        serviceInfo: BBServiceInfo?,
+        category: String?,
+        parentEvent: GenericEvent?,
+        fileID: StaticString,
+        function: StaticString,
+        line: UInt
+    ) {
+        queue.async {
+            let source = GenericEvent.Source(
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+            let event = EndEvent(
+                message: message ?? startEvent.rawMessage,
+                startEvent: startEvent,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                logLevel: startEvent.logLevel,
+                category: category,
+                parentEvent: parentEvent ?? startEvent.parentEvent,
+                source: source
+            )
+            
+            self.loggers.forEach { logger in
+                logger.logEnd(event)
+            }
+        }
     }
 }
