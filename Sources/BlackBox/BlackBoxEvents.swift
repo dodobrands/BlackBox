@@ -12,16 +12,23 @@ public typealias BBServiceInfo = Any
 
 extension BlackBox {
     public class GenericEvent {
+        /// Unique event ID
         public let id: UUID
+        /// Timestamp when event occured
         public let timestamp: Date
+        /// Formatted event message
         public let message: String
         /// Default info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
         /// Place any additional data here. For example, per-event instructions for your custom loggers.
         public let serviceInfo: BBServiceInfo?
+        /// level of log
         public let logLevel: BBLogLevel
+        /// Category of log. E.g. View Lifecycle.
         public let category: String?
+        /// Parent log of current log. May be useful for traces.
         public let parentEvent: GenericEvent?
+        /// From where log originated
         public let source: Source
         
         public init(
