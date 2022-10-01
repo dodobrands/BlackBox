@@ -29,8 +29,8 @@ public class BlackBox {
 }
 
 // MARK: - Instance
-extension BlackBox: BBProtocol {
-    public func log(
+extension BlackBox {
+    func log(
         _ message: String,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
@@ -63,7 +63,7 @@ extension BlackBox: BBProtocol {
         }
     }
     
-    public func log(
+    func log(
         _ error: Error,
         serviceInfo: BBServiceInfo?,
         category: String?,
@@ -92,7 +92,7 @@ extension BlackBox: BBProtocol {
         }
     }
     
-    public func logStart(
+    func logStart(
         _ message: String,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
@@ -123,7 +123,7 @@ extension BlackBox: BBProtocol {
         return event
     }
     
-    public func logStart(
+    func logStart(
         _ event: BlackBox.StartEvent
     ) {
         queue.async {
@@ -133,7 +133,7 @@ extension BlackBox: BBProtocol {
         }
     }
     
-    public func logEnd(
+    func logEnd(
         _ startEvent: BlackBox.StartEvent,
         message: String?,
         userInfo: BBUserInfo?,
