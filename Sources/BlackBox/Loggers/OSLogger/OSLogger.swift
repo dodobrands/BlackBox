@@ -74,8 +74,6 @@ extension OSLogType {
         switch logLevel {
         case .debug:
             self = .default // .debug won't be shown in Console.app, so switching to .default instead
-        case .default:
-            self = .default
         case .info:
             self = .info
         case .warning:

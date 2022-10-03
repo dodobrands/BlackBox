@@ -1,7 +1,7 @@
 import Foundation
 
 public enum BBLogLevel: String, CaseIterable {
-    case debug, `default`, info, warning, error
+    case debug, info, warning, error
 }
 
 extension BBLogLevel {
@@ -9,8 +9,6 @@ extension BBLogLevel {
         switch self {
         case .debug:
             return "🛠"
-        case .default:
-            return "📝"
         case .info:
             return "ℹ️"
         case .warning:
