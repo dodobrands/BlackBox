@@ -33,6 +33,17 @@ extension BlackBox.OSLogger {
     private func osLog(event: BlackBox.GenericEvent) {
         guard logLevels.contains(event.logLevel) else { return }
         
+        let message = message(from: event)
+        
+        let logType = OSLogType(event.logLevel)
+        let logger = OSLog(event)
+        
+        os_log(logType,
+               log: logger,
+               "%{public}@", message)
+    }
+    
+    private func message(from event: BlackBox.GenericEvent) -> String {
         let userInfo = event.userInfo?.bbLogDescription ?? "nil"
         
         let source = [event.source.module,
@@ -49,12 +60,7 @@ extension BlackBox.OSLogger {
         + "\n"
         + userInfo
         
-        let logType = OSLogType(event.logLevel)
-        let logger = OSLog(event)
-        
-        os_log(logType,
-               log: logger,
-               "%{public}@", message)
+        return message
     }
 }
 
