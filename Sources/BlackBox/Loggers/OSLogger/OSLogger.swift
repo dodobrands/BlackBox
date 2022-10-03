@@ -2,6 +2,8 @@ import Foundation
 import os
 
 extension BlackBox {
+    /// Redirects logs to Console.app
+    /// Usage example: https://habr.com/ru/company/dododev/blog/689758/
     public class OSLogger: BBLoggerProtocol {
         let logLevels: [BBLogLevel]
         

@@ -2,6 +2,8 @@ import Foundation
 import os
 
 extension BlackBox {
+    /// Redirects logs to Time Profiler
+    /// Usage example: https://habr.com/ru/company/dododev/blog/690542/
     public class OSSignpostLogger: BBLoggerProtocol {
         let logLevels: [BBLogLevel]
         
