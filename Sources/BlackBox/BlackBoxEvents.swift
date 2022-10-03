@@ -278,11 +278,6 @@ extension BlackBox {
     }
 }
 
-public indirect enum Profiling {
-    case start
-    case end(startEvent: BlackBox.GenericEvent)
-}
-
 fileprivate extension String {
     var filename: String {
         URL(fileURLWithPath: self).deletingPathExtension().lastPathComponent
