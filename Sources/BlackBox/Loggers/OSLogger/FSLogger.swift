@@ -4,33 +4,44 @@ extension BlackBox {
     public class FSLogger: BBLoggerProtocol {
         private let fullpath: URL
         private let logLevels: [BBLogLevel]
+        private let queue: DispatchQueue
         
-        public init(path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
-                    name: String = "BlackBox_log",
-                    logLevels: [BBLogLevel]) {
+        public init(
+            path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
+            name: String = "BlackBox_log",
+            logLevels: [BBLogLevel],
+            queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self))
+        ) {
             self.fullpath = path.appendingPathComponent(name)
             self.logLevels = logLevels
+            self.queue = queue
         }
         
         public func log(_ event: BlackBox.ErrorEvent) {
-            fsLog(event)
+            fsLogAsync(event)
         }
         
         public func log(_ event: BlackBox.GenericEvent) {
-            fsLog(event)
+            fsLogAsync(event)
         }
         
         public func logStart(_ event: BlackBox.StartEvent) {
-            fsLog(event)
+            fsLogAsync(event)
         }
         
         public func logEnd(_ event: BlackBox.EndEvent) {
-            fsLog(event)
+            fsLogAsync(event)
         }
     }
 }
 
 extension BlackBox.FSLogger {
+    private func fsLogAsync(_ event: BlackBox.GenericEvent) {
+        queue.async {
+            self.fsLog(event)
+        }
+    }
+    
     private func fsLog(_ event: BlackBox.GenericEvent) {
         guard logLevels.contains(event.logLevel) else { return }
         
