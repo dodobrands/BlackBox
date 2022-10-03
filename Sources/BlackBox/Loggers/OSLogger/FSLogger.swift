@@ -1,11 +1,18 @@
 import Foundation
 
 extension BlackBox {
+    /// Redirects logs to text file
     public class FSLogger: BBLoggerProtocol {
         private let fullpath: URL
         private let logLevels: [BBLogLevel]
         private let queue: DispatchQueue
         
+        /// Creates FS logger
+        /// - Parameters:
+        ///   - path: path to file where logs are added, without filename
+        ///   - name: filename
+        ///   - logLevels: levels to log
+        ///   - queue: queue for logs to be prepared and stored at
         public init(
             path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
             name: String = "BlackBox_log",
