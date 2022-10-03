@@ -16,7 +16,7 @@ extension BlackBox {
         public let id: UUID
         /// Timestamp when event occured
         public let timestamp: Date
-        /// Formatted event message
+        /// Event message. May be formatted for some events.
         public let message: String
         /// Default info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
@@ -86,7 +86,9 @@ extension BlackBox {
 }
 
 extension BlackBox {
+    /// Error event
     public class ErrorEvent: GenericEvent {
+        /// Original logged error
         public let error: Swift.Error
         
         public init(
@@ -144,7 +146,9 @@ extension BlackBox {
 }
 
 extension BlackBox {
+    /// Measurement start event
     public class StartEvent: GenericEvent {
+        /// Original unformatted message
         public var rawMessage: String
         
         public override init(
@@ -206,7 +210,10 @@ extension BlackBox {
 
 extension BlackBox {
     public class EndEvent: GenericEvent {
+        /// Original unformatted message
         public var rawMessage: String
+        
+        /// Start event
         public let startEvent: StartEvent
         
         public init(
