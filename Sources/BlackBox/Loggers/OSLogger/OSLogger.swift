@@ -1,7 +1,6 @@
 import Foundation
 import os
 
-@available(iOS 12.0, *)
 extension BlackBox {
     public class OSLogger: BBLoggerProtocol {
         let logLevels: [BBLogLevel]
@@ -28,7 +27,6 @@ extension BlackBox {
     }
 }
 
-@available(iOS 12.0, *)
 extension BlackBox.OSLogger {
     private func osLog(event: BlackBox.GenericEvent) {
         guard logLevels.contains(event.logLevel) else { return }
@@ -64,7 +62,6 @@ extension BlackBox.OSLogger {
     }
 }
 
-@available(iOS 12.0, *)
 extension OSLog {
     convenience init(_ event: BlackBox.GenericEvent) {
         self.init(
@@ -74,7 +71,6 @@ extension OSLog {
     }
 }
 
-@available(iOS 12.0, *)
 extension OSLogType {
     init(_ logLevel: BBLogLevel) {
         switch logLevel {

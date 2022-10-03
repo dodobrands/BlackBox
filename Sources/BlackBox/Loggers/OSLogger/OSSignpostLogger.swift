@@ -1,7 +1,6 @@
 import Foundation
 import os
 
-@available(iOS 12.0, *)
 extension BlackBox {
     public class OSSignpostLogger: BBLoggerProtocol {
         let logLevels: [BBLogLevel]
@@ -28,7 +27,6 @@ extension BlackBox {
     }
 }
 
-@available(iOS 12.0, *)
 extension BlackBox.OSSignpostLogger {
     private func signpostLog(
         event: BlackBox.GenericEvent
@@ -63,7 +61,6 @@ extension BlackBox.OSSignpostLogger {
     }
 }
 
-@available(iOS 12.0, *)
 extension OSSignpostType {
     init(_ event: BlackBox.GenericEvent) {
         switch event {
@@ -79,7 +76,6 @@ extension OSSignpostType {
     }
 }
 
-@available(iOS 12.0, *)
 extension OSSignpostID {
     init(_ event: BlackBox.GenericEvent) {
         let id: UUID
@@ -102,7 +98,6 @@ extension OSSignpostID {
     }
 }
 
-@available(iOS 12.0, *)
 extension OSLog {
     convenience init(signpostType: OSSignpostType,
                      event: BlackBox.GenericEvent) {
