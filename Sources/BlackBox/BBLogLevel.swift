@@ -20,13 +20,13 @@ extension BBLogLevel {
 }
 
 public protocol BBLogLevelProvider where Self: Swift.Error {
-    var logLevel: BBLogLevel { get }
+    var level: BBLogLevel { get }
 }
 
 public extension Swift.Error {
-    var logLevel: BBLogLevel {
-        if let logLevelError = self as? BBLogLevelProvider {
-            return logLevelError.logLevel
+    var level: BBLogLevel {
+        if let levelError = self as? BBLogLevelProvider {
+            return levelError.level
         } else {
             return .error
         }

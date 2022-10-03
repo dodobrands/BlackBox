@@ -35,7 +35,7 @@ extension BlackBox {
     ///   - message: Message to log
     ///   - userInfo: Additional info you'd like to see alongside log
     ///   - serviceInfo: to be deleted
-    ///   - logLevel: level of log
+    ///   - level: level of log
     ///   - category: Category of log. E.g. View Lifecycle.
     ///   - parentEvent: Parent log of current log. May be useful for traces.
     ///   - fileID: The fileID where the logs occurs. Containts module name and filename. The default is the fileID of the function where you call log.
@@ -45,7 +45,7 @@ extension BlackBox {
         _ message: String,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
-        logLevel: BBLogLevel = .debug,
+        level: BBLogLevel = .debug,
         category: String? = nil,
         parentEvent: GenericEvent? = nil,
         fileID: StaticString = #fileID,
@@ -56,7 +56,7 @@ extension BlackBox {
             message,
             userInfo: userInfo,
             serviceInfo: serviceInfo,
-            logLevel: logLevel,
+            level: level,
             category: category,
             parentEvent: parentEvent,
             fileID: fileID,
@@ -100,7 +100,7 @@ extension BlackBox {
     ///   - message: Measurement name
     ///   - userInfo: Additional info you'd like to see alongside log
     ///   - serviceInfo: to be deleted
-    ///   - logLevel: level of log
+    ///   - level: level of log
     ///   - category: Category of log. E.g. View Lifecycle.
     ///   - parentEvent: Parent log of current log. May be useful for traces.
     ///   - fileID: The fileID where the logs occurs. Containts module name and filename. The default is the fileID of the function where you call log.
@@ -111,7 +111,7 @@ extension BlackBox {
         _ message: String,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
-        logLevel: BBLogLevel = .debug,
+        level: BBLogLevel = .debug,
         category: String? = nil,
         parentEvent: GenericEvent? = nil,
         fileID: StaticString = #fileID,
@@ -122,7 +122,7 @@ extension BlackBox {
             message,
             userInfo: userInfo,
             serviceInfo: serviceInfo,
-            logLevel: logLevel,
+            level: level,
             category: category,
             parentEvent: parentEvent,
             fileID: fileID,
@@ -181,7 +181,7 @@ extension BlackBox {
         _ message: String,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
-        logLevel: BBLogLevel,
+        level: BBLogLevel,
         category: String?,
         parentEvent: GenericEvent?,
         fileID: StaticString,
@@ -198,7 +198,7 @@ extension BlackBox {
                 message,
                 userInfo: userInfo,
                 serviceInfo: serviceInfo,
-                logLevel: logLevel,
+                level: level,
                 category: category,
                 parentEvent: parentEvent,
                 source: source
@@ -243,7 +243,7 @@ extension BlackBox {
         _ message: String,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
-        logLevel: BBLogLevel,
+        level: BBLogLevel,
         category: String?,
         parentEvent: GenericEvent?,
         fileID: StaticString,
@@ -259,7 +259,7 @@ extension BlackBox {
             message,
             userInfo: userInfo,
             serviceInfo: serviceInfo,
-            logLevel: logLevel,
+            level: level,
             category: category,
             parentEvent: parentEvent,
             source: source
@@ -302,7 +302,7 @@ extension BlackBox {
                 startEvent: startEvent,
                 userInfo: userInfo,
                 serviceInfo: serviceInfo,
-                logLevel: startEvent.logLevel,
+                level: startEvent.level,
                 category: category,
                 parentEvent: parentEvent ?? startEvent.parentEvent,
                 source: source

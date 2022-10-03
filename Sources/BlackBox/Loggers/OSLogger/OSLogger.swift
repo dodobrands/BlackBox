@@ -5,10 +5,10 @@ extension BlackBox {
     /// Redirects logs to Console.app
     /// Usage example: https://habr.com/ru/company/dododev/blog/689758/
     public class OSLogger: BBLoggerProtocol {
-        let logLevels: [BBLogLevel]
+        let levels: [BBLogLevel]
         
-        public init(logLevels: [BBLogLevel]){
-            self.logLevels = logLevels
+        public init(levels: [BBLogLevel]){
+            self.levels = levels
         }
         
         public func log(_ event: BlackBox.ErrorEvent) {
@@ -31,11 +31,11 @@ extension BlackBox {
 
 extension BlackBox.OSLogger {
     private func osLog(event: BlackBox.GenericEvent) {
-        guard logLevels.contains(event.logLevel) else { return }
+        guard levels.contains(event.level) else { return }
         
         let message = message(from: event)
         
-        let logType = OSLogType(event.logLevel)
+        let logType = OSLogType(event.level)
         let logger = OSLog(event)
         
         os_log(logType,
@@ -74,8 +74,8 @@ extension OSLog {
 }
 
 extension OSLogType {
-    init(_ logLevel: BBLogLevel) {
-        switch logLevel {
+    init(_ level: BBLogLevel) {
+        switch level {
         case .debug:
             self = .default // .debug won't be shown in Console.app, so switching to .default instead
         case .info:

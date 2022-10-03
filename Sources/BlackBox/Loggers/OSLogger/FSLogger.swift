@@ -4,23 +4,23 @@ extension BlackBox {
     /// Redirects logs to text file
     public class FSLogger: BBLoggerProtocol {
         private let fullpath: URL
-        private let logLevels: [BBLogLevel]
+        private let levels: [BBLogLevel]
         private let queue: DispatchQueue
         
         /// Creates FS logger
         /// - Parameters:
         ///   - path: path to file where logs are added, without filename
         ///   - name: filename
-        ///   - logLevels: levels to log
+        ///   - levels: levels to log
         ///   - queue: queue for logs to be prepared and stored at
         public init(
             path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
             name: String = "BlackBox_log",
-            logLevels: [BBLogLevel],
+            levels: [BBLogLevel],
             queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self))
         ) {
             self.fullpath = path.appendingPathComponent(name)
-            self.logLevels = logLevels
+            self.levels = levels
             self.queue = queue
         }
         
@@ -50,11 +50,11 @@ extension BlackBox.FSLogger {
     }
     
     private func fsLog(_ event: BlackBox.GenericEvent) {
-        guard logLevels.contains(event.logLevel) else { return }
+        guard levels.contains(event.level) else { return }
         
         let userInfo = event.userInfo?.bbLogDescription ?? "nil"
         
-        let title = event.logLevel.icon + " " + String(describing: Date())
+        let title = event.level.icon + " " + String(describing: Date())
         let subtitle = event.source.filename + ", " + event.source.function.description
         
         let content = event.message

@@ -5,10 +5,10 @@ extension BlackBox {
     /// Redirects logs to Time Profiler
     /// Usage example: https://habr.com/ru/company/dododev/blog/690542/
     public class OSSignpostLogger: BBLoggerProtocol {
-        let logLevels: [BBLogLevel]
+        let levels: [BBLogLevel]
         
-        public init(logLevels: [BBLogLevel]){
-            self.logLevels = logLevels
+        public init(levels: [BBLogLevel]){
+            self.levels = levels
         }
         
         public func log(_ event: BlackBox.ErrorEvent) {
@@ -33,7 +33,7 @@ extension BlackBox.OSSignpostLogger {
     private func signpostLog(
         event: BlackBox.GenericEvent
     ) {
-        guard logLevels.contains(event.logLevel) else { return }
+        guard levels.contains(event.level) else { return }
         
         let signpostType = OSSignpostType(event)
         

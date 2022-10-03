@@ -36,7 +36,7 @@ BlackBox.log("Logged in", userInfo: ["userId": someUserId], category: "App lifec
 ```
 4. Message with custom log level
 ```swift
-BlackBox.log("Tried to open AuthScreen multiple times", logLevel: .warning)
+BlackBox.log("Tried to open AuthScreen multiple times", level: .warning)
 ```
 5. Error
 ```swift
@@ -70,19 +70,19 @@ Create your own logger and implement `BBLoggerProtocol`
 extension BlackBox {
     class CrashlyticsLogger: BBLoggerProtocol {
         func log(_ error: Error,
-                 logLevel: BBLogLevel,
+                 level: BBLogLevel,
                  file: StaticString,
                  category: String?,
                  function: StaticString,
                  line: UInt) {
-            if logLevel == .error {
+            if level == .error {
                 Crashlytics.crashlytics().record(error: error)
             }
             
             log(message(from: String(reflecting: error),
-                        with: logLevel),
+                        with: level),
                 userInfo: nil,
-                logLevel: logLevel,
+                level: level,
                 eventType: nil,
                 eventId: nil,
                 file: file,
@@ -93,7 +93,7 @@ extension BlackBox {
         
         func log(_ message: String,
                  userInfo: CustomDebugStringConvertible?,
-                 logLevel: BBLogLevel,
+                 level: BBLogLevel,
                  eventType: BBEventType?,
                  eventId: UInt64?,
                  file: StaticString,
@@ -106,12 +106,12 @@ extension BlackBox {
 }
 
 extension BlackBox.CrashlyticsLogger {
-    private func message(from message: String, with logLevel: BBLogLevel) -> String {
-        switch logLevel {
+    private func message(from message: String, with level: BBLogLevel) -> String {
+        switch level {
         case .debug, .info, .default:
             return message
         case .error, .warning:
-            return logLevel.icon + " " + message
+            return level.icon + " " + message
         }
     }
 }
@@ -144,7 +144,7 @@ Each Swift.Error is logged with `.error` log level by default.
 Implement `BBLogLevelProvider` to provide custom log levels for your errors
 ```swift
 extension ParsingError: BBLogLevelProvider {
-    var logLevel: BBLogLevel {
+    var level: BBLogLevel {
         switch self {
         case .unknownCategoryInDTO(let rawValue):
             if rawValue == 2 { // deprecated category, may be present in orders created before 2019
