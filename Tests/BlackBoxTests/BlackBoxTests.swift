@@ -10,25 +10,86 @@ import XCTest
 @testable import BlackBox
 
 class BlackBoxTests: XCTestCase {
-
+    var logger: TestLogger!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
+        logger = .init()
+        BlackBox.instance = .init(loggers: [logger])
     }
-
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        logger = nil
+        try super.tearDownWithError()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func test_genericLogMessage() {
+        log("Test")
+        XCTAssertEqual(logger.genericEvent?.message, "Test")
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func test_genericLogUserInfo() {
+        log("Test", userInfo: ["name": "Kenobi"])
+        XCTAssertEqual(logger.genericEvent?.userInfo as? [String: String], ["name": "Kenobi"])
+    }
+    
+    func test_genericLogServiceInfo() {
+        struct ObiWan: Equatable {
+            let greeting: String
         }
+        log("Test", serviceInfo: ObiWan(greeting: "Hello there"))
+        XCTAssertEqual(logger.genericEvent?.serviceInfo as? ObiWan, ObiWan(greeting: "Hello there"))
     }
+    
+    func log(
+        _ message: String,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        level: BBLogLevel = .debug,
+        category: String? = nil,
+        parentEvent: BlackBox.GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) {
+        let expectation = expectation(description: "Log received")
+        logger.expectation = expectation
+        BlackBox.log(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: level,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        wait(for: [expectation], timeout: 1)
+    }
+}
 
+class TestLogger: BBLoggerProtocol {
+    var expectation: XCTestExpectation?
+    
+    var genericEvent: BlackBox.GenericEvent?
+    func log(_ event: BlackBox.GenericEvent) {
+        genericEvent = event
+        expectation?.fulfill()
+    }
+    
+    var errorEvent: BlackBox.ErrorEvent?
+    func log(_ event: BlackBox.ErrorEvent) {
+        errorEvent = event
+    }
+    
+    var startEvent: BlackBox.StartEvent?
+    func logStart(_ event: BlackBox.StartEvent) {
+        startEvent = event
+    }
+    
+    var endEvent: BlackBox.EndEvent?
+    func logEnd(_ event: BlackBox.EndEvent) {
+        endEvent = event
+    }
 }
