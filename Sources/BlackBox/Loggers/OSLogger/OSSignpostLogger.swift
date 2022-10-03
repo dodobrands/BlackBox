@@ -11,11 +11,11 @@ extension BlackBox {
             self.levels = levels
         }
         
-        public func log(_ event: BlackBox.ErrorEvent) {
+        public func log(_ event: BlackBox.GenericEvent) {
             signpostLog(event: event)
         }
         
-        public func log(_ event: BlackBox.GenericEvent) {
+        public func log(_ event: BlackBox.ErrorEvent) {
             signpostLog(event: event)
         }
         

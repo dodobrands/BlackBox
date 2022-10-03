@@ -24,11 +24,11 @@ extension BlackBox {
             self.queue = queue
         }
         
-        public func log(_ event: BlackBox.ErrorEvent) {
+        public func log(_ event: BlackBox.GenericEvent) {
             fsLogAsync(event)
         }
         
-        public func log(_ event: BlackBox.GenericEvent) {
+        public func log(_ event: BlackBox.ErrorEvent) {
             fsLogAsync(event)
         }
         
