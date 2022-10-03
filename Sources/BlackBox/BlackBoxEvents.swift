@@ -11,6 +11,7 @@ public typealias BBUserInfo = [String: Any]
 public typealias BBServiceInfo = Any
 
 extension BlackBox {
+    /// Any log event
     public class GenericEvent {
         /// Unique event ID
         public let id: UUID
@@ -209,6 +210,7 @@ extension BlackBox {
 }
 
 extension BlackBox {
+    /// Measurement end event
     public class EndEvent: GenericEvent {
         /// Original unformatted message
         public var rawMessage: String
@@ -289,11 +291,17 @@ fileprivate extension String {
 }
 
 public extension BlackBox.GenericEvent {
+    /// Event source
     struct Source {
+        /// Unmodified file id
         public let fileID: StaticString
+        /// Module
         public let module: String
+        /// File name
         public let filename: String
+        /// Function name
         public let function: StaticString
+        /// Number of line
         public let line: UInt
         
         public init(
