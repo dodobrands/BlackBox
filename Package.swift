@@ -3,8 +3,13 @@
 
 import PackageDescription
 
+let libraryName = "BlackBox"
+let packageName = libraryName
+let targetName = libraryName
+let testsTargetName = targetName + "Tests"
+
 let package = Package(
-    name: "BlackBox",
+    name: packageName,
     platforms: [
         .iOS(.v12),
         .macOS(.v10_14),
@@ -12,24 +17,25 @@ let package = Package(
         .watchOS(.v5)
     ],
     products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "BlackBox",
-            targets: ["BlackBox"]),
+            name: libraryName,
+            targets: [
+                targetName
+            ]
+        ),
     ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-    ],
+    dependencies: [],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "BlackBox",
-            dependencies: []),
+            name: targetName,
+            dependencies: []
+        ),
         .testTarget(
-            name: "BlackBoxTests",
-            dependencies: ["BlackBox"]),
+            name: testsTargetName,
+            dependencies: [
+                .init(stringLiteral: targetName)
+            ]
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )
