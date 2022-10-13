@@ -1,35 +1,33 @@
 import Foundation
 import os
 
-extension BlackBox {
-    /// Redirects logs to Console.app
-    /// Usage example: https://habr.com/ru/company/dododev/blog/689758/
-    public class OSLogger: BBLoggerProtocol {
-        let levels: [BBLogLevel]
-        
-        public init(levels: [BBLogLevel]){
-            self.levels = levels
-        }
-        
-        public func log(_ event: BlackBox.GenericEvent) {
-            osLog(event: event)
-        }
-        
-        public func log(_ event: BlackBox.ErrorEvent) {
-            osLog(event: event)
-        }
-        
-        public func logStart(_ event: BlackBox.StartEvent) {
-            osLog(event: event)
-        }
-        
-        public func logEnd(_ event: BlackBox.EndEvent) {
-            osLog(event: event)
-        }
+/// Redirects logs to Console.app
+/// Usage example: https://habr.com/ru/company/dododev/blog/689758/
+public class OSLogger: BBLoggerProtocol {
+    let levels: [BBLogLevel]
+    
+    public init(levels: [BBLogLevel]){
+        self.levels = levels
+    }
+    
+    public func log(_ event: BlackBox.GenericEvent) {
+        osLog(event: event)
+    }
+    
+    public func log(_ event: BlackBox.ErrorEvent) {
+        osLog(event: event)
+    }
+    
+    public func logStart(_ event: BlackBox.StartEvent) {
+        osLog(event: event)
+    }
+    
+    public func logEnd(_ event: BlackBox.EndEvent) {
+        osLog(event: event)
     }
 }
 
-extension BlackBox.OSLogger {
+extension OSLogger {
     private func osLog(event: BlackBox.GenericEvent) {
         guard levels.contains(event.level) else { return }
         
