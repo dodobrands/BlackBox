@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-extension BlackBoxTests {
+class BlackBoxTests_ErrorEvent: BlackBoxTests {
     func test_errorLog_error() {
         log(AnakinKills.maceWindu)
         XCTAssertEqual(logger.errorEvent?.error as? AnakinKills, AnakinKills.maceWindu)

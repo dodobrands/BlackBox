@@ -10,7 +10,7 @@ import XCTest
 @testable import BlackBox
 
 class BlackBoxTests: XCTestCase {
-    var logger: TestLogger!
+    var logger: DummyLogger!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -148,33 +148,5 @@ class BlackBoxTests: XCTestCase {
         )
         
         wait(for: [expectation], timeout: 1)
-    }
-}
-
-class TestLogger: BBLoggerProtocol {
-    var expectation: XCTestExpectation?
-    
-    var genericEvent: BlackBox.GenericEvent?
-    func log(_ event: BlackBox.GenericEvent) {
-        genericEvent = event
-        expectation?.fulfill()
-    }
-    
-    var errorEvent: BlackBox.ErrorEvent?
-    func log(_ event: BlackBox.ErrorEvent) {
-        errorEvent = event
-        expectation?.fulfill()
-    }
-    
-    var startEvent: BlackBox.StartEvent?
-    func logStart(_ event: BlackBox.StartEvent) {
-        startEvent = event
-        expectation?.fulfill()
-    }
-    
-    var endEvent: BlackBox.EndEvent?
-    func logEnd(_ event: BlackBox.EndEvent) {
-        endEvent = event
-        expectation?.fulfill()
     }
 }

@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-extension BlackBoxTests {
+class BlackBoxTests_StartEvent: BlackBoxTests {
     func test_logStart_event() {
         let event = BlackBox.StartEvent("Test")
         logStart(event)

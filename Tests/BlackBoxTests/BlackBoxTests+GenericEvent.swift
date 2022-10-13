@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-extension BlackBoxTests {
+class BlackBoxTests_GenericEvent: BlackBoxTests {
     func test_genericLog_message() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.message, "Test")
