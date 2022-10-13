@@ -1,48 +1,46 @@
 import Foundation
 
-extension BlackBox {
-    /// Redirects logs to text file
-    public class FSLogger: BBLoggerProtocol {
-        private let fullpath: URL
-        private let levels: [BBLogLevel]
-        private let queue: DispatchQueue
-        
-        /// Creates FS logger
-        /// - Parameters:
-        ///   - path: path to file where logs are added, without filename
-        ///   - name: filename
-        ///   - levels: levels to log
-        ///   - queue: queue for logs to be prepared and stored at
-        public init(
-            path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
-            name: String = "BlackBox_log",
-            levels: [BBLogLevel],
-            queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self))
-        ) {
-            self.fullpath = path.appendingPathComponent(name)
-            self.levels = levels
-            self.queue = queue
-        }
-        
-        public func log(_ event: BlackBox.GenericEvent) {
-            fsLogAsync(event)
-        }
-        
-        public func log(_ event: BlackBox.ErrorEvent) {
-            fsLogAsync(event)
-        }
-        
-        public func logStart(_ event: BlackBox.StartEvent) {
-            fsLogAsync(event)
-        }
-        
-        public func logEnd(_ event: BlackBox.EndEvent) {
-            fsLogAsync(event)
-        }
+/// Redirects logs to text file
+public class FSLogger: BBLoggerProtocol {
+    private let fullpath: URL
+    private let levels: [BBLogLevel]
+    private let queue: DispatchQueue
+    
+    /// Creates FS logger
+    /// - Parameters:
+    ///   - path: path to file where logs are added, without filename
+    ///   - name: filename
+    ///   - levels: levels to log
+    ///   - queue: queue for logs to be prepared and stored at
+    public init(
+        path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
+        name: String = "BlackBox_log",
+        levels: [BBLogLevel],
+        queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self))
+    ) {
+        self.fullpath = path.appendingPathComponent(name)
+        self.levels = levels
+        self.queue = queue
+    }
+    
+    public func log(_ event: BlackBox.GenericEvent) {
+        fsLogAsync(event)
+    }
+    
+    public func log(_ event: BlackBox.ErrorEvent) {
+        fsLogAsync(event)
+    }
+    
+    public func logStart(_ event: BlackBox.StartEvent) {
+        fsLogAsync(event)
+    }
+    
+    public func logEnd(_ event: BlackBox.EndEvent) {
+        fsLogAsync(event)
     }
 }
 
-extension BlackBox.FSLogger {
+extension FSLogger {
     private func fsLogAsync(_ event: BlackBox.GenericEvent) {
         queue.async {
             self.fsLog(event)
