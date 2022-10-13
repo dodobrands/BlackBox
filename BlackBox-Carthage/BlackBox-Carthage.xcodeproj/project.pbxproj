@@ -71,19 +71,19 @@
 			isa = PBXGroup;
 			children = (
 				1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */,
-				1E4AC26127A7F221009F0981 /* OSLogger */,
+				1E4AC26127A7F221009F0981 /* Loggers */,
 			);
 			path = Loggers;
 			sourceTree = "<group>";
 		};
-		1E4AC26127A7F221009F0981 /* OSLogger */ = {
+		1E4AC26127A7F221009F0981 /* Loggers */ = {
 			isa = PBXGroup;
 			children = (
 				1E4AC25F27A7F221009F0981 /* FSLogger.swift */,
 				1E4AC26227A7F221009F0981 /* OSSignpostLogger.swift */,
 				1E4AC26327A7F221009F0981 /* OSLogger.swift */,
 			);
-			path = OSLogger;
+			path = Loggers;
 			sourceTree = "<group>";
 		};
 		1E4AC26727A7F221009F0981 /* Helpers */ = {
