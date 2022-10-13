@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ObiWan: Equatable {
-    let greeting: String
+struct Lightsaber: Equatable {
+    let color: String
 }

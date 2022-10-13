@@ -20,8 +20,8 @@ extension BlackBoxTests {
     }
     
     func test_genericLog_serviceInfo() {
-        log("Test", serviceInfo: ObiWan(greeting: "Hello there"))
-        XCTAssertEqual(logger.genericEvent?.serviceInfo as? ObiWan, ObiWan(greeting: "Hello there"))
+        log("Test", serviceInfo: Lightsaber(color: "purple"))
+        XCTAssertEqual(logger.genericEvent?.serviceInfo as? Lightsaber, Lightsaber(color: "purple"))
     }
     
     func test_genericLog_level() {

@@ -34,8 +34,8 @@ extension BlackBoxTests {
     
     func test_endLog_serviceInfo() {
         let event = BlackBox.StartEvent("Test")
-        logEnd(event, serviceInfo: ObiWan(greeting: "Hello there"))
-        XCTAssertEqual(logger.endEvent?.serviceInfo as? ObiWan, ObiWan(greeting: "Hello there"))
+        logEnd(event, serviceInfo: Lightsaber(color: "purple"))
+        XCTAssertEqual(logger.endEvent?.serviceInfo as? Lightsaber, Lightsaber(color: "purple"))
     }
     
     func test_endLog_level() {
