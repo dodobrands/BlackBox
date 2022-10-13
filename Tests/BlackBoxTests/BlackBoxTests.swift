@@ -125,6 +125,35 @@ class BlackBoxTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         return event
     }
+    
+    func logEnd(
+        _ event: BlackBox.StartEvent,
+        message: String? = nil,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: BlackBox.GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) {
+        let expectation = expectation(description: "Log received")
+        logger.expectation = expectation
+        
+        BlackBox.logEnd(
+            event,
+            message: message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 class TestLogger: BBLoggerProtocol {
