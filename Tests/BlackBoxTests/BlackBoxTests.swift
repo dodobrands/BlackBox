@@ -94,6 +94,37 @@ class BlackBoxTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
     }
+    
+    @discardableResult
+    func logStart(
+        _ message: String,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        level: BBLogLevel = .debug,
+        category: String? = nil,
+        parentEvent: BlackBox.GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) -> BlackBox.StartEvent {
+        let expectation = expectation(description: "Log received")
+        logger.expectation = expectation
+        
+        let event = BlackBox.logStart(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: level,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        
+        wait(for: [expectation], timeout: 1)
+        return event
+    }
 }
 
 class TestLogger: BBLoggerProtocol {
