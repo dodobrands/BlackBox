@@ -23,10 +23,6 @@ class BlackBoxTests: XCTestCase {
         try super.tearDownWithError()
     }
     
-    struct ObiWan: Equatable {
-        let greeting: String
-    }
-    
     func log(
         _ message: String,
         userInfo: BBUserInfo? = nil,
