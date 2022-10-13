@@ -23,24 +23,6 @@ class BlackBoxTests: XCTestCase {
         try super.tearDownWithError()
     }
     
-    func test_genericLogMessage() {
-        log("Test")
-        XCTAssertEqual(logger.genericEvent?.message, "Test")
-    }
-    
-    func test_genericLogUserInfo() {
-        log("Test", userInfo: ["name": "Kenobi"])
-        XCTAssertEqual(logger.genericEvent?.userInfo as? [String: String], ["name": "Kenobi"])
-    }
-    
-    func test_genericLogServiceInfo() {
-        struct ObiWan: Equatable {
-            let greeting: String
-        }
-        log("Test", serviceInfo: ObiWan(greeting: "Hello there"))
-        XCTAssertEqual(logger.genericEvent?.serviceInfo as? ObiWan, ObiWan(greeting: "Hello there"))
-    }
-    
     func log(
         _ message: String,
         userInfo: BBUserInfo? = nil,

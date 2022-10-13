@@ -12,7 +12,7 @@ public typealias BBServiceInfo = Any
 
 extension BlackBox {
     /// Any log event
-    public class GenericEvent {
+    public class GenericEvent: Equatable {
         /// Unique event ID
         public let id: UUID
         /// Timestamp when event occured
@@ -82,6 +82,10 @@ extension BlackBox {
                     line: line
                 )
             )
+        }
+        
+        public static func == (lhs: BlackBox.GenericEvent, rhs: BlackBox.GenericEvent) -> Bool {
+            lhs.id == rhs.id
         }
     }
 }
