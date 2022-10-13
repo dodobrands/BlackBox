@@ -23,6 +23,24 @@ class BlackBoxTests: XCTestCase {
         try super.tearDownWithError()
     }
     
+    struct ObiWan: Equatable {
+        let greeting: String
+    }
+    
+    enum SomeError: Error, Equatable, CustomNSError {
+        case someCase
+        case otherCase(value: Int)
+        
+        var errorUserInfo: [String : Any] {
+            switch self {
+            case .someCase:
+                return [:]
+            case .otherCase(let value):
+                return ["value": value]
+            }
+        }
+    }
+    
     func log(
         _ message: String,
         userInfo: BBUserInfo? = nil,
@@ -36,6 +54,7 @@ class BlackBoxTests: XCTestCase {
     ) {
         let expectation = expectation(description: "Log received")
         logger.expectation = expectation
+        
         BlackBox.log(
             message,
             userInfo: userInfo,
@@ -47,6 +66,32 @@ class BlackBoxTests: XCTestCase {
             function: function,
             line: line
         )
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func log(
+        _ error: Error,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: BlackBox.GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) {
+        let expectation = expectation(description: "Log received")
+        logger.expectation = expectation
+        
+        BlackBox.log(
+            error,
+            serviceInfo: serviceInfo,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        
         wait(for: [expectation], timeout: 1)
     }
 }
@@ -63,15 +108,18 @@ class TestLogger: BBLoggerProtocol {
     var errorEvent: BlackBox.ErrorEvent?
     func log(_ event: BlackBox.ErrorEvent) {
         errorEvent = event
+        expectation?.fulfill()
     }
     
     var startEvent: BlackBox.StartEvent?
     func logStart(_ event: BlackBox.StartEvent) {
         startEvent = event
+        expectation?.fulfill()
     }
     
     var endEvent: BlackBox.EndEvent?
     func logEnd(_ event: BlackBox.EndEvent) {
         endEvent = event
+        expectation?.fulfill()
     }
 }

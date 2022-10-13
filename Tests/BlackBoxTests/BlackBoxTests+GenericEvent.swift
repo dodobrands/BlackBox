@@ -20,10 +20,6 @@ extension BlackBoxTests {
     }
     
     func test_genericLog_serviceInfo() {
-        struct ObiWan: Equatable {
-            let greeting: String
-        }
-        
         log("Test", serviceInfo: ObiWan(greeting: "Hello there"))
         XCTAssertEqual(logger.genericEvent?.serviceInfo as? ObiWan, ObiWan(greeting: "Hello there"))
     }
@@ -66,6 +62,6 @@ extension BlackBoxTests {
     
     func test_genericLog_line() {
         log("Test")
-        XCTAssertEqual(logger.genericEvent?.source.line, 68)
+        XCTAssertEqual(logger.genericEvent?.source.line, 64)
     }
 }
