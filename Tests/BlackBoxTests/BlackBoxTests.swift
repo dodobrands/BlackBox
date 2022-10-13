@@ -108,6 +108,19 @@ class BlackBoxTests: XCTestCase {
         return event
     }
     
+    func logStart(
+        _ event: BlackBox.StartEvent
+    ) {
+        let expectation = expectation(description: "Log received")
+        logger.expectation = expectation
+        
+        BlackBox.logStart(
+            event
+        )
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
     func logEnd(
         _ event: BlackBox.StartEvent,
         message: String? = nil,

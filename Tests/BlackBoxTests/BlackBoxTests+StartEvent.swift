@@ -9,6 +9,11 @@ import XCTest
 @testable import BlackBox
 
 extension BlackBoxTests {
+    func test_logStart_event() {
+        let event = BlackBox.StartEvent("Test")
+        logStart(event)
+        XCTAssertEqual(logger.startEvent, event)
+    }
     func test_startLog_message() {
         logStart("Test")
         XCTAssertEqual(logger.startEvent?.message, "Start: Test")
@@ -72,6 +77,6 @@ extension BlackBoxTests {
     
     func test_startLog_line() {
         logStart("Test")
-        XCTAssertEqual(logger.startEvent?.source.line, 74)
+        XCTAssertEqual(logger.startEvent?.source.line, 79)
     }
 }
