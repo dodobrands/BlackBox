@@ -12,7 +12,6 @@
 		1E4AC26D27A7F221009F0981 /* BBLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */; };
 		1E4AC26E27A7F221009F0981 /* OSSignpostLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26227A7F221009F0981 /* OSSignpostLogger.swift */; };
 		1E4AC26F27A7F221009F0981 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26327A7F221009F0981 /* OSLogger.swift */; };
-		1E4AC27027A7F221009F0981 /* BBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26427A7F221009F0981 /* BBProtocol.swift */; };
 		1E4AC27127A7F221009F0981 /* BlackBoxEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */; };
 		1E4AC27327A7F221009F0981 /* BBHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26827A7F221009F0981 /* BBHelpers.swift */; };
 		1E4AC27427A7F221009F0981 /* BlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26927A7F221009F0981 /* BlackBox.swift */; };
@@ -25,7 +24,6 @@
 		1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLoggerProtocol.swift; sourceTree = "<group>"; };
 		1E4AC26227A7F221009F0981 /* OSSignpostLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSSignpostLogger.swift; sourceTree = "<group>"; };
 		1E4AC26327A7F221009F0981 /* OSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
-		1E4AC26427A7F221009F0981 /* BBProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBProtocol.swift; sourceTree = "<group>"; };
 		1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBoxEvents.swift; sourceTree = "<group>"; };
 		1E4AC26827A7F221009F0981 /* BBHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBHelpers.swift; sourceTree = "<group>"; };
 		1E4AC26927A7F221009F0981 /* BlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBox.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 				1E4AC28F27A7FE52009F0981 /* BlackBox.h */,
 				1E4AC29027A7FE52009F0981 /* Info.plist */,
 				1E4AC25E27A7F221009F0981 /* Loggers */,
-				1E4AC26427A7F221009F0981 /* BBProtocol.swift */,
 				1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */,
 				1E4AC26727A7F221009F0981 /* Helpers */,
 				1E4AC26927A7F221009F0981 /* BlackBox.swift */,
@@ -73,7 +70,6 @@
 		1E4AC25E27A7F221009F0981 /* Loggers */ = {
 			isa = PBXGroup;
 			children = (
-				1E4AC25F27A7F221009F0981 /* FSLogger.swift */,
 				1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */,
 				1E4AC26127A7F221009F0981 /* OSLogger */,
 			);
@@ -83,6 +79,7 @@
 		1E4AC26127A7F221009F0981 /* OSLogger */ = {
 			isa = PBXGroup;
 			children = (
+				1E4AC25F27A7F221009F0981 /* FSLogger.swift */,
 				1E4AC26227A7F221009F0981 /* OSSignpostLogger.swift */,
 				1E4AC26327A7F221009F0981 /* OSLogger.swift */,
 			);
@@ -207,7 +204,6 @@
 				1E4AC27127A7F221009F0981 /* BlackBoxEvents.swift in Sources */,
 				1E4AC26F27A7F221009F0981 /* OSLogger.swift in Sources */,
 				1E4AC27427A7F221009F0981 /* BlackBox.swift in Sources */,
-				1E4AC27027A7F221009F0981 /* BBProtocol.swift in Sources */,
 				1E4AC26E27A7F221009F0981 /* OSSignpostLogger.swift in Sources */,
 				1E4AC26B27A7F221009F0981 /* BBLogLevel.swift in Sources */,
 			);
