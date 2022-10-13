@@ -16,7 +16,7 @@ extension BlackBoxTests {
     
     func test_errorLog_message() {
         log(SomeError.someCase)
-        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.BlackBoxTests.SomeError.someCase")
+        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.SomeError.someCase")
     }
     
     func test_errorLog_userInfo() {

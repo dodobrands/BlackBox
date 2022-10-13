@@ -27,20 +27,6 @@ class BlackBoxTests: XCTestCase {
         let greeting: String
     }
     
-    enum SomeError: Error, Equatable, CustomNSError {
-        case someCase
-        case otherCase(value: Int)
-        
-        var errorUserInfo: [String : Any] {
-            switch self {
-            case .someCase:
-                return [:]
-            case .otherCase(let value):
-                return ["value": value]
-            }
-        }
-    }
-    
     func log(
         _ message: String,
         userInfo: BBUserInfo? = nil,
