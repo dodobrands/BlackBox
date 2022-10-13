@@ -27,7 +27,7 @@
 		1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBoxEvents.swift; sourceTree = "<group>"; };
 		1E4AC26827A7F221009F0981 /* BBHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBHelpers.swift; sourceTree = "<group>"; };
 		1E4AC26927A7F221009F0981 /* BlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBox.swift; sourceTree = "<group>"; };
-		1E4AC28F27A7FE52009F0981 /* BlackBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBox.h; sourceTree = SOURCE_ROOT; };
+		1E4AC28F27A7FE52009F0981 /* BlackBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlackBox.h; path = ../Sources/BlackBox/BlackBox.h; sourceTree = SOURCE_ROOT; };
 		9B8F3C18274299A8000B4702 /* BlackBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlackBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
