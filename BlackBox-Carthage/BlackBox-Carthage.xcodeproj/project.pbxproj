@@ -29,7 +29,6 @@
 		1E4AC26927A7F221009F0981 /* BlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBox.swift; sourceTree = "<group>"; };
 		1E4AC28F27A7FE52009F0981 /* BlackBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackBox.h; sourceTree = SOURCE_ROOT; };
 		1E4AC29027A7FE52009F0981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = SOURCE_ROOT; };
-		9B8F3BBF27428EA8000B4702 /* NSpry.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NSpry.xcframework; path = ../Carthage/Build/NSpry.xcframework; sourceTree = "<group>"; };
 		9B8F3C18274299A8000B4702 /* BlackBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlackBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -99,7 +98,6 @@
 			children = (
 				1E4AC25B27A7F221009F0981 /* Sources */,
 				9B8F3B8827428DCB000B4702 /* Products */,
-				9B8F3B9F27428E39000B4702 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,14 +107,6 @@
 				9B8F3C18274299A8000B4702 /* BlackBox.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9B8F3B9F27428E39000B4702 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9B8F3BBF27428EA8000B4702 /* NSpry.xcframework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
