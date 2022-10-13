@@ -1,35 +1,33 @@
 import Foundation
 import os
 
-extension BlackBox {
-    /// Redirects logs to Time Profiler
-    /// Usage example: https://habr.com/ru/company/dododev/blog/690542/
-    public class OSSignpostLogger: BBLoggerProtocol {
-        let levels: [BBLogLevel]
-        
-        public init(levels: [BBLogLevel]){
-            self.levels = levels
-        }
-        
-        public func log(_ event: BlackBox.GenericEvent) {
-            signpostLog(event: event)
-        }
-        
-        public func log(_ event: BlackBox.ErrorEvent) {
-            signpostLog(event: event)
-        }
-        
-        public func logStart(_ event: BlackBox.StartEvent) {
-            signpostLog(event: event)
-        }
-        
-        public func logEnd(_ event: BlackBox.EndEvent) {
-            signpostLog(event: event)
-        }
+/// Redirects logs to Time Profiler
+/// Usage example: https://habr.com/ru/company/dododev/blog/690542/
+public class OSSignpostLogger: BBLoggerProtocol {
+    let levels: [BBLogLevel]
+    
+    public init(levels: [BBLogLevel]){
+        self.levels = levels
+    }
+    
+    public func log(_ event: BlackBox.GenericEvent) {
+        signpostLog(event: event)
+    }
+    
+    public func log(_ event: BlackBox.ErrorEvent) {
+        signpostLog(event: event)
+    }
+    
+    public func logStart(_ event: BlackBox.StartEvent) {
+        signpostLog(event: event)
+    }
+    
+    public func logEnd(_ event: BlackBox.EndEvent) {
+        signpostLog(event: event)
     }
 }
 
-extension BlackBox.OSSignpostLogger {
+extension OSSignpostLogger {
     private func signpostLog(
         event: BlackBox.GenericEvent
     ) {
