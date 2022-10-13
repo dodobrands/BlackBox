@@ -56,21 +56,13 @@
 			children = (
 				1E4AC25D27A7F221009F0981 /* BBLogLevel.swift */,
 				1E4AC28F27A7FE52009F0981 /* BlackBox.h */,
-				1E4AC25E27A7F221009F0981 /* Loggers */,
+				1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */,
+				1E4AC26127A7F221009F0981 /* Loggers */,
 				1E4AC26527A7F221009F0981 /* BlackBoxEvents.swift */,
 				1E4AC26727A7F221009F0981 /* Helpers */,
 				1E4AC26927A7F221009F0981 /* BlackBox.swift */,
 			);
 			path = BlackBox;
-			sourceTree = "<group>";
-		};
-		1E4AC25E27A7F221009F0981 /* Loggers */ = {
-			isa = PBXGroup;
-			children = (
-				1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */,
-				1E4AC26127A7F221009F0981 /* Loggers */,
-			);
-			path = Loggers;
 			sourceTree = "<group>";
 		};
 		1E4AC26127A7F221009F0981 /* Loggers */ = {
