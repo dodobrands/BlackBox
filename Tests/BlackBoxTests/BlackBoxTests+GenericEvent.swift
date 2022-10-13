@@ -29,6 +29,11 @@ extension BlackBoxTests {
         XCTAssertEqual(logger.genericEvent?.level, .warning)
     }
     
+    func test_genericLog_defaultLevel() {
+        log("Test")
+        XCTAssertEqual(logger.genericEvent?.level, .debug)
+    }
+    
     func test_genericLog_category() {
         log("Test", category: "Analytics")
         XCTAssertEqual(logger.genericEvent?.category, "Analytics")
@@ -62,6 +67,6 @@ extension BlackBoxTests {
     
     func test_genericLog_line() {
         log("Test")
-        XCTAssertEqual(logger.genericEvent?.source.line, 64)
+        XCTAssertEqual(logger.genericEvent?.source.line, 69)
     }
 }

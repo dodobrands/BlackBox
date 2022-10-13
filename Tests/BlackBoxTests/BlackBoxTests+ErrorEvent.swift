@@ -29,7 +29,7 @@ extension BlackBoxTests {
         XCTAssertEqual(logger.errorEvent?.serviceInfo as? Lightsaber, Lightsaber(color: "purple"))
     }
     
-    func test_errorLog_level() {
+    func test_errorLog_defaultLevel() {
         log(AnakinKills.maceWindu)
         XCTAssertEqual(logger.errorEvent?.level, .error)
     }

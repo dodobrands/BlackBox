@@ -44,6 +44,12 @@ extension BlackBoxTests {
         XCTAssertEqual(logger.endEvent?.level, .warning)
     }
     
+    func test_endLog_defaultLevel() {
+        let event = BlackBox.StartEvent("Test")
+        logEnd(event)
+        XCTAssertEqual(logger.endEvent?.level, .debug)
+    }
+    
     func test_endLog_category() {
         let event = BlackBox.StartEvent("Test")
         logEnd(event, category: "Analytics")
@@ -84,6 +90,6 @@ extension BlackBoxTests {
     func test_endLog_line() {
         let event = BlackBox.StartEvent("Test")
         logEnd(event)
-        XCTAssertEqual(logger.endEvent?.source.line, 86)
+        XCTAssertEqual(logger.endEvent?.source.line, 92)
     }
 }

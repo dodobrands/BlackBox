@@ -34,6 +34,11 @@ extension BlackBoxTests {
         XCTAssertEqual(logger.startEvent?.level, .warning)
     }
     
+    func test_startLog_defaultLevel() {
+        logStart("Test")
+        XCTAssertEqual(logger.startEvent?.level, .debug)
+    }
+    
     func test_startLog_category() {
         logStart("Test", category: "Analytics")
         XCTAssertEqual(logger.startEvent?.category, "Analytics")
@@ -67,6 +72,6 @@ extension BlackBoxTests {
     
     func test_startLog_line() {
         logStart("Test")
-        XCTAssertEqual(logger.startEvent?.source.line, 69)
+        XCTAssertEqual(logger.startEvent?.source.line, 74)
     }
 }
