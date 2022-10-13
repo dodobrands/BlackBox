@@ -1,0 +1,25 @@
+name: 'Clean up'
+
+runs:
+  using: "composite"
+
+  # using bash instead of zsh because of zsh rm confirmation
+  # https://stackoverflow.com/questions/27988160/why-does-rm-f-ask-me-for-confirmation-on-zsh
+
+  steps:
+  - name: Delete Archives
+    shell: bash
+    run: rm -rf ~/Library/Developer/Xcode/Archives/{*,.*} || true
+
+  - name: Delete Derived Data
+    shell: bash
+    run: rm -rf ~/Library/Developer/Xcode/DerivedData/{*,.*} || true
+
+  - name: Delete Carthage Caches
+    shell: bash
+    run: rm -rf ~/Library/Caches/org.carthage.CarthageKit/{*,.*} || true
+
+  - name: Delete known_hosts # https://github.com/webfactory/ssh-agent/issues/106
+    shell: bash
+    run: rm -rf ~/.ssh/known_hosts || true
+    working-directory: ${{ github.workspace }}

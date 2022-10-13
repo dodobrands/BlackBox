@@ -1,0 +1,101 @@
+name: Unit Tests
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches:
+      - 'develop'
+      - 'main'
+      - 'release/**'
+      - 'hotfix/**'
+  workflow_dispatch:
+    inputs:
+      agent:
+        type: choice
+        description: 'Build agent'
+        required: true
+        default: ios
+        options: 
+        - bbq
+        - macos
+        - ios
+        - arriva
+        - salmon
+        - diablo
+        - cheesy-chicken
+        - pepperoni
+      xcode-version:
+        description: 'Xcode version'
+        required: true
+        default: '~>13'
+
+defaults:
+  run:
+    shell: zsh {0}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  LANG: "en_US.UTF-8"
+  LANGUAGE: "en_US.UTF-8"
+  LC_ALL: "en_US.UTF-8"
+  SCHEME: "BlackBox"
+  DESTINATION: "'platform=iOS Simulator,name=iPhone 11'"
+
+jobs:
+  unit-tests-spm:
+    runs-on: ${{ github.event.inputs.agent || 'ios' }}
+
+    timeout-minutes: 15
+
+    env:
+      XCODE_VERSION: ${{ github.event.inputs.xcode-version || '~>13' }}
+
+    steps:
+    - name: Get source code
+      uses: actions/checkout@v3
+      with:
+        clean: true
+
+    - name: Prepare Environment for App Build
+      uses: ./.github/actions/prepare_env_app_build
+      with:
+        xcode-version: ${{ env.XCODE_VERSION }}
+        
+    - name: Build
+      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination ${{ env.DESTINATION }}
+
+    - name: Test
+      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination ${{ env.DESTINATION }}
+
+    - name: Clean up
+      if: ${{ always() }}
+      uses: ./.github/actions/cleanup
+
+  unit-tests-carthage:
+    runs-on: ${{ github.event.inputs.agent || 'ios' }}
+
+    timeout-minutes: 15
+
+    env:
+      XCODE_VERSION: ${{ github.event.inputs.xcode-version || '~>13' }}
+
+    steps:
+    - name: Get source code
+      uses: actions/checkout@v3
+      with:
+        clean: true
+
+    - name: Prepare Environment for App Build
+      uses: ./.github/actions/prepare_env_app_build
+      with:
+        xcode-version: ${{ env.XCODE_VERSION }}
+
+    - name: Build Library
+      run: carthage build --no-skip-current --use-xcframeworks --platform iOS
+
+    - name: Clean up
+      if: ${{ always() }}
+      uses: ./.github/actions/cleanup
