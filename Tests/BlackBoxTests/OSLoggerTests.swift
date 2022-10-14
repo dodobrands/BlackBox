@@ -8,25 +8,31 @@
 import Foundation
 import XCTest
 @testable import BlackBox
+import os
 
-class OSLoggerTests: XCTestCase {
-    var sut: OSLoggerMock!
+class OSLoggerTests: BlackBoxTests {
+    var osLogger: OSLoggerMock!
     override func setUpWithError() throws {
         try super.setUpWithError()
         
-        sut = .init(
-            levels: .allCases
-        )
+        createOSLogger(levels: .allCases)
     }
     
     override func tearDownWithError() throws {
-        sut = nil
+        logger = nil
+        osLogger = nil
         try super.tearDownWithError()
     }
     
+    private func createOSLogger(levels: [BBLogLevel]) {
+        osLogger = .init(levels: levels)
+        BlackBox.instance = .init(loggers: [osLogger])
+        
+        logger = osLogger
+    }
+    
     func test_genericEvent_message() {
-        let event = BlackBox.GenericEvent("Hello there")
-        sut.log(event)
+        log("Hello there")
         
         let expectedResult = """
 Hello there
@@ -37,16 +43,14 @@ OSLoggerTests.test_genericEvent_message()
 [User Info]:
 nil
 """
-        XCTAssertEqual(sut.data?.message, expectedResult)
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
     
     func test_genericEvent_userInfo() {
-        let event = BlackBox.GenericEvent(
+        log(
             "Hello there",
             userInfo: ["response": "General Kenobi"]
         )
-        
-        sut.log(event)
         
         let expectedResult = """
 Hello there
@@ -59,19 +63,17 @@ OSLoggerTests.test_genericEvent_userInfo()
   "response" : "General Kenobi"
 }
 """
-        XCTAssertEqual(sut.data?.message, expectedResult)
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
     
     struct Response {
         let value: String
     }
     func test_genericEvent_userInfo_nonCodable() {
-        let event = BlackBox.GenericEvent(
+        log(
             "Hello there",
             userInfo: ["response": Response(value: "General Kenobi")]
         )
-        
-        sut.log(event)
         
         let expectedResult = """
 Hello there
@@ -82,51 +84,75 @@ OSLoggerTests.test_genericEvent_userInfo_nonCodable()
 [User Info]:
 ["response": BlackBoxTests.OSLoggerTests.Response(value: "General Kenobi")]
 """
-        XCTAssertEqual(sut.data?.message, expectedResult)
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
     
     func test_genericEvent_invalidLevels() {
-        sut = .init(levels: [.error])
+        createOSLogger(levels: [.error])
 
         let logLevels: [BBLogLevel] = [.debug, .info, .warning]
         
         logLevels.forEach { level in
-            let event = BlackBox.GenericEvent("Hello There", level: level)
-            sut.log(event)
+            log("Hello There", level: level, isInverted: true)
         }
         
-        XCTAssertNil(sut.data)
+        XCTAssertNil(osLogger.data)
     }
     
     func test_genericEvent_validLevel() {
-        sut = .init(levels: [.error])
-        let event = BlackBox.GenericEvent("Hello There", level: .error)
-        sut.log(event)
-        XCTAssertNotNil(sut.data)
+        createOSLogger(levels: [.error])
+        
+        log("Hello There", level: .error)
+        XCTAssertNotNil(osLogger.data)
+    }
+    
+    func test_genericEvent_level_debugMapsToDefault() {
+        log("Hello There", level: .debug)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.default.rawValue)
+    }
+    
+    func test_genericEvent_level_infoMapsToInfo() {
+        log("Hello There", level: .info)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.info.rawValue)
+    }
+    
+    func test_genericEvent_level_warningMapsToError() {
+        log("Hello There", level: .warning)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.error.rawValue)
+    }
+    
+    func test_genericEvent_level_errorMapsToFault() {
+        log("Hello There", level: .error)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.fault.rawValue)
     }
     
     func test_genericEvent_subsystem() {
-        let event = BlackBox.GenericEvent("Hello There")
-        sut.log(event)
-        XCTAssertEqual(sut.data?.subsystem, "BlackBoxTests")
+        log("Hello There")
+        XCTAssertEqual(osLogger.data?.subsystem, "BlackBoxTests")
     }
     
     func test_genericEvent_categoryProvided() {
-        let event = BlackBox.GenericEvent("Hello There", category: "Analytics")
-        sut.log(event)
-        XCTAssertEqual(sut.data?.category, "Analytics")
+        log("Hello There", category: "Analytics")
+        XCTAssertEqual(osLogger.data?.category, "Analytics")
     }
     
     func test_genericEvent_categoryNotProvided() {
-        let event = BlackBox.GenericEvent("Hello There")
-        sut.log(event)
-        XCTAssertEqual(sut.data?.category, "")
+        log("Hello There")
+        XCTAssertEqual(osLogger.data?.category, "")
     }
 }
 
-class OSLoggerMock: OSLogger {
+class OSLoggerMock: OSLogger, TestableLoggerProtocol {
+    var expectation: XCTestExpectation?
+    var genericEvent: BlackBox.GenericEvent?
+    var errorEvent: BlackBox.ErrorEvent?
+    var startEvent: BlackBox.StartEvent?
+    var endEvent: BlackBox.EndEvent?
+    
     var data: LogData?
     override func osLog(_ data: LogData) {
         self.data = data
+        expectation?.fulfill()
+        super.osLog(data)
     }
 }
