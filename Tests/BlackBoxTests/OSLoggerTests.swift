@@ -38,7 +38,8 @@ class OSLoggerTests: BlackBoxTests {
 Hello there
 
 [Sender]:
-OSLoggerTests.test_genericEvent_message()
+OSLoggerTests:35
+test_genericEvent_message()
 
 [User Info]:
 nil
@@ -56,7 +57,8 @@ nil
 Hello there
 
 [Sender]:
-OSLoggerTests.test_genericEvent_userInfo()
+OSLoggerTests:51
+test_genericEvent_userInfo()
 
 [User Info]:
 {
@@ -79,7 +81,8 @@ OSLoggerTests.test_genericEvent_userInfo()
 Hello there
 
 [Sender]:
-OSLoggerTests.test_genericEvent_userInfo_nonCodable()
+OSLoggerTests:75
+test_genericEvent_userInfo_nonCodable()
 
 [User Info]:
 ["response": BlackBoxTests.OSLoggerTests.Response(value: "General Kenobi")]
