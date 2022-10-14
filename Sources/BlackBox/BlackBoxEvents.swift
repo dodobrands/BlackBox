@@ -106,19 +106,23 @@ extension BlackBox {
             source: Source
         ) {
             self.error = error
-            let nsError = error as NSError
-            
-            let domain = nsError.domain
-            let name = String(describing: error)
-            
-            let nameWithoutUserInfo: String
-            if let split = name.split(separator: "(").first {
-                nameWithoutUserInfo = String(split)
-            } else {
-                nameWithoutUserInfo = name
+            func domainWithoutModuleName(_ module: String) -> String {
+                let nsError = error as NSError
+                return nsError.domain
+                    .deletingPrefix(source.module)
+                    .deletingPrefix(".")
             }
             
-            let message = [domain, nameWithoutUserInfo].joined(separator: ".")
+            func nameWithoutUserInfo() -> String {
+                let name = String(describing: error)
+                guard let split = name.split(separator: "(").first else { return name }
+                return String(split)
+            }
+
+            let message = [
+                domainWithoutModuleName(source.module),
+                nameWithoutUserInfo()
+            ].joined(separator: ".")
             
             super.init(
                 id: id,
@@ -330,5 +334,12 @@ public extension BlackBox.GenericEvent {
             self.function = function
             self.line = line
         }
+    }
+}
+
+extension String {
+    func deletingPrefix(_ prefix: String) -> String {
+        guard hasPrefix(prefix) else { return self }
+        return String(dropFirst(prefix.count))
     }
 }
