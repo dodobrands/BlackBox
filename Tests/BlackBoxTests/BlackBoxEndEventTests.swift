@@ -16,9 +16,19 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         event = BlackBox.StartEvent("Test")
     }
     
-    func test_endEvent_startEvent() {
+    func test_startEvent() {
         waitForLog { BlackBox.logEnd(event) }
         XCTAssertEqual(logger.endEvent?.startEvent, event)
+    }
+    
+    func test_duration() {
+        let startTimestamp = Date()
+        let endTimestamp = startTimestamp.addingTimeInterval(10)
+        
+        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
+        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
+        
+        XCTAssertEqual(endEvent.duration, 10)
     }
     
     func test_message() {
@@ -85,6 +95,6 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     
     func test_line() {
         waitForLog { BlackBox.logEnd(event) }
-        XCTAssertEqual(logger.endEvent?.source.line, 87)
+        XCTAssertEqual(logger.endEvent?.source.line, 97)
     }
 }

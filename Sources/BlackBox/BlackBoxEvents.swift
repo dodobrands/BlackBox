@@ -237,6 +237,9 @@ extension BlackBox {
         /// Start event
         public let startEvent: StartEvent
         
+        /// Duration between end event and start event
+        public let duration: TimeInterval
+        
         public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
@@ -251,7 +254,7 @@ extension BlackBox {
         ) {
             self.rawMessage = message
             self.startEvent = startEvent
-            
+            self.duration = timestamp.timeIntervalSince(startEvent.timestamp)
             super.init(
                 id: id,
                 timestamp: timestamp,
