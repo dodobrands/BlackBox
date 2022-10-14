@@ -36,23 +36,19 @@ class BlackBoxTestCase: XCTestCase {
         line: UInt = #line,
         isInverted: Bool = false
     ) {
-        let expectation = expectation(description: "Log received")
-        expectation.isInverted = isInverted
-        logger.expectation = expectation
-        
-        BlackBox.log(
-            message,
-            userInfo: userInfo,
-            serviceInfo: serviceInfo,
-            level: level,
-            category: category,
-            parentEvent: parentEvent,
-            fileID: fileID,
-            function: function,
-            line: line
-        )
-        
-        wait(for: [expectation], timeout: timeout)
+        waitForLog(isInverted: isInverted) {
+            BlackBox.log(
+                message,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                level: level,
+                category: category,
+                parentEvent: parentEvent,
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+        }
     }
     
     func log(
@@ -65,24 +61,19 @@ class BlackBoxTestCase: XCTestCase {
         line: UInt = #line,
         isInverted: Bool = false
     ) {
-        let expectation = expectation(description: "Log received")
-        expectation.isInverted = isInverted
-        logger.expectation = expectation
-        
-        BlackBox.log(
-            error,
-            serviceInfo: serviceInfo,
-            category: category,
-            parentEvent: parentEvent,
-            fileID: fileID,
-            function: function,
-            line: line
-        )
-        
-        wait(for: [expectation], timeout: timeout)
+        waitForLog(isInverted: isInverted) {
+            BlackBox.log(
+                error,
+                serviceInfo: serviceInfo,
+                category: category,
+                parentEvent: parentEvent,
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+        }
     }
     
-    @discardableResult
     func logStart(
         _ message: String,
         userInfo: BBUserInfo? = nil,
@@ -94,38 +85,31 @@ class BlackBoxTestCase: XCTestCase {
         function: StaticString = #function,
         line: UInt = #line,
         isInverted: Bool = false
-    ) -> BlackBox.StartEvent {
-        let expectation = expectation(description: "Log received")
-        expectation.isInverted = isInverted
-        logger.expectation = expectation
-        
-        let event = BlackBox.logStart(
-            message,
-            userInfo: userInfo,
-            serviceInfo: serviceInfo,
-            level: level,
-            category: category,
-            parentEvent: parentEvent,
-            fileID: fileID,
-            function: function,
-            line: line
-        )
-        
-        wait(for: [expectation], timeout: timeout)
-        return event
+    ) {
+        waitForLog(isInverted: isInverted) {
+            let _ = BlackBox.logStart(
+                message,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                level: level,
+                category: category,
+                parentEvent: parentEvent,
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+        }
     }
     
     func logStart(
-        _ event: BlackBox.StartEvent
+        _ event: BlackBox.StartEvent,
+        isInverted: Bool = false
     ) {
-        let expectation = expectation(description: "Log received")
-        logger.expectation = expectation
-        
-        BlackBox.logStart(
-            event
-        )
-        
-        wait(for: [expectation], timeout: timeout)
+        waitForLog(isInverted: isInverted) {
+            BlackBox.logStart(
+                event
+            )
+        }
     }
     
     func logEnd(
@@ -140,21 +124,30 @@ class BlackBoxTestCase: XCTestCase {
         line: UInt = #line,
         isInverted: Bool = false
     ) {
+        waitForLog(isInverted: isInverted) {
+            BlackBox.logEnd(
+                event,
+                message: message,
+                userInfo: userInfo,
+                serviceInfo: serviceInfo,
+                category: category,
+                parentEvent: parentEvent,
+                fileID: fileID,
+                function: function,
+                line: line
+            )
+        }
+    }
+    
+    private func waitForLog(
+        isInverted: Bool = false,
+        from code: () -> ()
+    ) {
         let expectation = expectation(description: "Log received")
         expectation.isInverted = isInverted
         logger.expectation = expectation
         
-        BlackBox.logEnd(
-            event,
-            message: message,
-            userInfo: userInfo,
-            serviceInfo: serviceInfo,
-            category: category,
-            parentEvent: parentEvent,
-            fileID: fileID,
-            function: function,
-            line: line
-        )
+        code()
         
         wait(for: [expectation], timeout: timeout)
     }
