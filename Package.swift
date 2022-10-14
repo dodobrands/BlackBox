@@ -8,6 +8,8 @@ let packageName = libraryName
 let targetName = libraryName
 let testsTargetName = targetName + "Tests"
 
+let exampleModuleName = "ExampleModule"
+
 let package = Package(
     name: packageName,
     platforms: [
@@ -30,10 +32,17 @@ let package = Package(
             name: targetName,
             dependencies: []
         ),
+        .target(
+            name: exampleModuleName,
+            dependencies: [
+                .init(stringLiteral: targetName)
+            ]
+        ),
         .testTarget(
             name: testsTargetName,
             dependencies: [
-                .init(stringLiteral: targetName)
+                .init(stringLiteral: targetName),
+                .init(stringLiteral: exampleModuleName)
             ]
         ),
     ],
