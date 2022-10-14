@@ -42,7 +42,6 @@ env:
   LANGUAGE: "en_US.UTF-8"
   LC_ALL: "en_US.UTF-8"
   SCHEME: "BlackBox"
-  DESTINATION: "'platform=iOS Simulator,name=iPhone 11'"
   XCODE_VERSION: ${{ github.event.inputs.xcode-version || '~>13' }}
 
 jobs:
@@ -50,6 +49,10 @@ jobs:
     runs-on: ${{ github.event.inputs.agent || 'ios' }}
 
     timeout-minutes: 15
+
+    strategy:
+      matrix:
+        DESTINATION: ["'platform=iOS Simulator,name=iPhone 11'"]
 
     steps:
     - name: Get source code
@@ -63,10 +66,10 @@ jobs:
         xcode-version: ${{ env.XCODE_VERSION }}
         
     - name: Build
-      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination ${{ env.DESTINATION }}
+      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination ${{ matrix.DESTINATION }}
 
     - name: Test
-      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination ${{ env.DESTINATION }}
+      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination ${{ matrix.DESTINATION }}
 
     - name: Clean up
       if: ${{ always() }}
