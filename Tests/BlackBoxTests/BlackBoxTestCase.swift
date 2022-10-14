@@ -139,7 +139,7 @@ class BlackBoxTestCase: XCTestCase {
         }
     }
     
-    private func waitForLog(
+    func waitForLog(
         isInverted: Bool = false,
         from code: () -> ()
     ) {

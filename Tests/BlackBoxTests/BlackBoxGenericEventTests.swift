@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import BlackBox
+@testable import ExampleModule
 
 class BlackBoxGenericEventTests: BlackBoxTestCase {
     func test_genericLog_message() {
@@ -55,6 +56,13 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
         XCTAssertEqual(logger.genericEvent?.source.module, "BlackBoxTests")
     }
     
+    func test_genericLog_anotherModule() {
+        waitForLog {
+            ExampleService().doSomeWork()
+        }
+        XCTAssertEqual(logger.genericEvent?.source.module, "ExampleModule")
+    }
+    
     func test_genericLog_filename() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.source.filename, "BlackBoxGenericEventTests")
@@ -67,6 +75,6 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
     
     func test_genericLog_line() {
         log("Test")
-        XCTAssertEqual(logger.genericEvent?.source.line, 69)
+        XCTAssertEqual(logger.genericEvent?.source.line, 77)
     }
 }

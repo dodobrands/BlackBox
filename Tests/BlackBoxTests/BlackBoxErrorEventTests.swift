@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import BlackBox
+@testable import ExampleModule
 
 class BlackBoxErrorEventTests: BlackBoxTestCase {
     func test_errorLog_error() {
@@ -17,6 +18,13 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
     func test_errorLog_message() {
         log(AnakinKills.maceWindu)
         XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.maceWindu")
+    }
+    
+    func test_errorLog_message_fromAnotherModule() {
+        waitForLog {
+            ExampleService().logSomeError()
+        }
+        XCTAssertEqual(logger.errorEvent?.message, "ExampleModule.ExampleError.taskFailed")
     }
     
     func test_errorLog_messageOfErrorWithAssociatedValue() {
@@ -72,6 +80,6 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
     
     func test_errorLog_line() {
         log(AnakinKills.maceWindu)
-        XCTAssertEqual(logger.errorEvent?.source.line, 74)
+        XCTAssertEqual(logger.errorEvent?.source.line, 82)
     }
 }
