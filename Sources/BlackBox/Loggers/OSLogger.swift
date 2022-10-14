@@ -101,15 +101,16 @@ extension OSLogger {
                 ].joined(separator: "\n")
             }
             
-            let message = [
-                event.message,
+            // newline at the beginning increments readability in Xcode's console while not decrementing reading in Console.app
+            let message = "\n" + event.message
+            
+            return [
+                message,
                 source(from: event),
                 userInfo(from: event)
             ]
                 .compactMap { $0 }
                 .joined(separator: "\n\n")
-            
-            return message
         }
     }
 }
