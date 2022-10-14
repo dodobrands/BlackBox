@@ -4,6 +4,10 @@ public enum BBLogLevel: String, CaseIterable {
     case debug, info, warning, error
 }
 
+extension Array where Element == BBLogLevel {
+    public static var allCases: [Element] { BBLogLevel.allCases }
+}
+
 extension BBLogLevel {
     public var icon: String {
         switch self {

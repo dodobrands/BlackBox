@@ -6,7 +6,9 @@ import os
 public class OSLogger: BBLoggerProtocol {
     let levels: [BBLogLevel]
     
-    public init(levels: [BBLogLevel]){
+    public init(
+        levels: [BBLogLevel]
+    ){
         self.levels = levels
     }
     
@@ -25,49 +27,79 @@ public class OSLogger: BBLoggerProtocol {
     public func logEnd(_ event: BlackBox.EndEvent) {
         osLog(event: event)
     }
+    
+    func osLog(event: BlackBox.GenericEvent) {
+        guard levels.contains(event.level) else { return }
+        
+        let data = LogData(from: event)
+        
+        osLog(data)
+    }
+    
+    func osLog(_ data: LogData) {
+        let log = OSLog(
+            subsystem: data.subsystem,
+            category: data.category
+        )
+        
+        os_log(
+            data.logType,
+            log: log,
+            "%{public}@", data.message
+        )
+    }
 }
 
 extension OSLogger {
-    private func osLog(event: BlackBox.GenericEvent) {
-        guard levels.contains(event.level) else { return }
+    struct LogData {
+        let logType: OSLogType
+        let subsystem: String
+        let category: String
+        let message: String
         
-        let message = message(from: event)
+        init(
+            logType: OSLogType,
+            subsystem: String,
+            category: String,
+            message: String
+        ) {
+            self.logType = logType
+            self.subsystem = subsystem
+            self.category = category
+            self.message = message
+        }
         
-        let logType = OSLogType(event.level)
-        let logger = OSLog(event)
+        init(from event: BlackBox.GenericEvent) {
+            let subsystem = event.source.module
+            let category = event.category ?? ""
+            
+            self.init(
+                logType: OSLogType(event.level),
+                subsystem: subsystem,
+                category: category,
+                message: Self.message(from: event)
+            )
+        }
         
-        os_log(logType,
-               log: logger,
-               "%{public}@", message)
-    }
-    
-    private func message(from event: BlackBox.GenericEvent) -> String {
-        let userInfo = event.userInfo?.bbLogDescription ?? "nil"
-        
-        let source = [event.source.module,
-                      event.source.filename,
-                      event.source.function.description].joined(separator: ".")
-        
-        let message = event.message
-        + "\n\n"
-        + "[Sender]:"
-        + "\n"
-        + source
-        + "\n\n"
-        + "[User Info]:"
-        + "\n"
-        + userInfo
-        
-        return message
-    }
-}
-
-extension OSLog {
-    convenience init(_ event: BlackBox.GenericEvent) {
-        self.init(
-            subsystem: event.source.module,
-            category:  event.category ?? ""
-        )
+        private static func message(from event: BlackBox.GenericEvent) -> String {
+            let userInfo = event.userInfo?.bbLogDescription ?? "nil"
+            
+            let source = [event.source.module,
+                          event.source.filename,
+                          event.source.function.description].joined(separator: ".")
+            
+            let message = event.message
+            + "\n\n"
+            + "[Sender]:"
+            + "\n"
+            + source
+            + "\n\n"
+            + "[User Info]:"
+            + "\n"
+            + userInfo
+            
+            return message
+        }
     }
 }
 
