@@ -37,7 +37,7 @@ class OSLoggerTests: BlackBoxTests {
         let expectedResult = """
 Hello there
 
-[Sender]:
+[Source]:
 OSLoggerTests:35
 test_genericEvent_message()
 
@@ -56,7 +56,7 @@ nil
         let expectedResult = """
 Hello there
 
-[Sender]:
+[Source]:
 OSLoggerTests:51
 test_genericEvent_userInfo()
 
@@ -80,7 +80,7 @@ test_genericEvent_userInfo()
         let expectedResult = """
 Hello there
 
-[Sender]:
+[Source]:
 OSLoggerTests:75
 test_genericEvent_userInfo_nonCodable()
 
