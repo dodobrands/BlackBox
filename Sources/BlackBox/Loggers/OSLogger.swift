@@ -82,24 +82,24 @@ extension OSLogger {
         }
         
         private static func message(from event: BlackBox.GenericEvent) -> String {
-            let userInfo = event.userInfo?.bbLogDescription ?? "nil"
-            
             let fileWithLine = [event.source.filename, String(event.source.line)].joined(separator: ":")
             
             let source = [
+                "[Source]:",
                 fileWithLine,
                 event.source.function.description
             ].joined(separator: "\n")
             
-            let message = event.message
-            + "\n\n"
-            + "[Source]:"
-            + "\n"
-            + source
-            + "\n\n"
-            + "[User Info]:"
-            + "\n"
-            + userInfo
+            let userInfo = [
+                "[User Info]:",
+                event.userInfo?.bbLogDescription ?? "nil"
+            ].joined(separator: "\n")
+            
+            let message = [
+                event.message,
+                source,
+                userInfo
+            ].joined(separator: "\n\n")
             
             return message
         }
