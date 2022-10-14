@@ -37,11 +37,11 @@ class OSLoggerTests: BlackBoxTests {
         let expectedResult = """
 Hello there
 
-[Source]:
+[Source]
 OSLoggerTests:35
 test_genericEvent_message()
 
-[User Info]:
+[User Info]
 nil
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -56,11 +56,11 @@ nil
         let expectedResult = """
 Hello there
 
-[Source]:
+[Source]
 OSLoggerTests:51
 test_genericEvent_userInfo()
 
-[User Info]:
+[User Info]
 {
   "response" : "General Kenobi"
 }
@@ -80,11 +80,11 @@ test_genericEvent_userInfo()
         let expectedResult = """
 Hello there
 
-[Source]:
+[Source]
 OSLoggerTests:75
 test_genericEvent_userInfo_nonCodable()
 
-[User Info]:
+[User Info]
 ["response": BlackBoxTests.OSLoggerTests.Response(value: "General Kenobi")]
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
