@@ -8,7 +8,7 @@
 import XCTest
 import BlackBox
 
-class DummyLogger: BBLoggerProtocol {
+class DummyLogger: BBLoggerProtocol, TestableLoggerProtocol {
     var expectation: XCTestExpectation?
     
     var genericEvent: BlackBox.GenericEvent?
