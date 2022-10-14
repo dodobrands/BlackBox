@@ -19,6 +19,11 @@ class BlackBoxTests_ErrorEvent: BlackBoxTests {
         XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.maceWindu")
     }
     
+    func test_errorLog_messageOfErrorWithAssociatedValue() {
+        log(AnakinKills.younglings(count: 12))
+        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.younglings(count: 12)")
+    }
+    
     func test_errorLog_userInfo() {
         log(AnakinKills.younglings(count: 11))
         XCTAssertEqual(logger.errorEvent?.userInfo as? [String: Int], ["count": 11])
