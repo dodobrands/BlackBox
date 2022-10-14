@@ -10,70 +10,70 @@ import XCTest
 @testable import ExampleModule
 
 class BlackBoxGenericEventTests: BlackBoxTestCase {
-    func test_genericLog_message() {
+    func test_message() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.message, "Test")
     }
     
-    func test_genericLog_userInfo() {
+    func test_userInfo() {
         log("Test", userInfo: ["name": "Kenobi"])
         XCTAssertEqual(logger.genericEvent?.userInfo as? [String: String], ["name": "Kenobi"])
     }
     
-    func test_genericLog_serviceInfo() {
+    func test_serviceInfo() {
         log("Test", serviceInfo: Lightsaber(color: "purple"))
         XCTAssertEqual(logger.genericEvent?.serviceInfo as? Lightsaber, Lightsaber(color: "purple"))
     }
     
-    func test_genericLog_level() {
+    func test_level() {
         log("Test", level: .warning)
         XCTAssertEqual(logger.genericEvent?.level, .warning)
     }
     
-    func test_genericLog_defaultLevel() {
+    func test_defaultLevel() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.level, .debug)
     }
     
-    func test_genericLog_category() {
+    func test_category() {
         log("Test", category: "Analytics")
         XCTAssertEqual(logger.genericEvent?.category, "Analytics")
     }
     
-    func test_genericLog_parentEvent() {
+    func test_parentEvent() {
         let parentEvent = BlackBox.GenericEvent("Test")
         log("Test 2", parentEvent: parentEvent)
         XCTAssertEqual(logger.genericEvent?.parentEvent, parentEvent)
     }
     
-    func test_genericLog_fileID() {
+    func test_fileID() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.source.fileID.description, "BlackBoxTests/BlackBoxGenericEventTests.swift")
     }
     
-    func test_genericLog_module() {
+    func test_module() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.source.module, "BlackBoxTests")
     }
     
-    func test_genericLog_anotherModule() {
+    func test_anotherModule() {
         waitForLog {
             ExampleService().doSomeWork()
         }
         XCTAssertEqual(logger.genericEvent?.source.module, "ExampleModule")
     }
     
-    func test_genericLog_filename() {
+    func test_filename() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.source.filename, "BlackBoxGenericEventTests")
     }
     
-    func test_genericLog_function() {
+    func test_function() {
         log("Test")
-        XCTAssertEqual(logger.genericEvent?.source.function.description, "test_genericLog_function()")
+        XCTAssertEqual(logger.genericEvent?.source.function.description, "test_function()")
     }
     
-    func test_genericLog_line() {
+    func test_line() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.source.line, 77)
     }
