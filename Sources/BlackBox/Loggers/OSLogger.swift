@@ -93,7 +93,7 @@ extension OSLogger {
             
             let message = event.message
             + "\n\n"
-            + "[Sender]:"
+            + "[Source]:"
             + "\n"
             + source
             + "\n\n"
