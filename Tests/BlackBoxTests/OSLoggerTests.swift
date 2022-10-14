@@ -32,7 +32,7 @@ class OSLoggerTests: XCTestCase {
 Hello there
 
 [Sender]:
-BlackBoxTests.OSLoggerTests.test_genericEvent_message()
+OSLoggerTests.test_genericEvent_message()
 
 [User Info]:
 nil
@@ -52,7 +52,7 @@ nil
 Hello there
 
 [Sender]:
-BlackBoxTests.OSLoggerTests.test_genericEvent_userInfo()
+OSLoggerTests.test_genericEvent_userInfo()
 
 [User Info]:
 {
@@ -77,7 +77,7 @@ BlackBoxTests.OSLoggerTests.test_genericEvent_userInfo()
 Hello there
 
 [Sender]:
-BlackBoxTests.OSLoggerTests.test_genericEvent_userInfo_nonCodable()
+OSLoggerTests.test_genericEvent_userInfo_nonCodable()
 
 [User Info]:
 ["response": BlackBoxTests.OSLoggerTests.Response(value: "General Kenobi")]
