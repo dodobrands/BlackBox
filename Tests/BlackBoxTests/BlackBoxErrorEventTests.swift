@@ -17,20 +17,20 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
     
     func test_message() {
         waitForLog { BlackBox.log(AnakinKills.maceWindu) }
-        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.maceWindu")
+        XCTAssertEqual(logger.errorEvent?.message, "AnakinKills.maceWindu")
     }
     
     func test_message_fromAnotherModule() {
         waitForLog { ExampleService().logSomeError() }
-        XCTAssertEqual(logger.errorEvent?.message, "ExampleModule.ExampleError.taskFailed")
+        XCTAssertEqual(logger.errorEvent?.message, "ExampleError.taskFailed")
     }
     
-    func test_messageOfErrorWithAssociatedValue() {
+    func test_message_hasNoWithAssociatedValue() {
         waitForLog { BlackBox.log(AnakinKills.younglings(count: 11)) }
-        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.younglings")
+        XCTAssertEqual(logger.errorEvent?.message, "AnakinKills.younglings")
     }
     
-    func test_userInfoOfErrorWithAssociatedValue() {
+    func test_userInfo_hasAssociatedValue() {
         waitForLog { BlackBox.log(AnakinKills.younglings(count: 11)) }
         XCTAssertEqual(logger.errorEvent?.userInfo as? [String: Int], ["count": 11])
     }
