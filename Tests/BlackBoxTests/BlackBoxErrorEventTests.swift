@@ -1,5 +1,5 @@
 //
-//  BlackBoxTests+ErrorEvent.swift
+//  BlackBoxErrorEventTests.swift
 //  
 //
 //  Created by Aleksey Berezka on 13.10.2022.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-class BlackBoxTests_ErrorEvent: BlackBoxTests {
+class BlackBoxErrorEventTests: BlackBoxTestCase {
     func test_errorLog_error() {
         log(AnakinKills.maceWindu)
         XCTAssertEqual(logger.errorEvent?.error as? AnakinKills, AnakinKills.maceWindu)
@@ -52,7 +52,7 @@ class BlackBoxTests_ErrorEvent: BlackBoxTests {
     
     func test_errorLog_fileID() {
         log(AnakinKills.maceWindu)
-        XCTAssertEqual(logger.errorEvent?.source.fileID.description, "BlackBoxTests/BlackBoxTests+ErrorEvent.swift")
+        XCTAssertEqual(logger.errorEvent?.source.fileID.description, "BlackBoxTests/BlackBoxErrorEventTests.swift")
     }
     
     func test_errorLog_module() {
@@ -62,7 +62,7 @@ class BlackBoxTests_ErrorEvent: BlackBoxTests {
     
     func test_errorLog_filename() {
         log(AnakinKills.maceWindu)
-        XCTAssertEqual(logger.errorEvent?.source.filename, "BlackBoxTests+ErrorEvent")
+        XCTAssertEqual(logger.errorEvent?.source.filename, "BlackBoxErrorEventTests")
     }
     
     func test_errorLog_function() {

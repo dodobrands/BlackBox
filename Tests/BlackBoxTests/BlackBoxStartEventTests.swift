@@ -1,5 +1,5 @@
 //
-//  BlackBoxTests+StartEvent.swift
+//  BlackBoxStartEventTests.swift
 //  
 //
 //  Created by Aleksey Berezka on 13.10.2022.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-class BlackBoxTests_StartEvent: BlackBoxTests {
+class BlackBoxStartEventTests: BlackBoxTestCase {
     func test_logStart_event() {
         let event = BlackBox.StartEvent("Test")
         logStart(event)
@@ -57,7 +57,7 @@ class BlackBoxTests_StartEvent: BlackBoxTests {
     
     func test_startLog_fileID() {
         logStart("Test")
-        XCTAssertEqual(logger.startEvent?.source.fileID.description, "BlackBoxTests/BlackBoxTests+StartEvent.swift")
+        XCTAssertEqual(logger.startEvent?.source.fileID.description, "BlackBoxTests/BlackBoxStartEventTests.swift")
     }
     
     func test_startLog_module() {
@@ -67,7 +67,7 @@ class BlackBoxTests_StartEvent: BlackBoxTests {
     
     func test_startLog_filename() {
         logStart("Test")
-        XCTAssertEqual(logger.startEvent?.source.filename, "BlackBoxTests+StartEvent")
+        XCTAssertEqual(logger.startEvent?.source.filename, "BlackBoxStartEventTests")
     }
     
     func test_startLog_function() {
