@@ -52,7 +52,7 @@ jobs:
 
     strategy:
       matrix:
-        DESTINATION: ["'platform=iOS Simulator,name=iPhone 11'"]
+        DESTINATION: ["platform=iOS Simulator,name=iPhone 11", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Series 5 - 40mm"]
 
     steps:
     - name: Get source code
@@ -66,10 +66,10 @@ jobs:
         xcode-version: ${{ env.XCODE_VERSION }}
         
     - name: Build
-      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination ${{ matrix.DESTINATION }}
+      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
 
     - name: Test
-      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination ${{ matrix.DESTINATION }}
+      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
 
     - name: Clean up
       if: ${{ always() }}
