@@ -106,10 +106,24 @@ extension BlackBox {
             source: Source
         ) {
             self.error = error
+            let nsError = error as NSError
+            
+            let domain = nsError.domain
+            let name = String(describing: error)
+            
+            let nameWithoutUserInfo: String
+            if let split = name.split(separator: "(").first {
+                nameWithoutUserInfo = String(split)
+            } else {
+                nameWithoutUserInfo = name
+            }
+            
+            let message = [domain, nameWithoutUserInfo].joined(separator: ".")
+            
             super.init(
                 id: id,
                 timestamp: timestamp,
-                String(reflecting: error),
+                message,
                 userInfo: (error as? CustomNSError)?.errorUserInfo,
                 serviceInfo: serviceInfo,
                 level: error.level,

@@ -20,11 +20,11 @@ class BlackBoxTests_ErrorEvent: BlackBoxTests {
     }
     
     func test_errorLog_messageOfErrorWithAssociatedValue() {
-        log(AnakinKills.younglings(count: 12))
-        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.younglings(count: 12)")
+        log(AnakinKills.younglings(count: 11))
+        XCTAssertEqual(logger.errorEvent?.message, "BlackBoxTests.AnakinKills.younglings")
     }
     
-    func test_errorLog_userInfo() {
+    func test_errorLog_userInfoOfErrorWithAssociatedValue() {
         log(AnakinKills.younglings(count: 11))
         XCTAssertEqual(logger.errorEvent?.userInfo as? [String: Int], ["count": 11])
     }
@@ -72,6 +72,6 @@ class BlackBoxTests_ErrorEvent: BlackBoxTests {
     
     func test_errorLog_line() {
         log(AnakinKills.maceWindu)
-        XCTAssertEqual(logger.errorEvent?.source.line, 69)
+        XCTAssertEqual(logger.errorEvent?.source.line, 74)
     }
 }
