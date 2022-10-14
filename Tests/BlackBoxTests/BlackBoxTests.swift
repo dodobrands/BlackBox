@@ -10,11 +10,11 @@ import XCTest
 @testable import BlackBox
 
 class BlackBoxTests: XCTestCase {
-    var logger: DummyLogger!
+    var logger: (BBLoggerProtocol & TestableLoggerProtocol)!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        logger = .init()
+        logger = DummyLogger()
         BlackBox.instance = .init(loggers: [logger])
     }
     
@@ -32,9 +32,11 @@ class BlackBoxTests: XCTestCase {
         parentEvent: BlackBox.GenericEvent? = nil,
         fileID: StaticString = #fileID,
         function: StaticString = #function,
-        line: UInt = #line
+        line: UInt = #line,
+        isInverted: Bool = false
     ) {
         let expectation = expectation(description: "Log received")
+        expectation.isInverted = isInverted
         logger.expectation = expectation
         
         BlackBox.log(
@@ -59,9 +61,11 @@ class BlackBoxTests: XCTestCase {
         parentEvent: BlackBox.GenericEvent? = nil,
         fileID: StaticString = #fileID,
         function: StaticString = #function,
-        line: UInt = #line
+        line: UInt = #line,
+        isInverted: Bool = false
     ) {
         let expectation = expectation(description: "Log received")
+        expectation.isInverted = isInverted
         logger.expectation = expectation
         
         BlackBox.log(
@@ -87,9 +91,11 @@ class BlackBoxTests: XCTestCase {
         parentEvent: BlackBox.GenericEvent? = nil,
         fileID: StaticString = #fileID,
         function: StaticString = #function,
-        line: UInt = #line
+        line: UInt = #line,
+        isInverted: Bool = false
     ) -> BlackBox.StartEvent {
         let expectation = expectation(description: "Log received")
+        expectation.isInverted = isInverted
         logger.expectation = expectation
         
         let event = BlackBox.logStart(
@@ -130,9 +136,11 @@ class BlackBoxTests: XCTestCase {
         parentEvent: BlackBox.GenericEvent? = nil,
         fileID: StaticString = #fileID,
         function: StaticString = #function,
-        line: UInt = #line
+        line: UInt = #line,
+        isInverted: Bool = false
     ) {
         let expectation = expectation(description: "Log received")
+        expectation.isInverted = isInverted
         logger.expectation = expectation
         
         BlackBox.logEnd(
@@ -149,4 +157,12 @@ class BlackBoxTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
     }
+}
+
+protocol TestableLoggerProtocol {
+    var expectation: XCTestExpectation? { get set }
+    var genericEvent: BlackBox.GenericEvent? { get set }
+    var errorEvent: BlackBox.ErrorEvent? { get set }
+    var startEvent: BlackBox.StartEvent? { get set }
+    var endEvent: BlackBox.EndEvent? { get set }
 }
