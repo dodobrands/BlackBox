@@ -32,7 +32,8 @@ class OSLoggerTests: BlackBoxTestCase {
     }
     
     func test_genericEvent_message() {
-        log("Hello there")
+        waitForLog { BlackBox.log("Hello there") }
+        
         
         let expectedResult = """
 
@@ -46,17 +47,14 @@ test_genericEvent_message()
     }
     
     func test_genericEvent_userInfo() {
-        log(
-            "Hello there",
-            userInfo: ["response": "General Kenobi"]
-        )
+        waitForLog { BlackBox.log("Hello there", userInfo: ["response": "General Kenobi"]) }
         
         let expectedResult = """
 
 Hello there
 
 [Source]
-OSLoggerTests:49
+OSLoggerTests:50
 test_genericEvent_userInfo()
 
 [User Info]
@@ -71,17 +69,14 @@ test_genericEvent_userInfo()
         let value: String
     }
     func test_genericEvent_userInfo_nonCodable() {
-        log(
-            "Hello there",
-            userInfo: ["response": Response(value: "General Kenobi")]
-        )
+        waitForLog { BlackBox.log("Hello there", userInfo: ["response": Response(value: "General Kenobi")]) }
         
         let expectedResult = """
 
 Hello there
 
 [Source]
-OSLoggerTests:74
+OSLoggerTests:72
 test_genericEvent_userInfo_nonCodable()
 
 [User Info]
@@ -96,7 +91,7 @@ test_genericEvent_userInfo_nonCodable()
         let logLevels: [BBLogLevel] = [.debug, .info, .warning]
         
         logLevels.forEach { level in
-            log("Hello There", level: level, isInverted: true)
+            waitForLog(isInverted: true) { BlackBox.log("Hello There", level: level) }
         }
         
         XCTAssertNil(osLogger.data)
@@ -105,42 +100,42 @@ test_genericEvent_userInfo_nonCodable()
     func test_genericEvent_validLevel() {
         createOSLogger(levels: [.error])
         
-        log("Hello There", level: .error)
+        waitForLog { BlackBox.log("Hello There", level: .error) }
         XCTAssertNotNil(osLogger.data)
     }
     
     func test_genericEvent_level_debugMapsToDefault() {
-        log("Hello There", level: .debug)
+        waitForLog { BlackBox.log("Hello There", level: .debug) }
         XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.default.rawValue)
     }
     
     func test_genericEvent_level_infoMapsToInfo() {
-        log("Hello There", level: .info)
+        waitForLog { BlackBox.log("Hello There", level: .info) }
         XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.info.rawValue)
     }
     
     func test_genericEvent_level_warningMapsToError() {
-        log("Hello There", level: .warning)
+        waitForLog { BlackBox.log("Hello There", level: .warning) }
         XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.error.rawValue)
     }
     
     func test_genericEvent_level_errorMapsToFault() {
-        log("Hello There", level: .error)
+        waitForLog { BlackBox.log("Hello There", level: .error) }
         XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.fault.rawValue)
     }
     
     func test_genericEvent_subsystem() {
-        log("Hello There")
+        waitForLog { BlackBox.log("Hello There") }
         XCTAssertEqual(osLogger.data?.subsystem, "BlackBoxTests")
     }
     
     func test_genericEvent_categoryProvided() {
-        log("Hello There", category: "Analytics")
+        waitForLog { BlackBox.log("Hello There", category: "Analytics") }
         XCTAssertEqual(osLogger.data?.category, "Analytics")
     }
     
     func test_genericEvent_categoryNotProvided() {
-        log("Hello There")
+        waitForLog { BlackBox.log("Hello There") }
         XCTAssertEqual(osLogger.data?.category, "")
     }
 }
