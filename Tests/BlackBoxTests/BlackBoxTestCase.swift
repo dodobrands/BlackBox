@@ -10,6 +10,7 @@ import XCTest
 @testable import BlackBox
 
 class BlackBoxTestCase: XCTestCase {
+    let timeout: TimeInterval = 0.1
     var logger: (BBLoggerProtocol & TestableLoggerProtocol)!
     
     override func setUpWithError() throws {
@@ -51,7 +52,7 @@ class BlackBoxTestCase: XCTestCase {
             line: line
         )
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: timeout)
     }
     
     func log(
@@ -78,7 +79,7 @@ class BlackBoxTestCase: XCTestCase {
             line: line
         )
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: timeout)
     }
     
     @discardableResult
@@ -110,7 +111,7 @@ class BlackBoxTestCase: XCTestCase {
             line: line
         )
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: timeout)
         return event
     }
     
@@ -124,7 +125,7 @@ class BlackBoxTestCase: XCTestCase {
             event
         )
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: timeout)
     }
     
     func logEnd(
@@ -155,7 +156,7 @@ class BlackBoxTestCase: XCTestCase {
             line: line
         )
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: timeout)
     }
 }
 
