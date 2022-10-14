@@ -8,6 +8,7 @@
 import Foundation
 import XCTest
 @testable import BlackBox
+import os
 
 class OSLoggerTests: BlackBoxTests {
     var osLogger: OSLoggerMock!
@@ -103,6 +104,26 @@ OSLoggerTests.test_genericEvent_userInfo_nonCodable()
         
         log("Hello There", level: .error)
         XCTAssertNotNil(osLogger.data)
+    }
+    
+    func test_genericEvent_level_debugMapsToDefault() {
+        log("Hello There", level: .debug)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.default.rawValue)
+    }
+    
+    func test_genericEvent_level_infoMapsToInfo() {
+        log("Hello There", level: .info)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.info.rawValue)
+    }
+    
+    func test_genericEvent_level_warningMapsToError() {
+        log("Hello There", level: .warning)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.error.rawValue)
+    }
+    
+    func test_genericEvent_level_errorMapsToFault() {
+        log("Hello There", level: .error)
+        XCTAssertEqual(osLogger.data?.logType.rawValue, OSLogType.fault.rawValue)
     }
     
     func test_genericEvent_subsystem() {
