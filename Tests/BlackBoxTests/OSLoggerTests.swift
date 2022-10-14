@@ -40,9 +40,6 @@ Hello there
 [Source]
 OSLoggerTests:35
 test_genericEvent_message()
-
-[User Info]
-nil
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
@@ -57,7 +54,7 @@ nil
 Hello there
 
 [Source]
-OSLoggerTests:51
+OSLoggerTests:48
 test_genericEvent_userInfo()
 
 [User Info]
@@ -81,7 +78,7 @@ test_genericEvent_userInfo()
 Hello there
 
 [Source]
-OSLoggerTests:75
+OSLoggerTests:72
 test_genericEvent_userInfo_nonCodable()
 
 [User Info]

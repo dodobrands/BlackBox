@@ -92,10 +92,12 @@ extension OSLogger {
                 ].joined(separator: "\n")
             }
             
-            func userInfo(from event: BlackBox.GenericEvent) -> String {
+            func userInfo(from event: BlackBox.GenericEvent) -> String? {
+                guard let userInfo = event.userInfo else { return nil }
+                
                 return [
                     "[User Info]",
-                    event.userInfo?.bbLogDescription ?? "nil"
+                    userInfo.bbLogDescription
                 ].joined(separator: "\n")
             }
             
@@ -103,7 +105,9 @@ extension OSLogger {
                 event.message,
                 source(from: event),
                 userInfo(from: event)
-            ].joined(separator: "\n\n")
+            ]
+                .compactMap { $0 }
+                .joined(separator: "\n\n")
             
             return message
         }
