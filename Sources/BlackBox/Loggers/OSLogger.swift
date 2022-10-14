@@ -85,13 +85,13 @@ extension OSLogger {
             let fileWithLine = [event.source.filename, String(event.source.line)].joined(separator: ":")
             
             let source = [
-                "[Source]:",
+                "[Source]",
                 fileWithLine,
                 event.source.function.description
             ].joined(separator: "\n")
             
             let userInfo = [
-                "[User Info]:",
+                "[User Info]",
                 event.userInfo?.bbLogDescription ?? "nil"
             ].joined(separator: "\n")
             
