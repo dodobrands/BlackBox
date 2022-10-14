@@ -10,7 +10,7 @@ import XCTest
 @testable import BlackBox
 import os
 
-class OSLoggerTests: BlackBoxTests {
+class OSLoggerTests: BlackBoxTestCase {
     var osLogger: OSLoggerMock!
     override func setUpWithError() throws {
         try super.setUpWithError()

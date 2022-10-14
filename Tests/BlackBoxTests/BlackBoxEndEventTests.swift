@@ -1,5 +1,5 @@
 //
-//  BlackBoxTests+EndEvent.swift
+//  BlackBoxEndEventTests.swift
 //  
 //
 //  Created by Aleksey Berezka on 13.10.2022.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-class BlackBoxTests_EndEvent: BlackBoxTests {
+class BlackBoxEndEventTests: BlackBoxTestCase {
     func test_endEvent_startEvent() {
         let event = BlackBox.StartEvent("Test")
         logEnd(event)
@@ -66,7 +66,7 @@ class BlackBoxTests_EndEvent: BlackBoxTests {
     func test_endLog_fileID() {
         let event = BlackBox.StartEvent("Test")
         logEnd(event)
-        XCTAssertEqual(logger.endEvent?.source.fileID.description, "BlackBoxTests/BlackBoxTests+EndEvent.swift")
+        XCTAssertEqual(logger.endEvent?.source.fileID.description, "BlackBoxTests/BlackBoxEndEventTests.swift")
     }
     
     func test_endLog_module() {
@@ -78,7 +78,7 @@ class BlackBoxTests_EndEvent: BlackBoxTests {
     func test_endLog_filename() {
         let event = BlackBox.StartEvent("Test")
         logEnd(event)
-        XCTAssertEqual(logger.endEvent?.source.filename, "BlackBoxTests+EndEvent")
+        XCTAssertEqual(logger.endEvent?.source.filename, "BlackBoxEndEventTests")
     }
     
     func test_endLog_function() {

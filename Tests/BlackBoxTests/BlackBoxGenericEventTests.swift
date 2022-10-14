@@ -1,5 +1,5 @@
 //
-//  BlackBoxTests+GenericEvent.swift
+//  BlackBoxGenericEventTests.swift
 //  
 //
 //  Created by Aleksey Berezka on 13.10.2022.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import BlackBox
 
-class BlackBoxTests_GenericEvent: BlackBoxTests {
+class BlackBoxGenericEventTests: BlackBoxTestCase {
     func test_genericLog_message() {
         log("Test")
         XCTAssertEqual(logger.genericEvent?.message, "Test")
@@ -47,7 +47,7 @@ class BlackBoxTests_GenericEvent: BlackBoxTests {
     
     func test_genericLog_fileID() {
         log("Test")
-        XCTAssertEqual(logger.genericEvent?.source.fileID.description, "BlackBoxTests/BlackBoxTests+GenericEvent.swift")
+        XCTAssertEqual(logger.genericEvent?.source.fileID.description, "BlackBoxTests/BlackBoxGenericEventTests.swift")
     }
     
     func test_genericLog_module() {
@@ -57,7 +57,7 @@ class BlackBoxTests_GenericEvent: BlackBoxTests {
     
     func test_genericLog_filename() {
         log("Test")
-        XCTAssertEqual(logger.genericEvent?.source.filename, "BlackBoxTests+GenericEvent")
+        XCTAssertEqual(logger.genericEvent?.source.filename, "BlackBoxGenericEventTests")
     }
     
     func test_genericLog_function() {

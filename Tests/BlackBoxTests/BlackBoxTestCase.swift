@@ -1,6 +1,6 @@
 //
-//  BlackBoxTests.swift
-//  BlackBoxTests
+//  BlackBoxTestCase.swift
+//  BlackBoxTestCase
 //
 //  Created by Алексей Берёзка on 01.08.2020.
 //  Copyright © 2020 Dodo Pizza Engineering. All rights reserved.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import BlackBox
 
-class BlackBoxTests: XCTestCase {
+class BlackBoxTestCase: XCTestCase {
     var logger: (BBLoggerProtocol & TestableLoggerProtocol)!
     
     override func setUpWithError() throws {
