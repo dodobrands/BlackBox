@@ -99,7 +99,7 @@ jobs:
       uses: ./.github/actions/cleanup
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
-  deploy-status:
+  status-for-matrix:
     runs-on: ${{ github.event.inputs.agent || 'ios' }}
     needs: ['unit-tests-spm', 'unit-tests-carthage']
     if: always()
