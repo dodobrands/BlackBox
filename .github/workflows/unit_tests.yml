@@ -97,3 +97,16 @@ jobs:
     - name: Clean up
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
+
+  # This allows us to have a branch protection rule for tests and deploys with matrix
+  deploy-status:
+    runs-on: ${{ github.event.inputs.agent || 'ios' }}
+    needs: ['unit-tests-spm', 'unit-tests-carthage']
+    if: always()
+    steps:
+      - name: Successful deploy
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+      - name: Failing deploy
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
