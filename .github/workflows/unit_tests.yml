@@ -80,6 +80,10 @@ jobs:
 
     timeout-minutes: 15
 
+    strategy:
+      matrix:
+        PLATFORM: ["iOS", "tvOS", "watchOS", "macOS"]
+
     steps:
     - name: Get source code
       uses: actions/checkout@v3
@@ -92,7 +96,7 @@ jobs:
         xcode-version: ${{ env.XCODE_VERSION }}
 
     - name: Build Library
-      run: carthage build --no-skip-current --use-xcframeworks --platform iOS
+      run: carthage build --no-skip-current --use-xcframeworks --platform ${{ matrix.PLATFORM }}
 
     - name: Clean up
       if: ${{ always() }}
