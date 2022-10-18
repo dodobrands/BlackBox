@@ -11,8 +11,8 @@ import Foundation
 public class BlackBox {
     /// Instance that holds loggers
     ///
-    /// Create instance with required loggers and replace this one
-    public static var instance = BlackBox(loggers: [])
+    /// Create instance with desired loggers and replace this one
+    public static var instance = BlackBox.default
     
     private let loggers: [BBLoggerProtocol]
     private let queue: DispatchQueue
@@ -313,4 +313,13 @@ extension BlackBox {
             }
         }
     }
+}
+
+extension BlackBox {
+    static let `default` = BlackBox(
+        loggers: [
+            OSLogger(levels: .allCases),
+            OSSignpostLogger(levels: .allCases)
+        ]
+    )
 }
