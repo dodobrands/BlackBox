@@ -1,10 +1,3 @@
-//
-//  BlackBoxEvent.swift
-//  
-//
-//  Created by Алексей Берёзка on 12.10.2021.
-//
-
 import Foundation
 
 public typealias BBUserInfo = [String: Any]

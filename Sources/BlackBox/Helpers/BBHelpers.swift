@@ -1,10 +1,3 @@
-//
-//  BBHelpers.swift
-//  DFoundation
-//
-//  Created by Алексей Берёзка on 31.07.2020.
-//
-
 import Foundation
 
 extension Dictionary where Key == String, Value == Any {
