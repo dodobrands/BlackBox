@@ -8,7 +8,7 @@ public class FSLogger: BBLoggerProtocol {
     
     /// Creates FS logger
     /// - Parameters:
-    ///   - path: path to file where logs are added, without filename
+    ///   - path: path to directory where log file will be stored
     ///   - name: filename
     ///   - levels: levels to log
     ///   - queue: queue for logs to be prepared and stored at

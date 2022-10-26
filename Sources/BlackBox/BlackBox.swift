@@ -86,7 +86,7 @@ extension BlackBox {
         )
     }
 
-    // MARK: - Trace
+    // MARK: - Measurements
     /// Logs measurement start
     /// - Parameters:
     ///   - message: Measurement name
