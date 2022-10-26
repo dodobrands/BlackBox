@@ -102,6 +102,19 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
         waitForLog { BlackBox.log(Error.someError) }
         XCTAssertNotNil(osSignpostLogger.data)
     }
+    
+    func test_startEvent_endEvent_shareSameId() throws {
+        var log: BlackBox.StartEvent?
+        waitForLog { log = BlackBox.logStart("Hello There") }
+        
+        let startLog = try XCTUnwrap(log)
+        let startLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        waitForLog { BlackBox.logEnd(startLog) }
+        let endLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        XCTAssertEqual(startLogData.signpostId.rawValue, endLogData.signpostId.rawValue)
+    }
 }
 
 class OSSignpostLoggerMock: OSSignpostLogger, TestableLoggerProtocol {
