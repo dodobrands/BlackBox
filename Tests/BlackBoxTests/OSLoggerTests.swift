@@ -138,6 +138,24 @@ test_genericEvent_userInfo_nonCodable()
         waitForLog { BlackBox.log("Hello There") }
         XCTAssertEqual(osLogger.data?.category, "")
     }
+    
+    func test_errorEvent() {
+        enum Error: Swift.Error {
+            case someError
+        }
+        waitForLog { BlackBox.log(Error.someError) }
+        XCTAssertNotNil(osLogger.data)
+    }
+    
+    func test_startEvent() {
+        waitForLog { let _ = BlackBox.logStart("Process") }
+        XCTAssertNotNil(osLogger.data)
+    }
+    
+    func test_endEvent() {
+        waitForLog { BlackBox.logEnd(BlackBox.StartEvent("Process")) }
+        XCTAssertNotNil(osLogger.data)
+    }
 }
 
 class OSLoggerMock: OSLogger, TestableLoggerProtocol {
