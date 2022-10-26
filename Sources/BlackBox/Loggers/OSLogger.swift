@@ -29,7 +29,7 @@ public class OSLogger: BBLoggerProtocol {
         osLog(event: event)
     }
     
-    func osLog(event: BlackBox.GenericEvent) {
+    private func osLog(event: BlackBox.GenericEvent) {
         guard levels.contains(event.level) else { return }
         
         let data = LogData(from: event)

@@ -73,6 +73,13 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         XCTAssertEqual(logger.endEvent?.rawMessage, "Test")
     }
     
+    func test_customMessage() throws {
+        let event = BlackBox.StartEvent(timestamp: Date().addingTimeInterval(-1), "Test")
+        waitForLog { BlackBox.logEnd(event, message: "Custom Message") }
+        let endEvent = try XCTUnwrap(logger.endEvent)
+        XCTAssertTrue(endEvent.message.hasPrefix("End: Custom Message, duration: 1.00"))
+    }
+    
     func test_userInfo() {
         waitForLog { BlackBox.logEnd(event, userInfo: ["name": "Kenobi"]) }
         XCTAssertEqual(logger.endEvent?.userInfo as? [String: String], ["name": "Kenobi"])
@@ -127,6 +134,6 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     
     func test_line() {
         waitForLog { BlackBox.logEnd(event) }
-        XCTAssertEqual(logger.endEvent?.source.line, 129)
+        XCTAssertEqual(logger.endEvent?.source.line, 136)
     }
 }
