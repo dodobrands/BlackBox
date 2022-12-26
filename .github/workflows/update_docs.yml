@@ -23,10 +23,10 @@ env:
   XCODE_VERSION: '~>14'
   DERIVED_DATA_PATH: './DerivedData/'
   DESTINATION: 'platform=iOS Simulator,name=iPhone 11'
-  HOSTING_BASE_PATH: 'dodopizza.github.io'
+  HOSTING_BASE_PATH: ''
 
 jobs:
-  build:
+  update-docs:
     runs-on: ios
     steps:
       - name: Checkout
@@ -35,9 +35,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
         
+      - name: Setup Dependencies
+        run: |
+          brew bundle
+        
       - name: Build
         run: |
-          swift package --allow-writing-to-directory ${{ env.DERIVED_DATA_PATH }} generate-documentation --target ${{ env.SCHEME }} --disable-indexing --transform-for-static-hosting --hosting-base-path ${{ env.HOSTING_BASE_PATH }} --output-path ${{ env.DERIVED_DATA_PATH }}
+          swift package --allow-writing-to-directory ${{ env.DERIVED_DATA_PATH }} generate-documentation --target ${{ env.SCHEME }} --disable-indexing --transform-for-static-hosting --hosting-base-path '${{ env.HOSTING_BASE_PATH }}' --output-path ${{ env.DERIVED_DATA_PATH }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
