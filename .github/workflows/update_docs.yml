@@ -35,6 +35,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
         
+      - name: Setup Dependencies
+        run: |
+          brew bundle
+        
       - name: Build
         run: |
           swift package --allow-writing-to-directory ${{ env.DERIVED_DATA_PATH }} generate-documentation --target ${{ env.SCHEME }} --disable-indexing --transform-for-static-hosting --hosting-base-path ${{ env.HOSTING_BASE_PATH }} --output-path ${{ env.DERIVED_DATA_PATH }}
