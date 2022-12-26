@@ -162,12 +162,12 @@ extension BlackBox {
     /// Measurement start event
     public class StartEvent: GenericEvent {
         /// Original unformatted message
-        public var rawMessage: String
+        public var rawMessage: StaticString
         
-        public override init(
+        public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
-            _ message: String,
+            _ message: StaticString,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
             level: BBLogLevel = .debug,
@@ -192,7 +192,7 @@ extension BlackBox {
         public convenience init(
             id: UUID = .init(),
             timestamp: Date = .init(),
-            _ message: String,
+            _ message: StaticString,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
             level: BBLogLevel = .debug,
@@ -225,7 +225,7 @@ extension BlackBox {
     /// Measurement end event
     public class EndEvent: GenericEvent {
         /// Original unformatted message
-        public var rawMessage: String
+        public var rawMessage: StaticString
         
         /// Start event
         public let startEvent: StartEvent
@@ -239,7 +239,7 @@ extension BlackBox {
         public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
-            message: String,
+            message: StaticString,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -279,7 +279,7 @@ extension BlackBox {
         public convenience init(
             id: UUID = .init(),
             timestamp: Date = .init(),
-            message: String,
+            message: StaticString,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
