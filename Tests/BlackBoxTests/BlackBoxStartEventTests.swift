@@ -21,7 +21,7 @@ class BlackBoxStartEventTests: BlackBoxTestCase {
     
     func test_rawMessage() {
         waitForLog { let _ = BlackBox.logStart("Test") }
-        XCTAssertEqual(logger.startEvent?.rawMessage, "Test")
+        XCTAssertEqual(logger.startEvent?.rawMessage.description, "Test".description)
     }
     
     func test_userInfo() {

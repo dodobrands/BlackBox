@@ -34,7 +34,7 @@ extension BlackBox {
     ///   - function: The function where the logs occurs. The default is the function name from where you call log.
     ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
     public static func log(
-        _ message: String,
+        _ message: StaticString,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
         level: BBLogLevel = .debug,
@@ -100,7 +100,7 @@ extension BlackBox {
     ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
     /// - Returns: Started measurement
     public static func logStart(
-        _ message: String,
+        _ message: StaticString,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
         level: BBLogLevel = .debug,
@@ -144,7 +144,7 @@ extension BlackBox {
     ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
     public static func logEnd(
         _ event: StartEvent,
-        message: String? = nil,
+        message: StaticString? = nil,
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
         category: String? = nil,
@@ -170,7 +170,7 @@ extension BlackBox {
 // MARK: - Instance
 extension BlackBox {
     func log(
-        _ message: String,
+        _ message: StaticString,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         level: BBLogLevel,
@@ -187,7 +187,7 @@ extension BlackBox {
                 line: line
             )
             let event = BlackBox.GenericEvent(
-                message,
+                message.description,
                 userInfo: userInfo,
                 serviceInfo: serviceInfo,
                 level: level,
@@ -232,7 +232,7 @@ extension BlackBox {
     }
     
     func logStart(
-        _ message: String,
+        _ message: StaticString,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         level: BBLogLevel,
@@ -274,7 +274,7 @@ extension BlackBox {
     
     func logEnd(
         _ startEvent: BlackBox.StartEvent,
-        message: String?,
+        message: StaticString?,
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         category: String?,

@@ -70,7 +70,7 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     
     func test_rawMessage() {
         waitForLog { BlackBox.logEnd(event) }
-        XCTAssertEqual(logger.endEvent?.rawMessage, "Test")
+        XCTAssertEqual(logger.endEvent?.rawMessage.description, "Test".description)
     }
     
     func test_customMessage() throws {
