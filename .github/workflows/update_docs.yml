@@ -26,7 +26,7 @@ env:
   HOSTING_BASE_PATH: ''
 
 jobs:
-  build:
+  update-docs:
     runs-on: ios
     steps:
       - name: Checkout
