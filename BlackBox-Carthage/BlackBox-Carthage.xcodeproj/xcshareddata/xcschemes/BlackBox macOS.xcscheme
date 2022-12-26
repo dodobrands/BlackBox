@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9C0C4DE028FDC6B40062AF73"
-               BuildableName = "BlackBox macOS.framework"
+               BuildableName = "BlackBox_macOS.framework"
                BlueprintName = "BlackBox macOS"
                ReferencedContainer = "container:BlackBox-Carthage.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0C4DE028FDC6B40062AF73"
-            BuildableName = "BlackBox macOS.framework"
+            BuildableName = "BlackBox_macOS.framework"
             BlueprintName = "BlackBox macOS"
             ReferencedContainer = "container:BlackBox-Carthage.xcodeproj">
          </BuildableReference>

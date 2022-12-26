@@ -9,25 +9,6 @@ on:
       - 'release/**'
       - 'hotfix/**'
   workflow_dispatch:
-    inputs:
-      agent:
-        type: choice
-        description: 'Build agent'
-        required: true
-        default: ios
-        options: 
-        - bbq
-        - macos
-        - ios
-        - arriva
-        - salmon
-        - diablo
-        - cheesy-chicken
-        - pepperoni
-      xcode-version:
-        description: 'Xcode version'
-        required: true
-        default: '~>13'
 
 defaults:
   run:
@@ -42,17 +23,17 @@ env:
   LANGUAGE: "en_US.UTF-8"
   LC_ALL: "en_US.UTF-8"
   SCHEME: "BlackBox"
-  XCODE_VERSION: ${{ github.event.inputs.xcode-version || '~>13' }}
+  XCODE_VERSION: '~>14'
 
 jobs:
   unit-tests-spm:
-    runs-on: ${{ github.event.inputs.agent || 'ios' }}
+    runs-on: 'ios'
 
     timeout-minutes: 15
 
     strategy:
       matrix:
-        DESTINATION: ["platform=iOS Simulator,name=iPhone 11", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Series 5 - 40mm"]
+        DESTINATION: ["platform=iOS Simulator,name=iPhone 11", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Ultra (49mm)"]
 
     steps:
     - name: Get source code
