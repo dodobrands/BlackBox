@@ -23,7 +23,7 @@ env:
   XCODE_VERSION: '~>14'
   DERIVED_DATA_PATH: './DerivedData/'
   DESTINATION: 'platform=iOS Simulator,name=iPhone 11'
-  HOSTING_BASE_PATH: 'crispy-meme-11bfdf34.pages.github.io'
+  HOSTING_BASE_PATH: ''
 
 jobs:
   build:
