@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9C0C4E0428FE436E0062AF73"
-               BuildableName = "BlackBox watchOS.framework"
+               BuildableName = "BlackBox_watchOS.framework"
                BlueprintName = "BlackBox watchOS"
                ReferencedContainer = "container:BlackBox-Carthage.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0C4E0428FE436E0062AF73"
-            BuildableName = "BlackBox watchOS.framework"
+            BuildableName = "BlackBox_watchOS.framework"
             BlueprintName = "BlackBox watchOS"
             ReferencedContainer = "container:BlackBox-Carthage.xcodeproj">
          </BuildableReference>
