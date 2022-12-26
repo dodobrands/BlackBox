@@ -1,0 +1,50 @@
+name: Update Documentation
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  LANG: "en_US.UTF-8"
+  LANGUAGE: "en_US.UTF-8"
+  LC_ALL: "en_US.UTF-8"
+  SCHEME: "BlackBox"
+  XCODE_VERSION: '~>14'
+  DERIVED_DATA_PATH: './DerivedData/'
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 11'
+  HOSTING_BASE_PATH: 'dodopizza.github.io'
+
+jobs:
+  build:
+    runs-on: ios
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+        
+      - name: Build
+        run: |
+          swift package --allow-writing-to-directory ${{ env.DERIVED_DATA_PATH }} generate-documentation --target ${{ env.SCHEME }} --disable-indexing --transform-for-static-hosting --hosting-base-path ${{ env.HOSTING_BASE_PATH }} --output-path ${{ env.DERIVED_DATA_PATH }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ${{ env.DERIVED_DATA_PATH }}
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+      
