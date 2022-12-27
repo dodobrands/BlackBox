@@ -1,0 +1,44 @@
+@Tutorial(time: 2) {
+    @Intro(title: "Creating Custom Logger") {
+        If presented loggers doesn't fit your need you can create your very own logger and do whatever you want with it. 
+    }
+    
+    @Section(title: "Base Custom Logger") {
+        @ContentAndMedia {
+            In this tutorial we'll create custom logger with base functionality
+        }
+        
+        @Steps {
+            @Step {
+                Create your logger
+                
+                @Code(name: "", file: "CustomLogger_Base_1.swift")
+            }
+            
+            @Step {
+                Conform it to ``BlackBox/BBLoggerProtocol``
+                
+                @Code(name: "", file: "CustomLogger_Base_2.swift")
+            }
+            
+            @Step {
+                Implement methods required by ``BlackBox/BBLoggerProtocol``
+                
+                @Code(name: "", file: "CustomLogger_Base_3.swift")
+            }
+            
+            @Step {
+                Redirect received events to whenever you want.
+                For example, show them as alerts inside your app.
+                
+                @Code(name: "", file: "CustomLogger_Base_4.swift")
+            }
+            
+            @Step {
+                Assing new BlackBox instance with all desired loggers, and yours among them.
+                
+                @Code(name: "", file: "CustomLogger_Base_5.swift")
+            }
+        }
+    }
+}

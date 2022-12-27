@@ -1,0 +1,52 @@
+@Tutorial(time: 2) {
+    @Intro(title: "Turning Custom Logger On and Off Based on Toggle") {
+        When you're not sure if your new custom logger is stable enough you may want to have an ability to turn it off remotely and instantly, without releasing a new version of your app.
+        
+        In this tutorial we take a look at one possible solution for this.
+    }
+    
+    @Section(title: "Advanced Custom Logger") {
+        @ContentAndMedia {
+            This tutorial relies on remote feature toggles that are already integrated in your app. 
+            
+            If you not quite sure what is remote feature toggle and how does it work, make sure to read some articles on the web. 
+            For example, [Remote Config Feature Flagging: A Full Walkthrough](https://medium.com/firebase-developers/remote-config-feature-flagging-a-full-walkthrough-9b2f2188bb47 ).
+        }
+        
+        @Steps {
+            @Step {
+                Open your custom logger code
+                
+                @Code(name: "", file: "CustomLogger_Toggle_1")
+            }
+            
+            @Step {
+                Add `isEnabled` argument to initializer
+                
+                We are using closure instead of `Bool`. 
+                Closure will be invoked each time your logger receives new log. 
+                This opens up possibility to turn your logger On or Off anytime during your app lifecycle. 
+                
+                @Code(name: "", file: "CustomLogger_Toggle_2")
+            }
+            
+            @Step {
+                Prevent logging if `isEnabled` returns `false`
+                
+                @Code(name: "", file: "CustomLogger_Toggle_3")
+            }
+            
+            @Step {
+                Get correct value for your remote toggle.
+                
+                @Code(name: "", file: "CustomLogger_Toggle_4")
+            }
+            
+            @Step {
+                Pass that value right into your logger initializer
+                
+                @Code(name: "", file: "CustomLogger_Toggle_5")
+            }
+        }
+    }
+}

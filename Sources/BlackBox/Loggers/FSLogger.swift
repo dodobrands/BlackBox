@@ -1,6 +1,7 @@
 import Foundation
 
 /// Redirects logs to text file
+/// > Warning: Doesn't support filesize limits, use at your own risk.
 public class FSLogger: BBLoggerProtocol {
     private let fullpath: URL
     private let levels: [BBLogLevel]
@@ -14,7 +15,7 @@ public class FSLogger: BBLoggerProtocol {
     ///   - queue: queue for logs to be prepared and stored at
     public init(
         path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
-        name: String = "BlackBox_log",
+        name: String = "BlackBox_FSLogger",
         levels: [BBLogLevel],
         queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self))
     ) {

@@ -2,8 +2,6 @@ import Foundation
 import os
 
 /// Redirects logs to Time Profiler
-///
-/// [Usage Example](https://habr.com/ru/company/dododev/blog/690542/)
 public class OSSignpostLogger: BBLoggerProtocol {
     let levels: [BBLogLevel]
     
