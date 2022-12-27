@@ -1,0 +1,33 @@
+@Tutorial(time: 2) {
+    @Intro(title: "Filtering Events in Custom Logger") {
+        Sometimes your need to filter logs based on their level.
+        
+        Each logger have it's own level filters, so you may want to implement that logic inside your custom logger too.
+    }
+    
+    @Section(title: "Advanced Custom Logger") {
+        @ContentAndMedia {
+            In this tutorial we'll add level filters to existing custom logger
+        }
+        
+        @Steps {
+            @Step {
+                Open your custom logger code
+                
+                @Code(name: "", file: "CustomLogger_Filter_1")
+            }
+            
+            @Step {
+                Add `levels` argument to initializer
+                
+                @Code(name: "", file: "CustomLogger_Filter_2")
+            }
+            
+            @Step {
+                Filter events based on this levels
+                
+                @Code(name: "", file: "CustomLogger_Filter_3")
+            }
+        }
+    }
+}

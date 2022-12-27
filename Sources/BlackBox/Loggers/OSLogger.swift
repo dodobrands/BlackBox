@@ -1,9 +1,7 @@
 import Foundation
 import os
 
-/// Redirects logs to Console.app
-///
-/// [Usage Example](https://habr.com/ru/company/dododev/blog/689758/)
+/// Redirects logs to Console.app and to Xcode console
 public class OSLogger: BBLoggerProtocol {
     let levels: [BBLogLevel]
     

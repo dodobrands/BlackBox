@@ -12,7 +12,7 @@ public class BlackBox {
     /// Creates `BlackBox` instance
     /// - Parameters:
     ///   - loggers: Instances to receive logs from `BlackBox`
-    ///   - queue: Queue to receive logs on from `BlackBox`
+    ///   - queue: Queue to receive logs on from `BlackBox`. Must be serial to guarantee correct logs order.
     public init(loggers: [BBLoggerProtocol],
                 queue: DispatchQueue = .init(label: String(describing: BlackBox.self))) {
         self.loggers = loggers
@@ -134,7 +134,7 @@ extension BlackBox {
     /// Logs measurement end
     /// - Parameters:
     ///   - startEvent: Measurement start event
-    ///   - message: Alternate message to log instead of ``BlackBox.StartEvent`` message.
+    ///   - message: Alternate message to log instead of ``StartEvent`` message.
     ///   - userInfo: Additional info you'd like to see alongside log
     ///   - serviceInfo: to be deleted
     ///   - category: Category of log. E.g. View Lifecycle.
@@ -308,10 +308,12 @@ extension BlackBox {
 }
 
 extension BlackBox {
-    static let `default` = BlackBox(
-        loggers: [
+    static let `default` = BlackBox(loggers: BlackBox.defaultLoggers)
+    
+    public static var defaultLoggers: [BBLoggerProtocol] {
+        [
             OSLogger(levels: .allCases),
             OSSignpostLogger(levels: .allCases)
         ]
-    )
+    }
 }

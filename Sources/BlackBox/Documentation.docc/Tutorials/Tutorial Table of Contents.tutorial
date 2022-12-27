@@ -1,0 +1,12 @@
+@Tutorials(name: "Tutorials ToC") {
+    @Intro(title: "BlackBox Interactive Tutorials") {
+        
+    }
+    
+    @Chapter(name: "Custom Loggers") {
+        @Image(source: "point.topleft.down.curvedto.point.filled.bottomright.up", alt: "Two docs connected with a curve")
+        @TutorialReference(tutorial: "doc:CustomLoggers_1_Base")
+        @TutorialReference(tutorial: "doc:CustomLoggers_2_Filters")
+        @TutorialReference(tutorial: "doc:CustomLoggers_3_Toggle")
+    }
+}
