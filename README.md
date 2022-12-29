@@ -1,5 +1,5 @@
 # BlackBox
-iOS wrapper library for Unified Logging, and more.
+Library for logs and measurements.
 
 [Documentation](https://crispy-meme-11bfdf34.pages.github.io/documentation/blackbox).
 
