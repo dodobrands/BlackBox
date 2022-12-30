@@ -10,7 +10,7 @@ import XCTest
 @testable import BlackBox
 
 class BlackBoxTestCase: XCTestCase {
-    let timeout: TimeInterval = 0.1
+    let timeout: TimeInterval = 1
     var logger: (BBLoggerProtocol & TestableLoggerProtocol)!
     
     override func setUpWithError() throws {
