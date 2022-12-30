@@ -1,6 +1,6 @@
 # BlackBox
 Library for logs and measurements.
 
-[Documentation](https://crispy-meme-11bfdf34.pages.github.io/documentation/blackbox).
+[Documentation](https://dodopizza.github.io/BlackBox/documentation/blackbox).
 
-[Interactive Tutorials](https://crispy-meme-11bfdf34.pages.github.io/tutorials/tutorial-table-of-contents).
+[Interactive Tutorials](https://dodopizza.github.io/BlackBox/tutorials/tutorial-table-of-contents).
