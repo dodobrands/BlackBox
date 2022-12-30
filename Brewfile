@@ -1,1 +1,0 @@
-brew 'gnu-tar' # required for actions/upload-pages-artifact@v1
