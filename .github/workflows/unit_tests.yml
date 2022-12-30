@@ -27,7 +27,7 @@ env:
 
 jobs:
   unit-tests-spm:
-    runs-on: 'ios'
+    runs-on: 'macos-latest'
 
     timeout-minutes: 10
 
@@ -53,7 +53,7 @@ jobs:
       run: xcodebuild test -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
 
   unit-tests-carthage:
-    runs-on: ${{ github.event.inputs.agent || 'ios' }}
+    runs-on: 'macos-latest'
 
     timeout-minutes: 10
 
@@ -77,7 +77,7 @@ jobs:
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
-    runs-on: ${{ github.event.inputs.agent || 'ios' }}
+    runs-on: 'macos-latest'
     needs: ['unit-tests-spm', 'unit-tests-carthage']
     if: always()
     steps:
