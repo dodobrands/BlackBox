@@ -29,7 +29,7 @@ jobs:
   unit-tests-spm:
     runs-on: 'ios'
 
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     strategy:
       matrix:
@@ -55,7 +55,7 @@ jobs:
   unit-tests-carthage:
     runs-on: ${{ github.event.inputs.agent || 'ios' }}
 
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     strategy:
       matrix:
