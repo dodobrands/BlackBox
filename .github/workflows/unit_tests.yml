@@ -52,10 +52,6 @@ jobs:
     - name: Test
       run: xcodebuild test -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
 
-    - name: Clean up
-      if: ${{ always() }}
-      uses: ./.github/actions/cleanup
-
   unit-tests-carthage:
     runs-on: ${{ github.event.inputs.agent || 'ios' }}
 
@@ -78,10 +74,6 @@ jobs:
 
     - name: Build Library
       run: carthage build --no-skip-current --use-xcframeworks --platform ${{ matrix.PLATFORM }}
-
-    - name: Clean up
-      if: ${{ always() }}
-      uses: ./.github/actions/cleanup
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
