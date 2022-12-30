@@ -23,7 +23,7 @@ env:
   XCODE_VERSION: '~>14'
   DERIVED_DATA_PATH: './DerivedData/'
   DESTINATION: 'platform=iOS Simulator,name=iPhone 11'
-  HOSTING_BASE_PATH: ''
+  HOSTING_BASE_PATH: 'BlackBox'
 
 jobs:
   update-docs:
