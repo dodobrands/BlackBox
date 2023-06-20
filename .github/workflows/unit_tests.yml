@@ -38,11 +38,19 @@ jobs:
       uses: ./.github/actions/prepare_env_app_build
         
     - name: Build
-      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
+      run: >
+        xcodebuild build-for-testing
+        -scheme ${{ env.SCHEME }}
+        -destination '${{ matrix.DESTINATION }}'
+        -quiet
 
     - name: Test
       if: ${{ !contains(matrix.DESTINATION, 'watchOS') }} # watchOS Simulator is too slow on GitHub-hosted Runners, expectation-related tests are flaky
-      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
+      run: >
+        xcodebuild test
+        -scheme ${{ env.SCHEME }}
+        -destination '${{ matrix.DESTINATION }}'
+        -quiet
 
   unit-tests-carthage:
     runs-on: 'macos-13'
@@ -61,7 +69,11 @@ jobs:
       uses: ./.github/actions/prepare_env_app_build
 
     - name: Build Library
-      run: carthage build --no-skip-current --use-xcframeworks --platform ${{ matrix.PLATFORM }}
+      run: >
+        carthage build
+        --no-skip-current
+        --use-xcframeworks
+        --platform ${{ matrix.PLATFORM }}
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
