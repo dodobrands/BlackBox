@@ -26,7 +26,7 @@ env:
 
 jobs:
   unit-tests-spm:
-    runs-on: 'macos-latest'
+    runs-on: 'macos-13'
 
     timeout-minutes: 10
 
@@ -51,7 +51,7 @@ jobs:
       run: xcodebuild test -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
 
   unit-tests-carthage:
-    runs-on: 'macos-latest'
+    runs-on: 'macos-13'
 
     timeout-minutes: 10
 
