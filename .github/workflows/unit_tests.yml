@@ -2,12 +2,8 @@ name: Unit Tests
 
 on:
   pull_request:
-    types: [opened, edited, reopened, synchronize]
     branches:
-      - 'develop'
       - 'main'
-      - 'release/**'
-      - 'hotfix/**'
   workflow_dispatch:
 
 defaults:
@@ -23,11 +19,10 @@ env:
   LANGUAGE: "en_US.UTF-8"
   LC_ALL: "en_US.UTF-8"
   SCHEME: "BlackBox"
-  XCODE_VERSION: '~>14'
 
 jobs:
   unit-tests-spm:
-    runs-on: 'macos-latest'
+    runs-on: 'macos-13'
 
     timeout-minutes: 10
 
@@ -38,23 +33,27 @@ jobs:
     steps:
     - name: Get source code
       uses: actions/checkout@v3
-      with:
-        clean: true
 
     - name: Prepare Environment for App Build
       uses: ./.github/actions/prepare_env_app_build
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
         
     - name: Build
-      run: xcodebuild build-for-testing -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
+      run: >
+        xcodebuild build-for-testing
+        -scheme ${{ env.SCHEME }}
+        -destination '${{ matrix.DESTINATION }}'
+        -quiet
 
     - name: Test
       if: ${{ !contains(matrix.DESTINATION, 'watchOS') }} # watchOS Simulator is too slow on GitHub-hosted Runners, expectation-related tests are flaky
-      run: xcodebuild test -scheme ${{ env.SCHEME }} -destination '${{ matrix.DESTINATION }}'
+      run: >
+        xcodebuild test
+        -scheme ${{ env.SCHEME }}
+        -destination '${{ matrix.DESTINATION }}'
+        -quiet
 
   unit-tests-carthage:
-    runs-on: 'macos-latest'
+    runs-on: 'macos-13'
 
     timeout-minutes: 10
 
@@ -65,16 +64,16 @@ jobs:
     steps:
     - name: Get source code
       uses: actions/checkout@v3
-      with:
-        clean: true
 
     - name: Prepare Environment for App Build
       uses: ./.github/actions/prepare_env_app_build
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
 
     - name: Build Library
-      run: carthage build --no-skip-current --use-xcframeworks --platform ${{ matrix.PLATFORM }}
+      run: >
+        carthage build
+        --no-skip-current
+        --use-xcframeworks
+        --platform ${{ matrix.PLATFORM }}
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
