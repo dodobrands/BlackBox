@@ -187,8 +187,7 @@ test_startEvent()
             )
             
             let endEvent = BlackBox.EndEvent(
-                timestamp: date.addingTimeInterval(1), 
-                message: startEvent.rawMessage, 
+                timestamp: date.addingTimeInterval(1),
                 startEvent: startEvent
             )
             

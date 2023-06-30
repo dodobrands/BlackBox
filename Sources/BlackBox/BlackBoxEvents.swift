@@ -239,7 +239,7 @@ extension BlackBox {
         public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
-            message: StaticString,
+            message: StaticString? = nil,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,
@@ -248,7 +248,7 @@ extension BlackBox {
             parentEvent: GenericEvent? = nil,
             source: Source
         ) {
-            self.rawMessage = message
+            self.rawMessage = message ?? startEvent.rawMessage
             self.startEvent = startEvent
             self.duration = timestamp.timeIntervalSince(startEvent.timestamp)
             
@@ -262,7 +262,7 @@ extension BlackBox {
             
             self.durationFormatted = formatted(duration)
             
-            let message = "End: \(message)"
+            let message = "End: \(rawMessage)"
             super.init(
                 id: id,
                 timestamp: timestamp,
@@ -279,7 +279,7 @@ extension BlackBox {
         public convenience init(
             id: UUID = .init(),
             timestamp: Date = .init(),
-            message: StaticString,
+            message: StaticString? = nil,
             startEvent: StartEvent,
             userInfo: BBUserInfo? = nil,
             serviceInfo: BBServiceInfo? = nil,

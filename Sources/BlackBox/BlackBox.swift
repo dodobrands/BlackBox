@@ -297,7 +297,7 @@ extension BlackBox {
             line: line
         )
         let event = EndEvent(
-            message: message ?? startEvent.rawMessage,
+            message: message,
             startEvent: startEvent,
             userInfo: userInfo,
             serviceInfo: serviceInfo,
