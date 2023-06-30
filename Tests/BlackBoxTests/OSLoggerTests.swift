@@ -101,7 +101,15 @@ test_genericEvent_userInfo_nonCodable()
         createOSLogger(levels: [.error])
         
         waitForLog { BlackBox.log("Hello There", level: .error) }
-        XCTAssertNotNil(osLogger.data)
+        let expectedResult = """
+
+Hello There
+
+[Source]
+OSLoggerTests:103
+test_genericEvent_validLevel()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
     
     func test_genericEvent_level_debugMapsToDefault() {
@@ -139,22 +147,62 @@ test_genericEvent_userInfo_nonCodable()
         XCTAssertEqual(osLogger.data?.category, "")
     }
     
+    enum Error: Swift.Error {
+        case someError
+    }
+    
     func test_errorEvent() {
-        enum Error: Swift.Error {
-            case someError
-        }
         waitForLog { BlackBox.log(Error.someError) }
-        XCTAssertNotNil(osLogger.data)
+        let expectedResult = """
+
+OSLoggerTests.Error.someError
+
+[Source]
+OSLoggerTests:155
+test_errorEvent()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
     
     func test_startEvent() {
         waitForLog { let _ = BlackBox.logStart("Process") }
-        XCTAssertNotNil(osLogger.data)
+        
+        let expectedResult = """
+
+Start: Process
+
+[Source]
+OSLoggerTests:168
+test_startEvent()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
     
     func test_endEvent() {
-        waitForLog { BlackBox.logEnd(BlackBox.StartEvent("Process")) }
-        XCTAssertNotNil(osLogger.data)
+        waitForLog { 
+            let date = Date()
+            let startEvent = BlackBox.StartEvent(
+                timestamp: date, 
+                "Process"
+            )
+            
+            let endEvent = BlackBox.EndEvent(
+                timestamp: date.addingTimeInterval(1), 
+                message: startEvent.rawMessage, 
+                startEvent: startEvent
+            )
+            
+            BlackBox.logEnd(endEvent) 
+        }
+        let expectedResult = """
+
+End: Process, duration: 1 sec
+
+[Source]
+OSLoggerTests:189
+test_endEvent()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
 }
 
