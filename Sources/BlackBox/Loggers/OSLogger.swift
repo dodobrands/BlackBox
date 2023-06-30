@@ -101,7 +101,7 @@ extension OSLogger {
             }
             
             // newline at the beginning increments readability in Xcode's console while not decrementing reading in Console.app
-            let message = "\n" + event.message
+            let message = "\n" + event.formattedMessage
             
             return [
                 message,
@@ -125,6 +125,17 @@ extension OSLogType {
             self = .error
         case .error:
             self = .fault
+        }
+    }
+}
+
+extension BlackBox.GenericEvent {
+    var formattedMessage: String {
+        switch self {
+        case let endEvent as BlackBox.EndEvent:
+            return "\(message), duration: \(endEvent.durationFormatted)"
+        default:
+            return message
         }
     }
 }

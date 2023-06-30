@@ -165,6 +165,14 @@ extension BlackBox {
             line: line
         )
     }
+    
+    /// Logs measurement end
+    /// - Parameter event: measurement end event
+    public static func logEnd(
+        _ event: EndEvent
+    ) {
+        BlackBox.instance.logEnd(event)
+    }
 }
 
 // MARK: - Instance
@@ -283,23 +291,29 @@ extension BlackBox {
         function: StaticString,
         line: UInt
     ) {
+        let source = GenericEvent.Source(
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        let event = EndEvent(
+            message: message ?? startEvent.rawMessage,
+            startEvent: startEvent,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: startEvent.level,
+            category: category,
+            parentEvent: parentEvent ?? startEvent.parentEvent,
+            source: source
+        )
+        
+        logEnd(event)
+    }
+    
+    func logEnd(
+        _ event: BlackBox.EndEvent
+    ) {
         queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let event = EndEvent(
-                message: message ?? startEvent.rawMessage,
-                startEvent: startEvent,
-                userInfo: userInfo,
-                serviceInfo: serviceInfo,
-                level: startEvent.level,
-                category: category,
-                parentEvent: parentEvent ?? startEvent.parentEvent,
-                source: source
-            )
-            
             self.loggers.forEach { logger in
                 logger.logEnd(event)
             }

@@ -262,7 +262,7 @@ extension BlackBox {
             
             self.durationFormatted = formatted(duration)
             
-            let message = "End: \(message), duration: \(durationFormatted)"
+            let message = "End: \(message)"
             super.init(
                 id: id,
                 timestamp: timestamp,
