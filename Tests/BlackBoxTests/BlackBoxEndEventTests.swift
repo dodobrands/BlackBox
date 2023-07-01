@@ -107,9 +107,9 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     }
     
     func test_parentEvent() {
-        let parentEvent = BlackBox.GenericEvent("Test")
-        waitForLog { BlackBox.logEnd(event, parentEvent: parentEvent) }
-        XCTAssertEqual(logger.endEvent?.parentEvent, parentEvent)
+        waitForLog { BlackBox.logEnd(event) }
+        XCTAssertEqual(logger.endEvent?.parentEvent, event)
+        XCTAssertEqual(logger.endEvent?.startEvent, event)
     }
     
     func test_fileID() {
