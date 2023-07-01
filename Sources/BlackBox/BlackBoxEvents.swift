@@ -228,7 +228,7 @@ extension BlackBox {
         public var rawMessage: StaticString
         
         /// Start event
-        public let startEvent: StartEvent
+        public var startEvent: StartEvent
         
         /// Duration between end event and start event
         public let duration: TimeInterval
@@ -245,7 +245,6 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             level: BBLogLevel = .debug,
             category: String? = nil,
-            parentEvent: GenericEvent? = nil,
             source: Source
         ) {
             self.rawMessage = message ?? startEvent.rawMessage
@@ -271,7 +270,7 @@ extension BlackBox {
                 serviceInfo: serviceInfo,
                 level: level,
                 category: category,
-                parentEvent: parentEvent,
+                parentEvent: startEvent,
                 source: source
             )
         }
@@ -285,7 +284,6 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             level: BBLogLevel = .debug,
             category: String? = nil,
-            parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
             line: UInt = #line
@@ -299,7 +297,6 @@ extension BlackBox {
                 serviceInfo: serviceInfo,
                 level: level,
                 category: category,
-                parentEvent: parentEvent,
                 source: .init(
                     fileID: fileID,
                     function: function,

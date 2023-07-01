@@ -148,7 +148,6 @@ extension BlackBox {
         userInfo: BBUserInfo? = nil,
         serviceInfo: BBServiceInfo? = nil,
         category: String? = nil,
-        parentEvent: GenericEvent? = nil,
         fileID: StaticString = #fileID,
         function: StaticString = #function,
         line: UInt = #line
@@ -159,7 +158,6 @@ extension BlackBox {
             userInfo: userInfo,
             serviceInfo: serviceInfo,
             category: category,
-            parentEvent: parentEvent,
             fileID: fileID,
             function: function,
             line: line
@@ -286,7 +284,6 @@ extension BlackBox {
         userInfo: BBUserInfo?,
         serviceInfo: BBServiceInfo?,
         category: String?,
-        parentEvent: GenericEvent?,
         fileID: StaticString,
         function: StaticString,
         line: UInt
@@ -303,7 +300,6 @@ extension BlackBox {
             serviceInfo: serviceInfo,
             level: startEvent.level,
             category: category,
-            parentEvent: parentEvent ?? startEvent.parentEvent,
             source: source
         )
         
