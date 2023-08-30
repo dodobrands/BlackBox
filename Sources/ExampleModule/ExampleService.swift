@@ -16,6 +16,10 @@ class ExampleService {
     func logSomeError() {
         BlackBox.log(ExampleError.taskFailed)
     }
+    
+    func finishLog(_ log: BlackBox.StartEvent) {
+        BlackBox.logEnd(log)
+    }
 }
 
 enum ExampleError: Error {

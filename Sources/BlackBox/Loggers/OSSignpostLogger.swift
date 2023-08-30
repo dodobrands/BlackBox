@@ -73,11 +73,12 @@ extension OSSignpostLogger {
         }
         
         init(from event: BlackBox.GenericEvent) {
-            let subsystem = event.source.module
-            let category = event.category ?? event.source.filename
-            let name = Self.function(from: event)
-            let signpostId = OSSignpostID(event)
+            // traces should be finished from where they've started
+            let subsystem = (event.startEventIfExists ?? event).source.module
+            let category = (event.startEventIfExists ?? event).category ?? (event.startEventIfExists ?? event).source.filename
+            let name = (event.startEventIfExists ?? event).source.function
             
+            let signpostId = OSSignpostID(event)
             self.init(
                 signpostType: OSSignpostType(event),
                 signpostId: signpostId,
@@ -86,18 +87,6 @@ extension OSSignpostLogger {
                 name: name,
                 message: event.message
             )
-        }
-        
-        private static func function(from event: BlackBox.GenericEvent) -> StaticString {
-            switch event {
-            case let endEvent as BlackBox.EndEvent:
-                return endEvent.startEvent.source.function
-            case _ as BlackBox.StartEvent,
-                _ as BlackBox.ErrorEvent: // maybe should return .exclusive for errors and default cases
-                return event.source.function
-            default:
-                return event.source.function
-            }
         }
     }
 }
@@ -109,8 +98,6 @@ extension OSSignpostType {
             self = .begin
         case _ as BlackBox.EndEvent:
             self = .end
-        case _ as BlackBox.ErrorEvent:
-            self = .event
         default:
             self = .event
         }
@@ -119,22 +106,19 @@ extension OSSignpostType {
 
 extension OSSignpostID {
     init(_ event: BlackBox.GenericEvent) {
-        let id: UUID
-        switch event {
-        case let endEvent as BlackBox.EndEvent:
-            id = endEvent.startEvent.id
-        case _ as BlackBox.StartEvent,
-            _ as BlackBox.ErrorEvent:
-            id = event.id
-        default:
-            id = event.id
-        }
-        
+        let id: UUID = (event.startEventIfExists ?? event).id
         self = OSSignpostID(id)
     }
     
     init(_ uuid: UUID) {
         let value = UInt64(abs(uuid.hashValue)) // uniqueness not guaranteed, but chances are ridiculous
         self = OSSignpostID(value)
+    }
+}
+
+fileprivate extension BlackBox.GenericEvent {
+    var startEventIfExists: BlackBox.StartEvent? {
+        guard let endEvent = self as? BlackBox.EndEvent else { return nil }
+        return endEvent.startEvent
     }
 }
