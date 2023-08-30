@@ -5,9 +5,10 @@
 //  Created by Aleksey Berezka on 26.10.2022.
 //
 
+@testable import BlackBox
+@testable import ExampleModule
 import Foundation
 import XCTest
-@testable import BlackBox
 import os
 
 class OSSignpostLoggerTests: BlackBoxTestCase {
@@ -114,6 +115,45 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
         let endLogData = try XCTUnwrap(osSignpostLogger.data)
         
         XCTAssertEqual(startLogData.signpostId.rawValue, endLogData.signpostId.rawValue)
+    }
+    
+    func test_startEvent_endEvent_shareSameSubsystem() throws {
+        var log: BlackBox.StartEvent?
+        waitForLog { log = BlackBox.logStart("Hello There") }
+        
+        let startLog = try XCTUnwrap(log)
+        let startLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        waitForLog { ExampleModule.ExampleService().finishLog(startLog) }
+        let endLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        XCTAssertEqual(startLogData.subsystem, endLogData.subsystem)
+    }
+    
+    func test_startEvent_endEvent_shareSameCategory() throws {
+        var log: BlackBox.StartEvent?
+        waitForLog { log = BlackBox.logStart("Hello There") }
+        
+        let startLog = try XCTUnwrap(log)
+        let startLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        waitForLog { ExampleModule.ExampleService().finishLog(startLog) }
+        let endLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        XCTAssertEqual(startLogData.category, endLogData.category)
+    }
+    
+    func test_startEvent_endEvent_shareSameName() throws {
+        var log: BlackBox.StartEvent?
+        waitForLog { log = BlackBox.logStart("Hello There") }
+        
+        let startLog = try XCTUnwrap(log)
+        let startLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        waitForLog { ExampleModule.ExampleService().finishLog(startLog) }
+        let endLogData = try XCTUnwrap(osSignpostLogger.data)
+        
+        XCTAssertEqual(startLogData.name.description, endLogData.name.description)
     }
 }
 
