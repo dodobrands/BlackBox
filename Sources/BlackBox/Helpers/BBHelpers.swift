@@ -1,10 +1,10 @@
 import Foundation
 
 extension Dictionary where Key == String, Value == Any {
-    var bbLogDescription: String {
+    func bbLogDescription(with options: JSONSerialization.WritingOptions?) -> String {
         guard JSONSerialization.isValidJSONObject(self),
             let jsonData = try? JSONSerialization.data(withJSONObject: self,
-                                                       options: .prettyPrinted),
+                                                       options: options ?? []),
             let jsonString = String(data: jsonData, encoding: .utf8)
             else { return String(describing: self) }
         

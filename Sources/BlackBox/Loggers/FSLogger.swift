@@ -51,7 +51,7 @@ extension FSLogger {
     private func fsLog(_ event: BlackBox.GenericEvent) {
         guard levels.contains(event.level) else { return }
         
-        let userInfo = event.userInfo?.bbLogDescription ?? "nil"
+        let userInfo = event.userInfo?.bbLogDescription(with: event.consoleStringFormatter.userInfoFormatOptions) ?? "nil"
         
         let title = event.level.icon + " " + String(describing: Date())
         let subtitle = event.source.filename + ", " + event.source.function.description

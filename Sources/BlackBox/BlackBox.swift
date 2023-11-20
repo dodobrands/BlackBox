@@ -8,15 +8,23 @@ public class BlackBox {
     
     private let loggers: [BBLoggerProtocol]
     private let queue: DispatchQueue
+
+    private(set) var consoleFormatter: BBConsoleStringFormatter
     
     /// Creates `BlackBox` instance
     /// - Parameters:
     ///   - loggers: Instances to receive logs from `BlackBox`
     ///   - queue: Queue to receive logs on from `BlackBox`. Must be serial to guarantee correct logs order.
+    ///   - consoleFormatter: Console output string formatter
     public init(loggers: [BBLoggerProtocol],
                 queue: DispatchQueue = .init(label: String(describing: BlackBox.self))) {
         self.loggers = loggers
         self.queue = queue
+        self.consoleFormatter = .default
+    }
+
+    public func setConsoleFormatter(_ formatter: BBConsoleStringFormatter) {
+        self.consoleFormatter = formatter
     }
 }
 
@@ -199,7 +207,8 @@ extension BlackBox {
                 level: level,
                 category: category,
                 parentEvent: parentEvent,
-                source: source
+                source: source,
+                consoleStringFormatter: self.consoleFormatter
             )
             
             self.loggers.forEach { logger in
@@ -228,7 +237,8 @@ extension BlackBox {
                 serviceInfo: serviceInfo,
                 category: category,
                 parentEvent: parentEvent,
-                source: source
+                source: source,
+                consoleStringFormatter: self.consoleFormatter
             )
             
             self.loggers.forEach { logger in
@@ -260,7 +270,8 @@ extension BlackBox {
             level: level,
             category: category,
             parentEvent: parentEvent,
-            source: source
+            source: source,
+            consoleStringFormatter: self.consoleFormatter
         )
         
         logStart(event)
@@ -300,7 +311,8 @@ extension BlackBox {
             serviceInfo: serviceInfo,
             level: startEvent.level,
             category: category,
-            source: source
+            source: source,
+            consoleStringFormatter: self.consoleFormatter
         )
         
         logEnd(event)
@@ -325,5 +337,24 @@ extension BlackBox {
             OSLogger(levels: .allCases),
             OSSignpostLogger(levels: .allCases)
         ]
+    }
+}
+
+extension BlackBox {
+    public struct BBConsoleStringFormatter {
+        var userInfoFormatOptions: JSONSerialization.WritingOptions?
+        var sourceSectionInline: Bool
+
+        /// Creates `BBConsoleStringFormatter` instance
+        /// - Parameters:
+        ///   - userInfoFormatOptions:Options for output JSON data.
+        ///   - sourceSectionInline: Print `Source` section in console inline
+        public init(userInfoFormatOptions: JSONSerialization.WritingOptions, sourceSectionInline: Bool) {
+            self.userInfoFormatOptions = userInfoFormatOptions
+            self.sourceSectionInline = sourceSectionInline
+        }
+
+        public static var `default` = BBConsoleStringFormatter(userInfoFormatOptions: .prettyPrinted,
+                                                                   sourceSectionInline: false)
     }
 }

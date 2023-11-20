@@ -88,7 +88,7 @@ extension OSLogger {
                     "[Source]",
                     fileWithLine,
                     event.source.function.description
-                ].joined(separator: "\n")
+                ].joined(separator: event.consoleStringFormatter.sourceSectionInline ? " " : "\n")
             }
             
             func userInfo(from event: BlackBox.GenericEvent) -> String? {
@@ -96,7 +96,7 @@ extension OSLogger {
                 
                 return [
                     "[User Info]",
-                    userInfo.bbLogDescription
+                    userInfo.bbLogDescription(with: event.consoleStringFormatter.userInfoFormatOptions)
                 ].joined(separator: "\n")
             }
             
