@@ -101,7 +101,8 @@ extension OSLogger {
             }
             
             // newline at the beginning increments readability in Xcode's console while not decrementing reading in Console.app
-            let message = "\n" + event.formattedMessage
+            let prefixString = event.consoleStringFormatter.showLevelIcon ? "\n\(event.level.icon) " : "\n"
+            let message = prefixString + event.formattedMessage
             
             return [
                 message,

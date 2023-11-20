@@ -344,17 +344,25 @@ extension BlackBox {
     public struct BBConsoleStringFormatter {
         var userInfoFormatOptions: JSONSerialization.WritingOptions?
         var sourceSectionInline: Bool
+        var showLevelIcon: Bool
 
         /// Creates `BBConsoleStringFormatter` instance
         /// - Parameters:
         ///   - userInfoFormatOptions:Options for output JSON data.
         ///   - sourceSectionInline: Print `Source` section in console inline
-        public init(userInfoFormatOptions: JSONSerialization.WritingOptions, sourceSectionInline: Bool) {
+        ///   - showLevelIcon: Boolean value defines showing log level icon in console
+        public init(
+            userInfoFormatOptions: JSONSerialization.WritingOptions,
+            sourceSectionInline: Bool,
+            showLevelIcon: Bool
+        ) {
             self.userInfoFormatOptions = userInfoFormatOptions
             self.sourceSectionInline = sourceSectionInline
+            self.showLevelIcon = showLevelIcon
         }
 
         public static var `default` = BBConsoleStringFormatter(userInfoFormatOptions: .prettyPrinted,
-                                                                   sourceSectionInline: false)
+                                                               sourceSectionInline: false,
+                                                               showLevelIcon: true)
     }
 }
