@@ -342,9 +342,9 @@ extension BlackBox {
 
 extension BlackBox {
     public struct BBConsoleStringFormatter {
-        var userInfoFormatOptions: JSONSerialization.WritingOptions?
-        var sourceSectionInline: Bool
-        var showLevelIcon: Bool
+        let userInfoFormatOptions: JSONSerialization.WritingOptions
+        let sourceSectionInline: Bool
+        let showLevelIcon: Bool
 
         /// Creates `BBConsoleStringFormatter` instance
         /// - Parameters:
