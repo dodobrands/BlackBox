@@ -207,8 +207,7 @@ extension BlackBox {
                 level: level,
                 category: category,
                 parentEvent: parentEvent,
-                source: source,
-                consoleStringFormatter: self.consoleFormatter
+                source: source
             )
             
             self.loggers.forEach { logger in
@@ -237,8 +236,7 @@ extension BlackBox {
                 serviceInfo: serviceInfo,
                 category: category,
                 parentEvent: parentEvent,
-                source: source,
-                consoleStringFormatter: self.consoleFormatter
+                source: source
             )
             
             self.loggers.forEach { logger in
@@ -270,8 +268,7 @@ extension BlackBox {
             level: level,
             category: category,
             parentEvent: parentEvent,
-            source: source,
-            consoleStringFormatter: self.consoleFormatter
+            source: source
         )
         
         logStart(event)
@@ -311,8 +308,7 @@ extension BlackBox {
             serviceInfo: serviceInfo,
             level: startEvent.level,
             category: category,
-            source: source,
-            consoleStringFormatter: self.consoleFormatter
+            source: source
         )
         
         logEnd(event)
@@ -334,7 +330,7 @@ extension BlackBox {
     
     public static var defaultLoggers: [BBLoggerProtocol] {
         [
-            OSLogger(levels: .allCases),
+            OSLogger(levels: .allCases, stringFormatter: .default),
             OSSignpostLogger(levels: .allCases)
         ]
     }
@@ -363,6 +359,6 @@ extension BlackBox {
 
         public static var `default` = BBConsoleStringFormatter(userInfoFormatOptions: .prettyPrinted,
                                                                sourceSectionInline: false,
-                                                               showLevelIcon: true)
+                                                               showLevelIcon: false)
     }
 }

@@ -24,9 +24,7 @@ extension BlackBox {
         public let parentEvent: GenericEvent?
         /// From where log originated
         public let source: Source
-        /// Console output string format
-        public let consoleStringFormatter: BBConsoleStringFormatter
-        
+
         public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
@@ -36,8 +34,7 @@ extension BlackBox {
             level: BBLogLevel = .debug,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            source: Source,
-            consoleStringFormatter: BBConsoleStringFormatter
+            source: Source
         ) {
             self.id = id
             self.timestamp = timestamp
@@ -48,7 +45,6 @@ extension BlackBox {
             self.category = category
             self.parentEvent = parentEvent
             self.source = source
-            self.consoleStringFormatter = consoleStringFormatter
         }
         
         public convenience init(
@@ -62,8 +58,7 @@ extension BlackBox {
             parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
-            line: UInt = #line,
-            consoleStringFormatter: BBConsoleStringFormatter
+            line: UInt = #line
         ) {
             self.init(
                 id: id,
@@ -78,8 +73,7 @@ extension BlackBox {
                     fileID: fileID,
                     function: function,
                     line: line
-                ),
-                consoleStringFormatter: consoleStringFormatter
+                )
             )
         }
         
@@ -102,8 +96,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            source: Source,
-            consoleStringFormatter: BBConsoleStringFormatter
+            source: Source
         ) {
             self.error = error
             func domainWithoutModuleName(_ module: String) -> String {
@@ -133,8 +126,7 @@ extension BlackBox {
                 level: error.level,
                 category: category,
                 parentEvent: parentEvent,
-                source: source,
-                consoleStringFormatter: consoleStringFormatter
+                source: source
             )
         }
         
@@ -147,8 +139,7 @@ extension BlackBox {
             parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
-            line: UInt = #line,
-            consoleStringFormatter: BBConsoleStringFormatter
+            line: UInt = #line
         ) {
             self.init(
                 id: id,
@@ -161,8 +152,7 @@ extension BlackBox {
                     fileID: fileID,
                     function: function,
                     line: line
-                ),
-                consoleStringFormatter: consoleStringFormatter
+                )
             )
         }
     }
@@ -183,8 +173,7 @@ extension BlackBox {
             level: BBLogLevel = .debug,
             category: String? = nil,
             parentEvent: GenericEvent? = nil,
-            source: Source,
-            consoleStringFormatter: BBConsoleStringFormatter
+            source: Source
         ) {
             self.rawMessage = message
             super.init(
@@ -196,8 +185,7 @@ extension BlackBox {
                 level: level,
                 category: category,
                 parentEvent: parentEvent,
-                source: source,
-                consoleStringFormatter: consoleStringFormatter
+                source: source
             )
         }
         
@@ -212,8 +200,7 @@ extension BlackBox {
             parentEvent: GenericEvent? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
-            line: UInt = #line,
-            consoleStringFormatter: BBConsoleStringFormatter
+            line: UInt = #line
         ) {
             self.init(
                 id: id,
@@ -228,8 +215,7 @@ extension BlackBox {
                     fileID: fileID,
                     function: function,
                     line: line
-                ),
-                consoleStringFormatter: consoleStringFormatter
+                )
             )
         }
     }
@@ -259,8 +245,7 @@ extension BlackBox {
             serviceInfo: BBServiceInfo? = nil,
             level: BBLogLevel = .debug,
             category: String? = nil,
-            source: Source,
-            consoleStringFormatter: BBConsoleStringFormatter
+            source: Source
         ) {
             self.rawMessage = message ?? startEvent.rawMessage
             self.startEvent = startEvent
@@ -286,8 +271,7 @@ extension BlackBox {
                 level: level,
                 category: category,
                 parentEvent: startEvent,
-                source: source,
-                consoleStringFormatter: consoleStringFormatter
+                source: source
             )
         }
         
@@ -302,8 +286,7 @@ extension BlackBox {
             category: String? = nil,
             fileID: StaticString = #fileID,
             function: StaticString = #function,
-            line: UInt = #line,
-            consoleStringFormatter: BBConsoleStringFormatter
+            line: UInt = #line
         ) {
             self.init(
                 id: id,
@@ -318,8 +301,7 @@ extension BlackBox {
                     fileID: fileID,
                     function: function,
                     line: line
-                ),
-                consoleStringFormatter: consoleStringFormatter
+                )
             )
         }
     }
