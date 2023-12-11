@@ -8,10 +8,10 @@ public class OSLogger: BBLoggerProtocol {
     
     public init(
         levels: [BBLogLevel],
-        stringFormatter: BlackBox.BBLogFormat
+        logFormat: BlackBox.BBLogFormat
     ){
         self.levels = levels
-        self.logFormat = stringFormatter
+        self.logFormat = logFormat
     }
     
     public func log(_ event: BlackBox.GenericEvent) {

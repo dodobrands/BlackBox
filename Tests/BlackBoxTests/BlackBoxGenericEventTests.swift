@@ -41,7 +41,7 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
     }
     
     func test_parentEvent() {
-        let parentEvent = BlackBox.GenericEvent("Test", consoleStringFormatter: .default)
+        let parentEvent = BlackBox.GenericEvent("Test")
         waitForLog { BlackBox.log("Test 2", parentEvent: parentEvent) }
         XCTAssertEqual(logger.genericEvent?.parentEvent, parentEvent)
     }

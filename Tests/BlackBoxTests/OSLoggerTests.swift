@@ -25,7 +25,7 @@ class OSLoggerTests: BlackBoxTestCase {
     }
     
     private func createOSLogger(levels: [BBLogLevel]) {
-        osLogger = .init(levels: levels)
+        osLogger = .init(levels: levels, logFormat: .default)
         BlackBox.instance = .init(loggers: [osLogger])
         
         logger = osLogger
@@ -37,7 +37,7 @@ class OSLoggerTests: BlackBoxTestCase {
         
         let expectedResult = """
 
-🛠 Hello there
+Hello there
 
 [Source]
 OSLoggerTests:35
@@ -51,7 +51,7 @@ test_genericEvent_message()
         
         let expectedResult = """
 
-🛠 Hello there
+Hello there
 
 [Source]
 OSLoggerTests:50
@@ -73,7 +73,7 @@ test_genericEvent_userInfo()
         
         let expectedResult = """
 
-🛠 Hello there
+Hello there
 
 [Source]
 OSLoggerTests:72
@@ -103,7 +103,7 @@ test_genericEvent_userInfo_nonCodable()
         waitForLog { BlackBox.log("Hello There", level: .error) }
         let expectedResult = """
 
-❌ Hello There
+Hello There
 
 [Source]
 OSLoggerTests:103
@@ -155,7 +155,7 @@ test_genericEvent_validLevel()
         waitForLog { BlackBox.log(Error.someError) }
         let expectedResult = """
 
-❌ OSLoggerTests.Error.someError
+OSLoggerTests.Error.someError
 
 [Source]
 OSLoggerTests:155
@@ -169,7 +169,7 @@ test_errorEvent()
         
         let expectedResult = """
 
-🛠 Start: Process
+Start: Process
 
 [Source]
 OSLoggerTests:168
@@ -183,24 +183,22 @@ test_startEvent()
             let date = Date()
             let startEvent = BlackBox.StartEvent(
                 timestamp: date, 
-                "Process",
-                consoleStringFormatter: .default
+                "Process"
             )
             
             let endEvent = BlackBox.EndEvent(
                 timestamp: date.addingTimeInterval(1),
-                startEvent: startEvent,
-                consoleStringFormatter: .default
+                startEvent: startEvent
             )
             
             BlackBox.logEnd(endEvent) 
         }
         let expectedResult = """
 
-🛠 End: Process, duration: 1 sec
+End: Process, duration: 1 sec
 
 [Source]
-OSLoggerTests:190
+OSLoggerTests:189
 test_endEvent()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)

@@ -10,7 +10,7 @@ import XCTest
 
 class BlackBoxStartEventTests: BlackBoxTestCase {
     func test_logStart_event() {
-        let event = BlackBox.StartEvent("Test", consoleStringFormatter: .default)
+        let event = BlackBox.StartEvent("Test")
         waitForLog { BlackBox.logStart(event) }
         XCTAssertEqual(logger.startEvent, event)
     }
@@ -50,7 +50,7 @@ class BlackBoxStartEventTests: BlackBoxTestCase {
     }
     
     func test_parentEvent() {
-        let parentEvent = BlackBox.StartEvent("Test", consoleStringFormatter: .default)
+        let parentEvent = BlackBox.StartEvent("Test")
         waitForLog { let _ = BlackBox.logStart("Test 2", parentEvent: parentEvent) }
         XCTAssertEqual(logger.startEvent?.parentEvent, parentEvent)
     }

@@ -51,7 +51,7 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
     }
     
     func test_parentEvent() {
-        let parentEvent = BlackBox.GenericEvent("Test", consoleStringFormatter: .default)
+        let parentEvent = BlackBox.GenericEvent("Test")
         waitForLog { BlackBox.log(AnakinKills.maceWindu, parentEvent: parentEvent) }
         XCTAssertEqual(logger.errorEvent?.parentEvent, parentEvent)
     }

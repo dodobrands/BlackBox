@@ -77,7 +77,7 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
     }
     
     func test_endEvent_signpostType_begin() {
-        waitForLog { BlackBox.logEnd(BlackBox.StartEvent("Process", consoleStringFormatter: .default)) }
+        waitForLog { BlackBox.logEnd(BlackBox.StartEvent("Process")) }
         XCTAssertEqual(osSignpostLogger.data?.signpostType, OSSignpostType.end)
     }
     

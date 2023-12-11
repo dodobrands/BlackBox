@@ -13,7 +13,7 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        event = BlackBox.StartEvent("Test", consoleStringFormatter: .default)
+        event = BlackBox.StartEvent("Test")
     }
     
     func test_startEvent() {
@@ -25,8 +25,8 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         let startTimestamp = Date()
         let endTimestamp = startTimestamp.addingTimeInterval(10)
         
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test", consoleStringFormatter: .default)
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent, consoleStringFormatter: .default)
+        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
+        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
         
         XCTAssertEqual(endEvent.duration, 10)
     }
@@ -35,8 +35,8 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         let startTimestamp = Date()
         let endTimestamp = startTimestamp.addingTimeInterval(1)
         
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test", consoleStringFormatter: .default)
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent, consoleStringFormatter: .default)
+        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
+        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
         
         XCTAssertEqual(endEvent.durationFormatted, "1 sec")
     }
@@ -45,8 +45,8 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         let startTimestamp = Date()
         let endTimestamp = startTimestamp.addingTimeInterval(0.0001)
         
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test", consoleStringFormatter: .default)
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent, consoleStringFormatter: .default)
+        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
+        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
         
         XCTAssertEqual(endEvent.durationFormatted, "0.0001 secs")
     }
@@ -55,14 +55,14 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         let startTimestamp = Date()
         let endTimestamp = startTimestamp.addingTimeInterval(1000)
         
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test", consoleStringFormatter: .default)
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent, consoleStringFormatter: .default)
+        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
+        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
         
         XCTAssertEqual(endEvent.durationFormatted, "1,000 secs")
     }
     
     func test_message() throws {
-        let event = BlackBox.StartEvent(timestamp: Date().addingTimeInterval(-1), "Test", consoleStringFormatter: .default)
+        let event = BlackBox.StartEvent(timestamp: Date().addingTimeInterval(-1), "Test")
         waitForLog { BlackBox.logEnd(event) }
         let endEvent = try XCTUnwrap(logger.endEvent)
         XCTAssertTrue(endEvent.durationFormatted.hasPrefix("1.00"))
@@ -74,7 +74,7 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     }
     
     func test_customMessage() throws {
-        let event = BlackBox.StartEvent("Test", consoleStringFormatter: .default)
+        let event = BlackBox.StartEvent("Test")
         waitForLog { BlackBox.logEnd(event, message: "Custom Message") }
         let endEvent = try XCTUnwrap(logger.endEvent)
         XCTAssertTrue(endEvent.message.hasPrefix("End: Custom Message"))
@@ -91,7 +91,7 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     }
     
     func test_levelComeFromStartEvent() {
-        event = BlackBox.StartEvent("Test", level: .warning, consoleStringFormatter: .default)
+        event = BlackBox.StartEvent("Test", level: .warning)
         waitForLog { BlackBox.logEnd(event) }
         XCTAssertEqual(logger.endEvent?.level, .warning)
     }
