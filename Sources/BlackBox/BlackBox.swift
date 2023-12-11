@@ -8,23 +8,15 @@ public class BlackBox {
     
     private let loggers: [BBLoggerProtocol]
     private let queue: DispatchQueue
-
-    private(set) var consoleFormatter: BBLogFormat
     
     /// Creates `BlackBox` instance
     /// - Parameters:
     ///   - loggers: Instances to receive logs from `BlackBox`
     ///   - queue: Queue to receive logs on from `BlackBox`. Must be serial to guarantee correct logs order.
-    ///   - consoleFormatter: Console output string formatter
     public init(loggers: [BBLoggerProtocol],
                 queue: DispatchQueue = .init(label: String(describing: BlackBox.self))) {
         self.loggers = loggers
         self.queue = queue
-        self.consoleFormatter = .default
-    }
-
-    public func setConsoleFormatter(_ formatter: BBLogFormat) {
-        self.consoleFormatter = formatter
     }
 }
 
