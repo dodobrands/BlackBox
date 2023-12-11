@@ -6,7 +6,7 @@ public class FSLogger: BBLoggerProtocol {
     private let fullpath: URL
     private let levels: [BBLogLevel]
     private let queue: DispatchQueue
-    private let stringFormatter: BlackBox.BBConsoleStringFormatter
+    private let logFormat: BlackBox.BBLogFormat
     
     /// Creates FS logger
     /// - Parameters:
@@ -19,12 +19,12 @@ public class FSLogger: BBLoggerProtocol {
         name: String = "BlackBox_FSLogger",
         levels: [BBLogLevel],
         queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self)),
-        stringFormatter: BlackBox.BBConsoleStringFormatter
+        logFormat: BlackBox.BBLogFormat
     ) {
         self.fullpath = path.appendingPathComponent(name)
         self.levels = levels
         self.queue = queue
-        self.stringFormatter = stringFormatter
+        self.logFormat = logFormat
     }
     
     public func log(_ event: BlackBox.GenericEvent) {
@@ -54,7 +54,7 @@ extension FSLogger {
     private func fsLog(_ event: BlackBox.GenericEvent) {
         guard levels.contains(event.level) else { return }
         
-        let userInfo = event.userInfo?.bbLogDescription(with: stringFormatter.userInfoFormatOptions) ?? "nil"
+        let userInfo = event.userInfo?.bbLogDescription(with: logFormat.userInfoFormatOptions) ?? "nil"
         
         let title = event.level.icon + " " + String(describing: Date())
         let subtitle = event.source.filename + ", " + event.source.function.description

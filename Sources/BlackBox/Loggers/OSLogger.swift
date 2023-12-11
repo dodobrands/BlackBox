@@ -4,14 +4,14 @@ import os
 /// Redirects logs to Console.app and to Xcode console
 public class OSLogger: BBLoggerProtocol {
     let levels: [BBLogLevel]
-    let stringFormatter: BlackBox.BBConsoleStringFormatter
+    let logFormat: BlackBox.BBLogFormat
     
     public init(
         levels: [BBLogLevel],
-        stringFormatter: BlackBox.BBConsoleStringFormatter
+        stringFormatter: BlackBox.BBLogFormat
     ){
         self.levels = levels
-        self.stringFormatter = stringFormatter
+        self.logFormat = stringFormatter
     }
     
     public func log(_ event: BlackBox.GenericEvent) {
@@ -33,7 +33,7 @@ public class OSLogger: BBLoggerProtocol {
     private func osLog(event: BlackBox.GenericEvent) {
         guard levels.contains(event.level) else { return }
         
-        let data = LogData(from: event, stringFormatter: stringFormatter)
+        let data = LogData(from: event, logFormat: logFormat)
         
         osLog(data)
     }
@@ -71,7 +71,7 @@ extension OSLogger {
             self.message = message
         }
         
-        init(from event: BlackBox.GenericEvent, stringFormatter: BlackBox.BBConsoleStringFormatter) {
+        init(from event: BlackBox.GenericEvent, logFormat: BlackBox.BBLogFormat) {
             let subsystem = event.source.module
             let category = event.category ?? ""
             
@@ -79,11 +79,11 @@ extension OSLogger {
                 logType: OSLogType(event.level),
                 subsystem: subsystem,
                 category: category,
-                message: Self.message(from: event, stringFormatter: stringFormatter)
+                message: Self.message(from: event, logFormat: logFormat)
             )
         }
         
-        private static func message(from event: BlackBox.GenericEvent, stringFormatter: BlackBox.BBConsoleStringFormatter) -> String {
+        private static func message(from event: BlackBox.GenericEvent, logFormat: BlackBox.BBLogFormat) -> String {
             func source(from event: BlackBox.GenericEvent) -> String {
                 let fileWithLine = [event.source.filename, String(event.source.line)].joined(separator: ":")
                 
@@ -91,7 +91,7 @@ extension OSLogger {
                     "[Source]",
                     fileWithLine,
                     event.source.function.description
-                ].joined(separator: stringFormatter.sourceSectionInline ? " " : "\n")
+                ].joined(separator: logFormat.sourceSectionInline ? " " : "\n")
             }
             
             func userInfo(from event: BlackBox.GenericEvent) -> String? {
@@ -99,12 +99,12 @@ extension OSLogger {
                 
                 return [
                     "[User Info]",
-                    userInfo.bbLogDescription(with: stringFormatter.userInfoFormatOptions)
+                    userInfo.bbLogDescription(with: logFormat.userInfoFormatOptions)
                 ].joined(separator: "\n")
             }
             
             // newline at the beginning increments readability in Xcode's console while not decrementing reading in Console.app
-            let prefixString = stringFormatter.showLevelIcon ? "\n\(event.level.icon) " : "\n"
+            let prefixString = logFormat.showLevelIcon ? "\n\(event.level.icon) " : "\n"
             let message = prefixString + event.formattedMessage
             
             return [

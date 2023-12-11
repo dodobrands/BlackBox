@@ -9,7 +9,7 @@ public class BlackBox {
     private let loggers: [BBLoggerProtocol]
     private let queue: DispatchQueue
 
-    private(set) var consoleFormatter: BBConsoleStringFormatter
+    private(set) var consoleFormatter: BBLogFormat
     
     /// Creates `BlackBox` instance
     /// - Parameters:
@@ -23,7 +23,7 @@ public class BlackBox {
         self.consoleFormatter = .default
     }
 
-    public func setConsoleFormatter(_ formatter: BBConsoleStringFormatter) {
+    public func setConsoleFormatter(_ formatter: BBLogFormat) {
         self.consoleFormatter = formatter
     }
 }
@@ -337,12 +337,12 @@ extension BlackBox {
 }
 
 extension BlackBox {
-    public struct BBConsoleStringFormatter {
+    public struct BBLogFormat {
         let userInfoFormatOptions: JSONSerialization.WritingOptions
         let sourceSectionInline: Bool
         let showLevelIcon: Bool
 
-        /// Creates `BBConsoleStringFormatter` instance
+        /// Creates `BBLogFormat` instance
         /// - Parameters:
         ///   - userInfoFormatOptions:Options for output JSON data.
         ///   - sourceSectionInline: Print `Source` section in console inline
@@ -357,8 +357,8 @@ extension BlackBox {
             self.showLevelIcon = showLevelIcon
         }
 
-        public static var `default` = BBConsoleStringFormatter(userInfoFormatOptions: .prettyPrinted,
-                                                               sourceSectionInline: false,
-                                                               showLevelIcon: false)
+        public static var `default` = BBLogFormat(userInfoFormatOptions: .prettyPrinted,
+                                                  sourceSectionInline: false,
+                                                  showLevelIcon: false)
     }
 }
