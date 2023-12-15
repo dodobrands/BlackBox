@@ -349,7 +349,7 @@ extension BlackBox {
             self.showLevelIcon = showLevelIcon
         }
 
-        public static var `default` = BBLogFormat(userInfoFormatOptions: .prettyPrinted,
+        public static let `default` = BBLogFormat(userInfoFormatOptions: .prettyPrinted,
                                                   sourceSectionInline: false,
                                                   showLevelIcon: false)
     }
