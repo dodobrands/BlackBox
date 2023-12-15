@@ -4,11 +4,11 @@ import os
 /// Redirects logs to Console.app and to Xcode console
 public class OSLogger: BBLoggerProtocol {
     let levels: [BBLogLevel]
-    let logFormat: BlackBox.BBLogFormat
+    let logFormat: BBLogFormat
     
     public init(
         levels: [BBLogLevel],
-        logFormat: BlackBox.BBLogFormat
+        logFormat: BBLogFormat
     ){
         self.levels = levels
         self.logFormat = logFormat
@@ -71,7 +71,7 @@ extension OSLogger {
             self.message = message
         }
         
-        init(from event: BlackBox.GenericEvent, logFormat: BlackBox.BBLogFormat) {
+        init(from event: BlackBox.GenericEvent, logFormat: BBLogFormat) {
             let subsystem = event.source.module
             let category = event.category ?? ""
             
@@ -83,7 +83,7 @@ extension OSLogger {
             )
         }
         
-        private static func message(from event: BlackBox.GenericEvent, logFormat: BlackBox.BBLogFormat) -> String {
+        private static func message(from event: BlackBox.GenericEvent, logFormat: BBLogFormat) -> String {
             func source(from event: BlackBox.GenericEvent) -> String {
                 let fileWithLine = [event.source.filename, String(event.source.line)].joined(separator: ":")
                 

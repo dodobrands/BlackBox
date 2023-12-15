@@ -6,7 +6,7 @@ public class FSLogger: BBLoggerProtocol {
     private let fullpath: URL
     private let levels: [BBLogLevel]
     private let queue: DispatchQueue
-    private let logFormat: BlackBox.BBLogFormat
+    private let logFormat: BBLogFormat
     
     /// Creates FS logger
     /// - Parameters:
@@ -19,7 +19,7 @@ public class FSLogger: BBLoggerProtocol {
         name: String = "BlackBox_FSLogger",
         levels: [BBLogLevel],
         queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self)),
-        logFormat: BlackBox.BBLogFormat
+        logFormat: BBLogFormat
     ) {
         self.fullpath = path.appendingPathComponent(name)
         self.levels = levels
