@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15C3EC6F2B3028A200A79B8B /* BBLogFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C3EC6E2B3028A200A79B8B /* BBLogFormat.swift */; };
+		15C3EC702B3028A200A79B8B /* BBLogFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C3EC6E2B3028A200A79B8B /* BBLogFormat.swift */; };
+		15C3EC712B3028A200A79B8B /* BBLogFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C3EC6E2B3028A200A79B8B /* BBLogFormat.swift */; };
+		15C3EC722B3028A200A79B8B /* BBLogFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C3EC6E2B3028A200A79B8B /* BBLogFormat.swift */; };
 		1E4AC26B27A7F221009F0981 /* BBLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC25D27A7F221009F0981 /* BBLogLevel.swift */; };
 		1E4AC26C27A7F221009F0981 /* FSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC25F27A7F221009F0981 /* FSLogger.swift */; };
 		1E4AC26D27A7F221009F0981 /* BBLoggerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */; };
@@ -46,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15C3EC6E2B3028A200A79B8B /* BBLogFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLogFormat.swift; sourceTree = "<group>"; };
 		1E4AC25D27A7F221009F0981 /* BBLogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLogLevel.swift; sourceTree = "<group>"; };
 		1E4AC25F27A7F221009F0981 /* FSLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSLogger.swift; sourceTree = "<group>"; };
 		1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBLoggerProtocol.swift; sourceTree = "<group>"; };
@@ -105,6 +110,7 @@
 		1E4AC25C27A7F221009F0981 /* BlackBox */ = {
 			isa = PBXGroup;
 			children = (
+				15C3EC6E2B3028A200A79B8B /* BBLogFormat.swift */,
 				1E4AC25D27A7F221009F0981 /* BBLogLevel.swift */,
 				1E4AC28F27A7FE52009F0981 /* BlackBox.h */,
 				1E4AC26027A7F221009F0981 /* BBLoggerProtocol.swift */,
@@ -338,6 +344,7 @@
 				1E4AC27327A7F221009F0981 /* BBHelpers.swift in Sources */,
 				1E4AC26D27A7F221009F0981 /* BBLoggerProtocol.swift in Sources */,
 				1E4AC27127A7F221009F0981 /* BlackBoxEvents.swift in Sources */,
+				15C3EC6F2B3028A200A79B8B /* BBLogFormat.swift in Sources */,
 				1E4AC26F27A7F221009F0981 /* OSLogger.swift in Sources */,
 				1E4AC27427A7F221009F0981 /* BlackBox.swift in Sources */,
 				1E4AC26E27A7F221009F0981 /* OSSignpostLogger.swift in Sources */,
@@ -353,6 +360,7 @@
 				9C0C4DE528FDC6B40062AF73 /* BBHelpers.swift in Sources */,
 				9C0C4DE628FDC6B40062AF73 /* BBLoggerProtocol.swift in Sources */,
 				9C0C4DE728FDC6B40062AF73 /* BlackBoxEvents.swift in Sources */,
+				15C3EC702B3028A200A79B8B /* BBLogFormat.swift in Sources */,
 				9C0C4DE828FDC6B40062AF73 /* OSLogger.swift in Sources */,
 				9C0C4DE928FDC6B40062AF73 /* BlackBox.swift in Sources */,
 				9C0C4DEA28FDC6B40062AF73 /* OSSignpostLogger.swift in Sources */,
@@ -368,6 +376,7 @@
 				9C0C4DF728FE43380062AF73 /* BBHelpers.swift in Sources */,
 				9C0C4DF828FE43380062AF73 /* BBLoggerProtocol.swift in Sources */,
 				9C0C4DF928FE43380062AF73 /* BlackBoxEvents.swift in Sources */,
+				15C3EC712B3028A200A79B8B /* BBLogFormat.swift in Sources */,
 				9C0C4DFA28FE43380062AF73 /* OSLogger.swift in Sources */,
 				9C0C4DFB28FE43380062AF73 /* BlackBox.swift in Sources */,
 				9C0C4DFC28FE43380062AF73 /* OSSignpostLogger.swift in Sources */,
@@ -383,6 +392,7 @@
 				9C0C4E0928FE436E0062AF73 /* BBHelpers.swift in Sources */,
 				9C0C4E0A28FE436E0062AF73 /* BBLoggerProtocol.swift in Sources */,
 				9C0C4E0B28FE436E0062AF73 /* BlackBoxEvents.swift in Sources */,
+				15C3EC722B3028A200A79B8B /* BBLogFormat.swift in Sources */,
 				9C0C4E0C28FE436E0062AF73 /* OSLogger.swift in Sources */,
 				9C0C4E0D28FE436E0062AF73 /* BlackBox.swift in Sources */,
 				9C0C4E0E28FE436E0062AF73 /* OSSignpostLogger.swift in Sources */,
