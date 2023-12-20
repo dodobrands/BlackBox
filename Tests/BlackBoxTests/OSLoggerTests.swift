@@ -257,7 +257,7 @@ Hello there
 
     }
 
-    @available(iOS 13.0, *)
+    @available(iOS 13.0, tvOS 13.0, watchOS 13.0, *)
     func test_whenLogFormatApplied_userInfoFormatted() {
         let customLogFormat = BBLogFormat(userInfoFormatOptions: [.prettyPrinted, .withoutEscapingSlashes],
                                           sourceSectionInline: false,
