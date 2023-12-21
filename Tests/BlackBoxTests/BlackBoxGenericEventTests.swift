@@ -11,68 +11,68 @@ import XCTest
 
 class BlackBoxGenericEventTests: BlackBoxTestCase {
     func test_message() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.message, "Test")
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.message, "Test")
     }
     
     func test_userInfo() {
-        waitForLog { BlackBox.log("Test", userInfo: ["name": "Kenobi"]) }
-        XCTAssertEqual(logger.genericEvent?.userInfo as? [String: String], ["name": "Kenobi"])
+        BlackBox.log("Test", userInfo: ["name": "Kenobi"])
+        XCTAssertEqual(testableLogger.genericEvent?.userInfo as? [String: String], ["name": "Kenobi"])
     }
     
     func test_serviceInfo() {
-        waitForLog { BlackBox.log("Test", serviceInfo: Lightsaber(color: "purple")) }
-        XCTAssertEqual(logger.genericEvent?.serviceInfo as? Lightsaber, Lightsaber(color: "purple"))
+        BlackBox.log("Test", serviceInfo: Lightsaber(color: "purple"))
+        XCTAssertEqual(testableLogger.genericEvent?.serviceInfo as? Lightsaber, Lightsaber(color: "purple"))
     }
     
     func test_level() {
-        waitForLog { BlackBox.log("Test", level: .warning) }
-        XCTAssertEqual(logger.genericEvent?.level, .warning)
+        BlackBox.log("Test", level: .warning)
+        XCTAssertEqual(testableLogger.genericEvent?.level, .warning)
     }
     
     func test_defaultLevel() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.level, .debug)
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.level, .debug)
     }
     
     func test_category() {
-        waitForLog { BlackBox.log("Test", category: "Analytics") }
-        XCTAssertEqual(logger.genericEvent?.category, "Analytics")
+        BlackBox.log("Test", category: "Analytics")
+        XCTAssertEqual(testableLogger.genericEvent?.category, "Analytics")
     }
     
     func test_parentEvent() {
         let parentEvent = BlackBox.GenericEvent("Test")
-        waitForLog { BlackBox.log("Test 2", parentEvent: parentEvent) }
-        XCTAssertEqual(logger.genericEvent?.parentEvent, parentEvent)
+        BlackBox.log("Test 2", parentEvent: parentEvent)
+        XCTAssertEqual(testableLogger.genericEvent?.parentEvent, parentEvent)
     }
     
     func test_fileID() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.source.fileID.description, "BlackBoxTests/BlackBoxGenericEventTests.swift")
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.source.fileID.description, "BlackBoxTests/BlackBoxGenericEventTests.swift")
     }
     
     func test_module() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.source.module, "BlackBoxTests")
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.source.module, "BlackBoxTests")
     }
     
     func test_anotherModule() {
-        waitForLog { ExampleService().doSomeWork() }
-        XCTAssertEqual(logger.genericEvent?.source.module, "ExampleModule")
+        ExampleService().doSomeWork()
+        XCTAssertEqual(testableLogger.genericEvent?.source.module, "ExampleModule")
     }
     
     func test_filename() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.source.filename, "BlackBoxGenericEventTests")
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.source.filename, "BlackBoxGenericEventTests")
     }
     
     func test_function() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.source.function.description, "test_function()")
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.source.function.description, "test_function()")
     }
     
     func test_line() {
-        waitForLog { BlackBox.log("Test") }
-        XCTAssertEqual(logger.genericEvent?.source.line, 75)
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.source.line, 75)
     }
 }

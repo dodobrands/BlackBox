@@ -7,16 +7,12 @@ public class BlackBox {
     public static var instance = BlackBox.default
     
     private let loggers: [BBLoggerProtocol]
-    private let queue: DispatchQueue
     
     /// Creates `BlackBox` instance
     /// - Parameters:
     ///   - loggers: Instances to receive logs from `BlackBox`
-    ///   - queue: Queue to receive logs on from `BlackBox`. Must be serial to guarantee correct logs order.
-    public init(loggers: [BBLoggerProtocol],
-                queue: DispatchQueue = .init(label: String(describing: BlackBox.self))) {
+    public init(loggers: [BBLoggerProtocol]) {
         self.loggers = loggers
-        self.queue = queue
     }
 }
 
@@ -186,26 +182,22 @@ extension BlackBox {
         function: StaticString,
         line: UInt
     ) {
-        queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let event = BlackBox.GenericEvent(
-                message.description,
-                userInfo: userInfo,
-                serviceInfo: serviceInfo,
-                level: level,
-                category: category,
-                parentEvent: parentEvent,
-                source: source
-            )
-            
-            self.loggers.forEach { logger in
-                logger.log(event)
-            }
-        }
+        let source = GenericEvent.Source(
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        let event = BlackBox.GenericEvent(
+            message.description,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: level,
+            category: category,
+            parentEvent: parentEvent,
+            source: source
+        )
+        
+        loggers.forEach { $0.log(event) }
     }
     
     func log(
@@ -217,24 +209,20 @@ extension BlackBox {
         function: StaticString,
         line: UInt
     ) {
-        queue.async {
-            let source = GenericEvent.Source(
-                fileID: fileID,
-                function: function,
-                line: line
-            )
-            let event = BlackBox.ErrorEvent(
-                error: error,
-                serviceInfo: serviceInfo,
-                category: category,
-                parentEvent: parentEvent,
-                source: source
-            )
-            
-            self.loggers.forEach { logger in
-                logger.log(event)
-            }
-        }
+        let source = GenericEvent.Source(
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+        let event = BlackBox.ErrorEvent(
+            error: error,
+            serviceInfo: serviceInfo,
+            category: category,
+            parentEvent: parentEvent,
+            source: source
+        )
+        
+        loggers.forEach { $0.log(event) }
     }
     
     func logStart(
@@ -271,11 +259,7 @@ extension BlackBox {
     func logStart(
         _ event: BlackBox.StartEvent
     ) {
-        queue.async {
-            self.loggers.forEach { logger in
-                logger.logStart(event)
-            }
-        }
+        loggers.forEach { $0.logStart(event) }
     }
     
     func logEnd(
@@ -309,11 +293,7 @@ extension BlackBox {
     func logEnd(
         _ event: BlackBox.EndEvent
     ) {
-        queue.async {
-            self.loggers.forEach { logger in
-                logger.logEnd(event)
-            }
-        }
+        loggers.forEach { $0.logEnd(event) }
     }
 }
 

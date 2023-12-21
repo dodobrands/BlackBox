@@ -33,7 +33,7 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
     }
     
     func test_startEvent_message() {
-        waitForLog { let _ = BlackBox.logStart("Hello there") }
+        let _ = BlackBox.logStart("Hello there")
         let expectedResult = "Start: Hello there"
         XCTAssertEqual(osSignpostLogger.data?.message, expectedResult)
     }
@@ -45,7 +45,7 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
         let logLevels: [BBLogLevel] = [.debug, .info, .warning]
         
         logLevels.forEach { level in
-            waitForLog(isInverted: true) { let _ = BlackBox.logStart("Hello There", level: level) }
+            let _ = BlackBox.logStart("Hello There", level: level)
         }
         
         XCTAssertNil(osSignpostLogger.data)
@@ -54,12 +54,12 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
     func test_startEvent_validLevel() {
         createOSSignpostLogger(levels: [.error])
         
-        waitForLog { let _ = BlackBox.logStart("Hello There", level: .error) }
+        let _ = BlackBox.logStart("Hello There", level: .error)
         XCTAssertNotNil(osSignpostLogger.data)
     }
     
     func test_genericEvent_signpostType_event() {
-        waitForLog { BlackBox.log("Hello There", level: .debug) }
+        BlackBox.log("Hello There", level: .debug)
         XCTAssertEqual(osSignpostLogger.data?.signpostType, OSSignpostType.event)
     }
     
@@ -67,32 +67,32 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
         enum Error: Swift.Error {
             case someError
         }
-        waitForLog { BlackBox.log(Error.someError) }
+        BlackBox.log(Error.someError)
         XCTAssertEqual(osSignpostLogger.data?.signpostType, OSSignpostType.event)
     }
     
     func test_startEvent_signpostType_begin() {
-        waitForLog { let _ = BlackBox.logStart("Process") }
+        let _ = BlackBox.logStart("Process")
         XCTAssertEqual(osSignpostLogger.data?.signpostType, OSSignpostType.begin)
     }
     
     func test_endEvent_signpostType_begin() {
-        waitForLog { BlackBox.logEnd(BlackBox.StartEvent("Process")) }
+        BlackBox.logEnd(BlackBox.StartEvent("Process"))
         XCTAssertEqual(osSignpostLogger.data?.signpostType, OSSignpostType.end)
     }
     
     func test_startEvent_subsystem() {
-        waitForLog { let _ = BlackBox.logStart("Hello There") }
+        let _ = BlackBox.logStart("Hello There")
         XCTAssertEqual(osSignpostLogger.data?.subsystem, "BlackBoxTests")
     }
     
     func test_startEvent_categoryProvided() {
-        waitForLog { let _ = BlackBox.logStart("Hello There", category: "Analytics") }
+        let _ = BlackBox.logStart("Hello There", category: "Analytics")
         XCTAssertEqual(osSignpostLogger.data?.category, "Analytics")
     }
     
     func test_startEvent_categoryNotProvided() {
-        waitForLog { let _ = BlackBox.logStart("Hello There") }
+        let _ = BlackBox.logStart("Hello There")
         XCTAssertEqual(osSignpostLogger.data?.category, "OSSignpostLoggerTests")
     }
     
@@ -100,74 +100,56 @@ class OSSignpostLoggerTests: BlackBoxTestCase {
         enum Error: Swift.Error {
             case someError
         }
-        waitForLog { BlackBox.log(Error.someError) }
+        BlackBox.log(Error.someError)
         XCTAssertNotNil(osSignpostLogger.data)
     }
     
     func test_startEvent_endEvent_shareSameId() throws {
-        var log: BlackBox.StartEvent?
-        waitForLog { log = BlackBox.logStart("Hello There") }
-        
-        let startLog = try XCTUnwrap(log)
+        let startLog = BlackBox.logStart("Hello There")
         let startLogData = try XCTUnwrap(osSignpostLogger.data)
         
-        waitForLog { BlackBox.logEnd(startLog) }
+        BlackBox.logEnd(startLog)
         let endLogData = try XCTUnwrap(osSignpostLogger.data)
         
         XCTAssertEqual(startLogData.signpostId.rawValue, endLogData.signpostId.rawValue)
     }
     
     func test_startEvent_endEvent_shareSameSubsystem() throws {
-        var log: BlackBox.StartEvent?
-        waitForLog { log = BlackBox.logStart("Hello There") }
-        
-        let startLog = try XCTUnwrap(log)
+        let startLog = BlackBox.logStart("Hello There")
         let startLogData = try XCTUnwrap(osSignpostLogger.data)
         
-        waitForLog { ExampleModule.ExampleService().finishLog(startLog) }
+        ExampleModule.ExampleService().finishLog(startLog)
         let endLogData = try XCTUnwrap(osSignpostLogger.data)
         
         XCTAssertEqual(startLogData.subsystem, endLogData.subsystem)
     }
     
     func test_startEvent_endEvent_shareSameCategory() throws {
-        var log: BlackBox.StartEvent?
-        waitForLog { log = BlackBox.logStart("Hello There") }
-        
-        let startLog = try XCTUnwrap(log)
+        let startLog = BlackBox.logStart("Hello There")
         let startLogData = try XCTUnwrap(osSignpostLogger.data)
         
-        waitForLog { ExampleModule.ExampleService().finishLog(startLog) }
+        ExampleModule.ExampleService().finishLog(startLog)
         let endLogData = try XCTUnwrap(osSignpostLogger.data)
         
         XCTAssertEqual(startLogData.category, endLogData.category)
     }
     
     func test_startEvent_endEvent_shareSameName() throws {
-        var log: BlackBox.StartEvent?
-        waitForLog { log = BlackBox.logStart("Hello There") }
-        
-        let startLog = try XCTUnwrap(log)
+        let startLog = BlackBox.logStart("Hello There")
         let startLogData = try XCTUnwrap(osSignpostLogger.data)
         
-        waitForLog { ExampleModule.ExampleService().finishLog(startLog) }
+        ExampleModule.ExampleService().finishLog(startLog)
         let endLogData = try XCTUnwrap(osSignpostLogger.data)
         
         XCTAssertEqual(startLogData.name.description, endLogData.name.description)
     }
 }
 
-class OSSignpostLoggerMock: OSSignpostLogger, TestableLoggerProtocol {
-    var expectation: XCTestExpectation?
-    var genericEvent: BlackBox.GenericEvent?
-    var errorEvent: BlackBox.ErrorEvent?
-    var startEvent: BlackBox.StartEvent?
-    var endEvent: BlackBox.EndEvent?
+class OSSignpostLoggerMock: OSSignpostLogger {
     
     var data: LogData?
     override func signpostLog(_ data: OSSignpostLogger.LogData) {
         self.data = data
-        expectation?.fulfill()
         super.signpostLog(data)
     }
 }
