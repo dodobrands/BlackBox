@@ -162,7 +162,7 @@ extension BlackBox {
     /// Measurement start event
     public class StartEvent: GenericEvent {
         /// Original unformatted message
-        public var rawMessage: StaticString
+        public let rawMessage: StaticString
         
         public init(
             id: UUID = .init(),
@@ -225,10 +225,10 @@ extension BlackBox {
     /// Measurement end event
     public class EndEvent: GenericEvent {
         /// Original unformatted message
-        public var rawMessage: StaticString
+        public let rawMessage: StaticString
         
         /// Start event
-        public var startEvent: StartEvent
+        public let startEvent: StartEvent
         
         /// Duration between end event and start event
         public let duration: TimeInterval
