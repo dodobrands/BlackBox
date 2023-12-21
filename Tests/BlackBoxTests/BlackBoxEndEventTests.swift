@@ -31,43 +31,6 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         XCTAssertEqual(endEvent.duration, 10)
     }
     
-    func test_durationFormatted() {
-        let startTimestamp = Date()
-        let endTimestamp = startTimestamp.addingTimeInterval(1)
-        
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
-        
-        XCTAssertEqual(endEvent.durationFormatted, "1 sec")
-    }
-    
-    func test_durationFormatted_short() {
-        let startTimestamp = Date()
-        let endTimestamp = startTimestamp.addingTimeInterval(0.0001)
-        
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
-        
-        XCTAssertEqual(endEvent.durationFormatted, "0.0001 secs")
-    }
-    
-    func test_durationFormatted_long() {
-        let startTimestamp = Date()
-        let endTimestamp = startTimestamp.addingTimeInterval(1000)
-        
-        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
-        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
-        
-        XCTAssertEqual(endEvent.durationFormatted, "1,000 secs")
-    }
-    
-    func test_message() throws {
-        let event = BlackBox.StartEvent(timestamp: Date().addingTimeInterval(-1), "Test")
-        BlackBox.logEnd(event)
-        let endEvent = try XCTUnwrap(testableLogger.endEvent)
-        XCTAssertTrue(endEvent.durationFormatted.hasPrefix("1.00"))
-    }
-    
     func test_rawMessage() {
         BlackBox.logEnd(event)
         XCTAssertEqual(testableLogger.endEvent?.rawMessage.description, "Test".description)
@@ -134,6 +97,6 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
     
     func test_line() {
         BlackBox.logEnd(event)
-        XCTAssertEqual(testableLogger.endEvent?.source.line, 136)
+        XCTAssertEqual(testableLogger.endEvent?.source.line, 99)
     }
 }

@@ -233,9 +233,6 @@ extension BlackBox {
         /// Duration between end event and start event
         public let duration: TimeInterval
         
-        /// Duration between end event and start event, formatted
-        public let durationFormatted: String
-        
         public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
@@ -250,16 +247,6 @@ extension BlackBox {
             self.rawMessage = message ?? startEvent.rawMessage
             self.startEvent = startEvent
             self.duration = timestamp.timeIntervalSince(startEvent.timestamp)
-            
-            func formatted(_ duration: TimeInterval) -> String {
-                if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
-                    return Measurement(value: duration, unit: UnitDuration.seconds).formatted()
-                } else {
-                    return "\(duration) s"
-                }
-            }
-            
-            self.durationFormatted = formatted(duration)
             
             let message = "End: \(rawMessage)"
             super.init(

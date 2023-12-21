@@ -24,7 +24,10 @@ class OSLoggerTests: BlackBoxTestCase {
         try super.tearDownWithError()
     }
     
-    private func createOSLogger(levels: [BBLogLevel], logFormat: BBLogFormat = .default) {
+    private func createOSLogger(
+        levels: [BBLogLevel], 
+        logFormat: BBLogFormat = .fixedLocale
+    ) {
         osLogger = .init(levels: levels, logFormat: logFormat)
         BlackBox.instance = .init(loggers: [osLogger])
         
@@ -40,7 +43,7 @@ class OSLoggerTests: BlackBoxTestCase {
 Hello there
 
 [Source]
-OSLoggerTests:35
+OSLoggerTests:38
 test_genericEvent_message()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -54,7 +57,7 @@ test_genericEvent_message()
 Hello there
 
 [Source]
-OSLoggerTests:50
+OSLoggerTests:53
 test_genericEvent_userInfo()
 
 [User Info]
@@ -76,7 +79,7 @@ test_genericEvent_userInfo()
 Hello there
 
 [Source]
-OSLoggerTests:72
+OSLoggerTests:75
 test_genericEvent_userInfo_nonCodable()
 
 [User Info]
@@ -106,7 +109,7 @@ test_genericEvent_userInfo_nonCodable()
 Hello There
 
 [Source]
-OSLoggerTests:103
+OSLoggerTests:106
 test_genericEvent_validLevel()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -158,7 +161,7 @@ test_genericEvent_validLevel()
 OSLoggerTests.Error.someError
 
 [Source]
-OSLoggerTests:155
+OSLoggerTests:158
 test_errorEvent()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -172,7 +175,7 @@ test_errorEvent()
 Start: Process
 
 [Source]
-OSLoggerTests:168
+OSLoggerTests:171
 test_startEvent()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -197,8 +200,37 @@ test_startEvent()
 End: Process, duration: 1 sec
 
 [Source]
-OSLoggerTests:188
+OSLoggerTests:191
 test_endEvent()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
+    }
+    
+    func test_endEvent_durationFormat() {
+        let formatter = MeasurementFormatter()
+        formatter.locale = Locale(identifier: "es_AR")
+        formatter.numberFormatter.minimumFractionDigits = 3
+        createOSLogger(levels: .allCases, logFormat: BBLogFormat(measurementFormatter: formatter))
+        let date = Date()
+        let startEvent = BlackBox.StartEvent(
+            timestamp: date, 
+            "Process"
+        )
+        
+        let endEvent = BlackBox.EndEvent(
+            timestamp: date.addingTimeInterval(1),
+            startEvent: startEvent
+        )
+        
+        BlackBox.logEnd(endEvent) 
+        
+        let expectedResult = """
+
+End: Process, duration: 1,000 seg.
+
+[Source]
+OSLoggerTests:220
+test_endEvent_durationFormat()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
     }
@@ -226,7 +258,7 @@ extension OSLoggerTests {
 🛠 Hello there
 
 [Source]
-OSLoggerTests:222
+OSLoggerTests:254
 test_whenLogFormatApplied_showingLevelIcon()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -243,7 +275,7 @@ test_whenLogFormatApplied_showingLevelIcon()
 
 Hello there
 
-[Source] OSLoggerTests:240 test_whenLogFormatApplied_outputSourceSectionInline()
+[Source] OSLoggerTests:272 test_whenLogFormatApplied_outputSourceSectionInline()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
 
@@ -263,7 +295,7 @@ Hello there
 Hello there
 
 [Source]
-OSLoggerTests:259
+OSLoggerTests:291
 test_whenLogFormatApplied_userInfoFormatted()
 
 [User Info]
@@ -274,4 +306,16 @@ test_whenLogFormatApplied_userInfoFormatted()
         XCTAssertEqual(osLogger.data?.message, expectedResult)
 
     }
+}
+
+extension BBLogFormat {
+    static let fixedLocale = BBLogFormat(measurementFormatter: .fixedLocale)
+}
+
+extension MeasurementFormatter {
+    static let fixedLocale: MeasurementFormatter = {
+        let formatter = MeasurementFormatter()
+        formatter.locale = Locale(identifier: "en-GB")
+        return formatter
+    }()
 }
