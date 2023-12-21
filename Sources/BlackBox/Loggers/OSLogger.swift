@@ -8,7 +8,7 @@ public class OSLogger: BBLoggerProtocol {
     
     public init(
         levels: [BBLogLevel],
-        logFormat: BBLogFormat
+        logFormat: BBLogFormat = BBLogFormat()
     ){
         self.levels = levels
         self.logFormat = logFormat
@@ -105,7 +105,7 @@ extension OSLogger {
             
             // newline at the beginning increments readability in Xcode's console while not decrementing reading in Console.app
             let prefixString = logFormat.showLevelIcon ? "\n\(event.level.icon) " : "\n"
-            let message = prefixString + event.formattedMessage
+            let message = prefixString + event.formattedMessage(using: logFormat.measurementFormatter)
             
             return [
                 message,
@@ -134,10 +134,23 @@ extension OSLogType {
 }
 
 extension BlackBox.GenericEvent {
-    var formattedMessage: String {
+    public func formattedMessage(using formatter: MeasurementFormatter) -> String {
         switch self {
         case let endEvent as BlackBox.EndEvent:
-            return "\(message), duration: \(endEvent.durationFormatted)"
+            func formatted(_ duration: TimeInterval) -> String {
+                let fallback = { return "\(duration) s" }
+                
+                if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+                    let measurement = Measurement(value: duration, unit: UnitDuration.seconds)
+                    return formatter.string(for: measurement) ?? fallback()
+                } else {
+                    return fallback()
+                }
+            }
+            
+            let durationFormatted = formatted(endEvent.duration)
+            
+            return "\(message), duration: \(durationFormatted)"
         default:
             return message
         }
