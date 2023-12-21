@@ -11,11 +11,12 @@ import XCTest
 
 class BlackBoxTestCase: XCTestCase {
     let timeout: TimeInterval = 1
-    var logger: (BBLoggerProtocol & TestableLoggerProtocol)!
+    var logger: BBLoggerProtocol!
+    var testableLogger: TestableLoggerProtocol { logger as! TestableLoggerProtocol } 
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        logger = DummyLogger()
+        logger = LoggerMock()
         BlackBox.instance = .init(loggers: [logger])
     }
     
@@ -23,25 +24,4 @@ class BlackBoxTestCase: XCTestCase {
         logger = nil
         try super.tearDownWithError()
     }
-    
-    func waitForLog(
-        isInverted: Bool = false,
-        from code: () -> ()
-    ) {
-        let expectation = expectation(description: "Log received")
-        expectation.isInverted = isInverted
-        logger.expectation = expectation
-        
-        code()
-        
-        wait(for: [expectation], timeout: timeout)
-    }
-}
-
-protocol TestableLoggerProtocol {
-    var expectation: XCTestExpectation? { get set }
-    var genericEvent: BlackBox.GenericEvent? { get set }
-    var errorEvent: BlackBox.ErrorEvent? { get set }
-    var startEvent: BlackBox.StartEvent? { get set }
-    var endEvent: BlackBox.EndEvent? { get set }
 }
