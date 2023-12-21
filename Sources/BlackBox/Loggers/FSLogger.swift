@@ -19,7 +19,7 @@ public class FSLogger: BBLoggerProtocol {
         name: String = "BlackBox_FSLogger",
         levels: [BBLogLevel],
         queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self)),
-        logFormat: BBLogFormat
+        logFormat: BBLogFormat = BBLogFormat()
     ) {
         self.fullpath = path.appendingPathComponent(name)
         self.levels = levels
