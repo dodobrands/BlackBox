@@ -302,7 +302,7 @@ extension BlackBox {
     
     public static var defaultLoggers: [BBLoggerProtocol] {
         [
-            OSLogger(levels: .allCases, logFormat: .default),
+            OSLogger(levels: .allCases),
             OSSignpostLogger(levels: .allCases)
         ]
     }
