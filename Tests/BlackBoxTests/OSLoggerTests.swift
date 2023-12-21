@@ -24,8 +24,8 @@ class OSLoggerTests: BlackBoxTestCase {
         try super.tearDownWithError()
     }
     
-    private func createOSLogger(levels: [BBLogLevel]) {
-        osLogger = .init(levels: levels)
+    private func createOSLogger(levels: [BBLogLevel], logFormat: BBLogFormat = .default) {
+        osLogger = .init(levels: levels, logFormat: logFormat)
         BlackBox.instance = .init(loggers: [osLogger])
         
         logger = osLogger
@@ -217,5 +217,69 @@ class OSLoggerMock: OSLogger, TestableLoggerProtocol {
         self.data = data
         expectation?.fulfill()
         super.osLog(data)
+    }
+}
+
+
+    // MARK: - BBLogFormat
+extension OSLoggerTests {
+    func test_whenLogFormatApplied_showingLevelIcon() {
+        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], sourceSectionInline: false, showLevelIcon: true)
+        createOSLogger(levels: .allCases, logFormat: customLogFormat)
+
+        waitForLog { BlackBox.log("Hello there") }
+
+        let expectedResult = """
+
+🛠 Hello there
+
+[Source]
+OSLoggerTests:230
+test_whenLogFormatApplied_showingLevelIcon()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
+
+    }
+
+    func test_whenLogFormatApplied_outputSourceSectionInline() {
+        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], sourceSectionInline: true, showLevelIcon: false)
+        createOSLogger(levels: .allCases, logFormat: customLogFormat)
+
+        waitForLog { BlackBox.log("Hello there") }
+
+        let expectedResult = """
+
+Hello there
+
+[Source] OSLoggerTests:248 test_whenLogFormatApplied_outputSourceSectionInline()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
+
+    }
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 13.0, *)
+    func test_whenLogFormatApplied_userInfoFormatted() {
+        let customLogFormat = BBLogFormat(userInfoFormatOptions: [.prettyPrinted, .withoutEscapingSlashes],
+                                          sourceSectionInline: false,
+                                          showLevelIcon: false)
+        createOSLogger(levels: .allCases, logFormat: customLogFormat)
+
+        waitForLog { BlackBox.log("Hello there", userInfo: ["path": "/api/v1/getData"]) }
+
+        let expectedResult = """
+
+Hello there
+
+[Source]
+OSLoggerTests:267
+test_whenLogFormatApplied_userInfoFormatted()
+
+[User Info]
+{
+  \"path\" : \"/api/v1/getData\"
+}
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
+
     }
 }

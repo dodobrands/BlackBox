@@ -24,7 +24,7 @@ extension BlackBox {
         public let parentEvent: GenericEvent?
         /// From where log originated
         public let source: Source
-        
+
         public init(
             id: UUID = .init(),
             timestamp: Date = .init(),
