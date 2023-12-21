@@ -49,13 +49,13 @@ jobs:
         xcodebuild test
         -scheme ${{ env.SCHEME }}
         -destination '${{ matrix.DESTINATION }}'
-        -resultBundlePath ${{ env.SCHEME }}
+        -resultBundlePath "${{ env.SCHEME }}-${{ matrix.DESTINATION }}"
         -quiet
 
     - name: Report
       uses: kishikawakatsumi/xcresulttool@v1
       with:
-        path: ${{ env.SCHEME }}.xcresult
+        path: "${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
         title: "Xcode test results | ${{ matrix.DESTINATION }}"
       if: success() || failure()
 
