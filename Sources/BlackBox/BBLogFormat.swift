@@ -5,6 +5,9 @@ public struct BBLogFormat {
     let sourceSectionInline: Bool
     let showLevelIcon: Bool
     let measurementFormatter: MeasurementFormatter
+    
+    /// Improves logs readability in Xcode 14 embedded console
+    let addEmptyLinePrefix: Bool
 
     /// Creates `BBLogFormat` instance
     /// - Parameters:
@@ -16,11 +19,13 @@ public struct BBLogFormat {
         userInfoFormatOptions: JSONSerialization.WritingOptions = .prettyPrinted,
         sourceSectionInline: Bool = false,
         showLevelIcon: Bool = false,
-        measurementFormatter: MeasurementFormatter = MeasurementFormatter()
+        measurementFormatter: MeasurementFormatter = MeasurementFormatter(),
+        addEmptyLinePrefix: Bool = false
     ) {
         self.userInfoFormatOptions = userInfoFormatOptions
         self.sourceSectionInline = sourceSectionInline
         self.showLevelIcon = showLevelIcon
         self.measurementFormatter = measurementFormatter
+        self.addEmptyLinePrefix = addEmptyLinePrefix
     }
 }

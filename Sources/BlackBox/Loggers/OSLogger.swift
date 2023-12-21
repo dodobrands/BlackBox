@@ -103,9 +103,12 @@ extension OSLogger {
                 ].joined(separator: "\n")
             }
             
-            // newline at the beginning increments readability in Xcode's console while not decrementing reading in Console.app
-            let prefixString = logFormat.showLevelIcon ? "\n\(event.level.icon) " : "\n"
-            let message = prefixString + event.formattedMessage(using: logFormat.measurementFormatter)
+            let emptyLinePrefix: String? = logFormat.addEmptyLinePrefix ? "\n" : nil
+            let iconPrefix: String? = logFormat.showLevelIcon ? event.level.icon + " " : nil
+            
+            let prefix = [emptyLinePrefix, iconPrefix].compactMap { $0 }.joined()
+            
+            let message = prefix + event.formattedMessage(using: logFormat.measurementFormatter)
             
             return [
                 message,

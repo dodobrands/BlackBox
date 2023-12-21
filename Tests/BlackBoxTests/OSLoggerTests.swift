@@ -39,7 +39,6 @@ class OSLoggerTests: BlackBoxTestCase {
         
         
         let expectedResult = """
-
 Hello there
 
 [Source]
@@ -53,11 +52,10 @@ test_genericEvent_message()
         BlackBox.log("Hello there", userInfo: ["response": "General Kenobi"])
         
         let expectedResult = """
-
 Hello there
 
 [Source]
-OSLoggerTests:53
+OSLoggerTests:52
 test_genericEvent_userInfo()
 
 [User Info]
@@ -75,11 +73,10 @@ test_genericEvent_userInfo()
         BlackBox.log("Hello there", userInfo: ["response": Response(value: "General Kenobi")])
         
         let expectedResult = """
-
 Hello there
 
 [Source]
-OSLoggerTests:75
+OSLoggerTests:73
 test_genericEvent_userInfo_nonCodable()
 
 [User Info]
@@ -105,11 +102,10 @@ test_genericEvent_userInfo_nonCodable()
         
         BlackBox.log("Hello There", level: .error)
         let expectedResult = """
-
 Hello There
 
 [Source]
-OSLoggerTests:106
+OSLoggerTests:103
 test_genericEvent_validLevel()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -157,11 +153,10 @@ test_genericEvent_validLevel()
     func test_errorEvent() {
         BlackBox.log(Error.someError)
         let expectedResult = """
-
 OSLoggerTests.Error.someError
 
 [Source]
-OSLoggerTests:158
+OSLoggerTests:154
 test_errorEvent()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -171,11 +166,10 @@ test_errorEvent()
         let _ = BlackBox.logStart("Process")
         
         let expectedResult = """
-
 Start: Process
 
 [Source]
-OSLoggerTests:171
+OSLoggerTests:166
 test_startEvent()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -196,11 +190,10 @@ test_startEvent()
         BlackBox.logEnd(endEvent) 
         
         let expectedResult = """
-
 End: Process, duration: 1 sec
 
 [Source]
-OSLoggerTests:191
+OSLoggerTests:185
 test_endEvent()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -225,11 +218,10 @@ test_endEvent()
         BlackBox.logEnd(endEvent) 
         
         let expectedResult = """
-
 End: Process, duration: 1,000 seg.
 
 [Source]
-OSLoggerTests:220
+OSLoggerTests:213
 test_endEvent_durationFormat()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -254,11 +246,10 @@ extension OSLoggerTests {
         BlackBox.log("Hello there")
 
         let expectedResult = """
-
 🛠 Hello there
 
 [Source]
-OSLoggerTests:254
+OSLoggerTests:246
 test_whenLogFormatApplied_showingLevelIcon()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -272,10 +263,9 @@ test_whenLogFormatApplied_showingLevelIcon()
         BlackBox.log("Hello there")
 
         let expectedResult = """
-
 Hello there
 
-[Source] OSLoggerTests:272 test_whenLogFormatApplied_outputSourceSectionInline()
+[Source] OSLoggerTests:263 test_whenLogFormatApplied_outputSourceSectionInline()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
 
@@ -287,15 +277,14 @@ Hello there
                                           sourceSectionInline: false,
                                           showLevelIcon: false)
         createOSLogger(levels: .allCases, logFormat: customLogFormat)
-
+        
         BlackBox.log("Hello there", userInfo: ["path": "/api/v1/getData"])
-
+        
         let expectedResult = """
-
 Hello there
 
 [Source]
-OSLoggerTests:291
+OSLoggerTests:281
 test_whenLogFormatApplied_userInfoFormatted()
 
 [User Info]
@@ -304,7 +293,25 @@ test_whenLogFormatApplied_userInfoFormatted()
 }
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
+        
+    }
+    
+    func test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine() {
+        let format = BBLogFormat(addEmptyLinePrefix: true)
+        createOSLogger(levels: .allCases, logFormat: format)
+        
+        BlackBox.log("Hello there")
+        
+        let expectedResult = """
 
+Hello there
+
+[Source]
+OSLoggerTests:303
+test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
+        
     }
 }
 
