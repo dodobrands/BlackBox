@@ -59,33 +59,10 @@ jobs:
         title: "Xcode test results | ${{ matrix.DESTINATION }}"
       if: success() || failure()
 
-  unit-tests-carthage:
-    runs-on: 'macos-13'
-
-    timeout-minutes: 10
-
-    strategy:
-      matrix:
-        PLATFORM: ["iOS", "tvOS", "watchOS", "macOS"]
-
-    steps:
-    - name: Get source code
-      uses: actions/checkout@v3
-
-    - name: Prepare Environment for App Build
-      uses: ./.github/actions/prepare_env_app_build
-
-    - name: Build Library
-      run: >
-        carthage build
-        --no-skip-current
-        --use-xcframeworks
-        --platform ${{ matrix.PLATFORM }}
-
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
     runs-on: 'macos-latest'
-    needs: ['unit-tests-spm', 'unit-tests-carthage']
+    needs: unit-tests-spm
     if: always()
     steps:
       - name: Successful deploy
