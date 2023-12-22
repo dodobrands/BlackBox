@@ -1,13 +1,13 @@
 import Foundation
 
 public struct BBLogFormat {
-    let userInfoFormatOptions: JSONSerialization.WritingOptions
-    let sourceSectionInline: Bool
-    let showLevelIcon: Bool
-    let measurementFormatter: MeasurementFormatter
+    public let userInfoFormatOptions: JSONSerialization.WritingOptions
+    public let sourceSectionInline: Bool
+    public let showLevelIcon: Bool
+    public let measurementFormatter: MeasurementFormatter
     
     /// Improves logs readability in Xcode 14 embedded console
-    let addEmptyLinePrefix: Bool
+    public let addEmptyLinePrefix: Bool
 
     /// Creates `BBLogFormat` instance
     /// - Parameters:
