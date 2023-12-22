@@ -104,7 +104,7 @@ extension OSLogger {
             }
             
             let emptyLinePrefix: String? = logFormat.addEmptyLinePrefix ? "\n" : nil
-            let iconPrefix: String? = logFormat.showLevelIcon ? event.level.icon + " " : nil
+            let iconPrefix: String? = logFormat.showLevelIcon.contains(event.level) ? event.level.icon + " " : nil
             
             let prefix = [emptyLinePrefix, iconPrefix].compactMap { $0 }.joined()
             
