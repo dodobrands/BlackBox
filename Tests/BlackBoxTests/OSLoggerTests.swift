@@ -240,7 +240,7 @@ class OSLoggerMock: OSLogger {
     // MARK: - BBLogFormat
 extension OSLoggerTests {
     func test_whenLogFormatApplied_showingLevelIcon() {
-        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], sourceSectionInline: false, showLevelIcon: true)
+        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], sourceSectionInline: false, showLevelIcon: [.debug])
         createOSLogger(levels: .allCases, logFormat: customLogFormat)
 
         BlackBox.log("Hello there")
@@ -257,7 +257,7 @@ test_whenLogFormatApplied_showingLevelIcon()
     }
 
     func test_whenLogFormatApplied_outputSourceSectionInline() {
-        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], sourceSectionInline: true, showLevelIcon: false)
+        let customLogFormat = BBLogFormat(sourceSectionInline: true)
         createOSLogger(levels: .allCases, logFormat: customLogFormat)
 
         BlackBox.log("Hello there")
@@ -273,9 +273,12 @@ Hello there
 
     @available(iOS 13.0, tvOS 13.0, watchOS 13.0, *)
     func test_whenLogFormatApplied_userInfoFormatted() {
-        let customLogFormat = BBLogFormat(userInfoFormatOptions: [.prettyPrinted, .withoutEscapingSlashes],
-                                          sourceSectionInline: false,
-                                          showLevelIcon: false)
+        let customLogFormat = BBLogFormat(
+            userInfoFormatOptions: [
+                .prettyPrinted,
+                .withoutEscapingSlashes
+            ]
+        )
         createOSLogger(levels: .allCases, logFormat: customLogFormat)
         
         BlackBox.log("Hello there", userInfo: ["path": "/api/v1/getData"])
@@ -284,7 +287,7 @@ Hello there
 Hello there
 
 [Source]
-OSLoggerTests:281
+OSLoggerTests:284
 test_whenLogFormatApplied_userInfoFormatted()
 
 [User Info]
@@ -307,7 +310,7 @@ test_whenLogFormatApplied_userInfoFormatted()
 Hello there
 
 [Source]
-OSLoggerTests:303
+OSLoggerTests:306
 test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)

@@ -3,7 +3,7 @@ import Foundation
 public struct BBLogFormat {
     public let userInfoFormatOptions: JSONSerialization.WritingOptions
     public let sourceSectionInline: Bool
-    public let showLevelIcon: Bool
+    public let showLevelIcon: [BBLogLevel]
     public let measurementFormatter: MeasurementFormatter
     
     /// Improves logs readability in Xcode 14 embedded console
@@ -18,7 +18,7 @@ public struct BBLogFormat {
     public init(
         userInfoFormatOptions: JSONSerialization.WritingOptions = .prettyPrinted,
         sourceSectionInline: Bool = false,
-        showLevelIcon: Bool = false,
+        showLevelIcon: [BBLogLevel] = [],
         measurementFormatter: MeasurementFormatter = MeasurementFormatter(),
         addEmptyLinePrefix: Bool = false
     ) {

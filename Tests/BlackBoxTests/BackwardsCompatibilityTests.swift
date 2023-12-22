@@ -294,7 +294,7 @@ class PublicApiTests: XCTestCase {
         let format = BBLogFormat(
             userInfoFormatOptions: [.fragmentsAllowed],
             sourceSectionInline: false,
-            showLevelIcon: false,
+            showLevelIcon: [.debug],
             measurementFormatter: MeasurementFormatter(),
             addEmptyLinePrefix: false
         )
