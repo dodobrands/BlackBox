@@ -229,10 +229,10 @@ class PublicApiTests: XCTestCase {
         
         let _ = BBLogLevel.debug.icon
         
-        BBLogLevel.Icon.debug = "❤️"
-        BBLogLevel.Icon.info = "❤️"
-        BBLogLevel.Icon.warning = "❤️"
-        BBLogLevel.Icon.error = "❤️"
+        BBLogIcon.debug = "❤️"
+        BBLogIcon.info = "❤️"
+        BBLogIcon.warning = "❤️"
+        BBLogIcon.error = "❤️"
     }
     
     func test_loggerProtocol() {
@@ -299,14 +299,14 @@ class PublicApiTests: XCTestCase {
         let format = BBLogFormat(
             userInfoFormatOptions: [.fragmentsAllowed],
             sourceSectionInline: false,
-            showLevelIcon: [.debug],
+            levelsWithIcons: [.debug],
             measurementFormatter: MeasurementFormatter(),
             addEmptyLinePrefix: false
         )
         
         let _ = format.userInfoFormatOptions
         let _ = format.sourceSectionInline
-        let _ = format.showLevelIcon
+        let _ = format.levelsWithIcons
         let _ = format.measurementFormatter
         let _ = format.addEmptyLinePrefix
     }

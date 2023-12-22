@@ -8,15 +8,15 @@ extension BlackBox {
     public class GenericEvent: Equatable {
         /// Unique event ID
         public let id: UUID
-        /// Timestamp when event occured
+        /// Timestamp when event occurred
         public let timestamp: Date
         /// Event message. May be formatted for some events.
         public let message: String
-        /// Default info. Place data you'd like to log here.
+        /// Additional info. Place data you'd like to log here.
         public let userInfo: BBUserInfo?
         /// Place any additional data here. For example, per-event instructions for your custom loggers.
         public let serviceInfo: BBServiceInfo?
-        /// level of log
+        /// Level of log
         public let level: BBLogLevel
         /// Category of log. E.g. View Lifecycle.
         public let category: String?

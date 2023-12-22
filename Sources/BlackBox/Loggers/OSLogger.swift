@@ -104,7 +104,7 @@ extension OSLogger {
             }
             
             let emptyLinePrefix: String? = logFormat.addEmptyLinePrefix ? "\n" : nil
-            let iconPrefix: String? = logFormat.showLevelIcon.contains(event.level) ? event.level.icon + " " : nil
+            let iconPrefix: String? = logFormat.levelsWithIcons.contains(event.level) ? event.level.icon + " " : nil
             
             let prefix = [emptyLinePrefix, iconPrefix].compactMap { $0 }.joined()
             
@@ -137,6 +137,7 @@ extension OSLogType {
 }
 
 extension BlackBox.GenericEvent {
+    /// Combines message and formatted duration together
     public func messageWithFormattedDuration(using formatter: MeasurementFormatter) -> String {
         [
             message, 
@@ -145,6 +146,8 @@ extension BlackBox.GenericEvent {
             .compactMap { $0 }
             .joined(separator: ", duration: ")
     }
+    
+    /// Formats duration according to formatter rules
     public func formattedDuration(using formatter: MeasurementFormatter) -> String? {
         guard let endEvent = self as? BlackBox.EndEvent else { return nil }
         let duration = endEvent.duration
