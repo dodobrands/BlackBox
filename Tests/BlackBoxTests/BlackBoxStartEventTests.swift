@@ -79,4 +79,14 @@ class BlackBoxStartEventTests: BlackBoxTestCase {
         let _ = BlackBox.logStart("Test")
         XCTAssertEqual(testableLogger.startEvent?.source.line, 79)
     }
+    
+    func test_durationFormattedIsNil() {
+        let _ = BlackBox.logStart("Test")
+        XCTAssertNil(testableLogger.startEvent?.formattedDuration(using: MeasurementFormatter()))
+    }
+    
+    func test_messageWithDurationFormattedIsMessageItself() {
+        let _ = BlackBox.logStart("Test")
+        XCTAssertEqual(testableLogger.startEvent?.message, testableLogger.startEvent?.messageWithFormattedDuration(using: MeasurementFormatter()))
+    }
 }

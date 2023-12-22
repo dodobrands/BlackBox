@@ -318,6 +318,24 @@ test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
     }
 }
 
+extension OSLoggerTests {
+    func test_customLevelIcon() {
+        let format = BBLogFormat(showLevelIcon: [.info])
+        createOSLogger(levels: .allCases, logFormat: format)
+        BBLogLevel.Icon.info = "💎"
+        BlackBox.log("Hello there", level: .info)
+        
+        let expectedResult = """
+💎 Hello there
+
+[Source]
+OSLoggerTests:326
+test_customLevelIcon()
+"""
+        XCTAssertEqual(osLogger.data?.message, expectedResult)
+    }
+}
+
 extension BBLogFormat {
     static let fixedLocale = BBLogFormat(measurementFormatter: .fixedLocale)
 }

@@ -80,4 +80,14 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
         BlackBox.log(AnakinKills.maceWindu)
         XCTAssertEqual(testableLogger.errorEvent?.source.line, 80)
     }
+    
+    func test_durationFormattedIsNil() {
+        BlackBox.log(AnakinKills.maceWindu)
+        XCTAssertNil(testableLogger.errorEvent?.formattedDuration(using: MeasurementFormatter()))
+    }
+    
+    func test_messageWithDurationFormattedIsMessageItself() {
+        BlackBox.log(AnakinKills.maceWindu)
+        XCTAssertEqual(testableLogger.errorEvent?.message, testableLogger.errorEvent?.messageWithFormattedDuration(using: MeasurementFormatter()))
+    }
 }
