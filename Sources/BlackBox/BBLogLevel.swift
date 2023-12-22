@@ -11,15 +11,18 @@ extension Array where Element == BBLogLevel {
 extension BBLogLevel {
     public var icon: String {
         switch self {
-        case .debug:
-            return "🛠"
-        case .info:
-            return "ℹ️"
-        case .warning:
-            return "⚠️"
-        case .error:
-            return "❌"
+        case .debug: return Icon.debug
+        case .info: return Icon.info
+        case .warning: return Icon.warning
+        case .error: return Icon.error
         }
+    }
+    
+    public struct Icon {
+        public static var debug =  "🛠"
+        public static var info =  "ℹ️"
+        public static var warning =  "⚠️"
+        public static var error =  "❌"
     }
 }
 

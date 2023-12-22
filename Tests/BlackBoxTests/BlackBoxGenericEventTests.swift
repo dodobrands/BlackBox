@@ -75,4 +75,16 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
         BlackBox.log("Test")
         XCTAssertEqual(testableLogger.genericEvent?.source.line, 75)
     }
+    
+    func test_durationFormattedIsNil() {
+        BlackBox.log("Test")
+        XCTAssertNil(testableLogger.genericEvent?.formattedDuration(using: MeasurementFormatter()))
+    }
+    
+    func test_messageWithDurationFormattedIsMessageItself() {
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.message, testableLogger.genericEvent?.messageWithFormattedDuration(using: MeasurementFormatter()))
+    }
 }
+
+

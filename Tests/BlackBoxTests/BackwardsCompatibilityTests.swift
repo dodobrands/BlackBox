@@ -228,6 +228,11 @@ class PublicApiTests: XCTestCase {
         let _:[BBLogLevel] = .allCases
         
         let _ = BBLogLevel.debug.icon
+        
+        BBLogLevel.Icon.debug = "❤️"
+        BBLogLevel.Icon.info = "❤️"
+        BBLogLevel.Icon.warning = "❤️"
+        BBLogLevel.Icon.error = "❤️"
     }
     
     func test_loggerProtocol() {

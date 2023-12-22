@@ -99,4 +99,18 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         BlackBox.logEnd(event)
         XCTAssertEqual(testableLogger.endEvent?.source.line, 99)
     }
+    
+    func test_messageWithDurationFormatted() {
+        let startTimestamp = Date()
+        let endTimestamp = startTimestamp.addingTimeInterval(10)
+        
+        let startEvent = BlackBox.StartEvent(timestamp: startTimestamp, "Test")
+        let endEvent = BlackBox.EndEvent(timestamp: endTimestamp, message: "Test", startEvent: startEvent)
+        
+        let formatter = MeasurementFormatter()
+        formatter.locale = Locale(identifier: "en-US")
+
+        XCTAssertEqual("10 sec", endEvent.formattedDuration(using: formatter))
+        XCTAssertEqual("End: Test, duration: 10 sec", endEvent.messageWithFormattedDuration(using: formatter))
+    }
 }
