@@ -16,12 +16,3 @@ dependencies: [
     )
 ]
 ```
-Carthage:
-```ogdl
-github "dodopizza/BlackBox"
-```
-
-> Note: Do not forget to import to your project
-```swift
-import BlackBox
-```
