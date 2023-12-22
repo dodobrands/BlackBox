@@ -12,7 +12,7 @@ SPM:
 dependencies: [
     .package(
         url: "https://github.com/dodopizza/BlackBox.git", 
-        .upToNextMajor(from: "1.0.0")
+        .upToNextMajor(from: "3.0.0")
     )
 ]
 ```
