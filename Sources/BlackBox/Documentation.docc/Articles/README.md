@@ -79,6 +79,12 @@ Each logger in turn redirects logs to some target system, so to read logs you ha
 
 > Tip: You can create your very own loggers and use it with BlackBox. For more information, see <doc:CustomLoggers_1_Base>
 
+#### External Loggers
+- [BlackBoxFirebasePerformance](https://github.com/dodobrands/BlackBoxFirebasePerformance) — redirects logs to Firebase Performance
+- [BlackBoxFirebaseCrashlytics](https://github.com/dodobrands/BlackBoxFirebaseCrashlytics) — redirects logs to Firebase Crashlytics
+
+If you've created your own logger — feel free to extend this list with PR.
+
 ### Setting up loggers
 BlackBox automatically enables `OSLogger` and `OSSignpostLogger` with all available log levels.
 You can customize this behaviour by assigning new BlackBox instance with required loggers:
