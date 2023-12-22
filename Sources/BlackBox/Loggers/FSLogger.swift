@@ -59,7 +59,7 @@ extension FSLogger {
         let title = event.level.icon + " " + String(describing: Date())
         let subtitle = event.source.filename + ", " + event.source.function.description
         
-        let content = event.formattedMessage(using: logFormat.measurementFormatter)
+        let content = event.messageWithFormattedDuration(using: logFormat.measurementFormatter)
         
         let footer = "[User Info]:" + "\n" + userInfo
         
