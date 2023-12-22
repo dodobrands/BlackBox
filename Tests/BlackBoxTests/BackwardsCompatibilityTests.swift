@@ -290,11 +290,18 @@ class PublicApiTests: XCTestCase {
     }
     
     func test_format() {
-        let _ = BBLogFormat(
+        let format = BBLogFormat(
             userInfoFormatOptions: [.fragmentsAllowed],
             sourceSectionInline: false,
             showLevelIcon: false,
-            measurementFormatter: MeasurementFormatter()
+            measurementFormatter: MeasurementFormatter(),
+            addEmptyLinePrefix: false
         )
+        
+        let _ = format.userInfoFormatOptions
+        let _ = format.sourceSectionInline
+        let _ = format.showLevelIcon
+        let _ = format.measurementFormatter
+        let _ = format.addEmptyLinePrefix
     }
 }
