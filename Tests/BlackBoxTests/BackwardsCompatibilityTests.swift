@@ -122,6 +122,8 @@ class PublicApiTests: XCTestCase {
         let _ = genericEvent.category
         let _ = genericEvent.parentEvent
         let _ = genericEvent.source
+        let _ = genericEvent.formattedDuration(using: MeasurementFormatter())
+        let _ = genericEvent.messageWithFormattedDuration(using: MeasurementFormatter())
         
         let _ = BlackBox.GenericEvent(
             id: UUID(), 
@@ -201,7 +203,6 @@ class PublicApiTests: XCTestCase {
         let _ = endEvent.rawMessage
         let _ = endEvent.startEvent
         let _ = endEvent.duration
-        let _ = endEvent.formattedMessage(using: MeasurementFormatter())
         
         let _ = BlackBox.EndEvent(
             id: UUID(), 
