@@ -9,21 +9,27 @@ extension Array where Element == BBLogLevel {
 }
 
 extension BBLogLevel {
+    /// Icons used when formatting messages with loggers
+    /// 
+    /// See ``BBLogIcon`` for more details
     public var icon: String {
         switch self {
-        case .debug: return Icon.debug
-        case .info: return Icon.info
-        case .warning: return Icon.warning
-        case .error: return Icon.error
+        case .debug: return BBLogIcon.debug
+        case .info: return BBLogIcon.info
+        case .warning: return BBLogIcon.warning
+        case .error: return BBLogIcon.error
         }
     }
-    
-    public struct Icon {
-        public static var debug =  "🛠"
-        public static var info =  "ℹ️"
-        public static var warning =  "⚠️"
-        public static var error =  "❌"
-    }
+}
+
+/// Icons optionally used in messages to improve readability
+/// 
+/// See ``BBLogFormat/levelsWithIcons`` for more details
+public struct BBLogIcon {
+    public static var debug =  "🛠"
+    public static var info =  "ℹ️"
+    public static var warning =  "⚠️"
+    public static var error =  "❌"
 }
 
 public protocol BBLogLevelProvider where Self: Swift.Error {

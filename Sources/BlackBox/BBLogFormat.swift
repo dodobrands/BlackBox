@@ -1,12 +1,43 @@
 import Foundation
 
 public struct BBLogFormat {
+    /// Used for formatting JSONs to String
     public let userInfoFormatOptions: JSONSerialization.WritingOptions
+    
+    /// Defines how information about log source is formatter: multiline or one-line.
+    /// > Examples:
+    /// ```
+    /// // False
+    /// [Source]
+    /// OSLoggerTests:246
+    /// test_whenLogFormatApplied_showingLevelIcon()
+    /// ```
+    /// ```
+    /// // True
+    /// [Source] OSLoggerTests:246 test_whenLogFormatApplied_showingLevelIcon()
+    /// ```
     public let sourceSectionInline: Bool
-    public let showLevelIcon: [BBLogLevel]
+    
+    /// Messages with this levels should get appropriate ``BBLogIcon`` icon in message. 
+    /// 
+    /// Icon position depends on formatter rules.
+    public let levelsWithIcons: [BBLogLevel]
+    
+    /// Used for formatting traces duration
     public let measurementFormatter: MeasurementFormatter
     
     /// Improves logs readability in Xcode 14 embedded console
+    /// > Examples:
+    /// `False`
+    /// ```
+    /// Hello there
+    /// ```
+    /// 
+    /// `True`
+    /// ```
+    /// 
+    /// 🛠 Hello there
+    /// ```
     public let addEmptyLinePrefix: Bool
 
     /// Creates `BBLogFormat` instance
@@ -18,13 +49,13 @@ public struct BBLogFormat {
     public init(
         userInfoFormatOptions: JSONSerialization.WritingOptions = .prettyPrinted,
         sourceSectionInline: Bool = false,
-        showLevelIcon: [BBLogLevel] = [],
+        levelsWithIcons: [BBLogLevel] = [],
         measurementFormatter: MeasurementFormatter = MeasurementFormatter(),
         addEmptyLinePrefix: Bool = false
     ) {
         self.userInfoFormatOptions = userInfoFormatOptions
         self.sourceSectionInline = sourceSectionInline
-        self.showLevelIcon = showLevelIcon
+        self.levelsWithIcons = levelsWithIcons
         self.measurementFormatter = measurementFormatter
         self.addEmptyLinePrefix = addEmptyLinePrefix
     }

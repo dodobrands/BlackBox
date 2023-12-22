@@ -12,16 +12,7 @@ SPM:
 dependencies: [
     .package(
         url: "https://github.com/dodopizza/BlackBox.git", 
-        .upToNextMajor(from: "1.0.0")
+        .upToNextMajor(from: "3.0.0")
     )
 ]
-```
-Carthage:
-```ogdl
-github "dodopizza/BlackBox"
-```
-
-> Note: Do not forget to import to your project
-```swift
-import BlackBox
 ```

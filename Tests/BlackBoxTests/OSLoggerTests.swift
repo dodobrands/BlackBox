@@ -240,7 +240,7 @@ class OSLoggerMock: OSLogger {
     // MARK: - BBLogFormat
 extension OSLoggerTests {
     func test_whenLogFormatApplied_showingLevelIcon() {
-        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], sourceSectionInline: false, showLevelIcon: [.debug])
+        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], levelsWithIcons: [.debug])
         createOSLogger(levels: .allCases, logFormat: customLogFormat)
 
         BlackBox.log("Hello there")
@@ -320,9 +320,9 @@ test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
 
 extension OSLoggerTests {
     func test_customLevelIcon() {
-        let format = BBLogFormat(showLevelIcon: [.info])
+        let format = BBLogFormat(levelsWithIcons: [.info])
         createOSLogger(levels: .allCases, logFormat: format)
-        BBLogLevel.Icon.info = "💎"
+        BBLogIcon.info = "💎"
         BlackBox.log("Hello there", level: .info)
         
         let expectedResult = """
