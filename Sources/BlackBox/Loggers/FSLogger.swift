@@ -5,7 +5,7 @@ import Foundation
 public class FSLogger: BBLoggerProtocol {
     private let fullpath: URL
     private let levels: [BBLogLevel]
-    private let queue: DispatchQueue
+    private let queue: DispatchQueue?
     private let logFormat: BBLogFormat
     
     /// Creates FS logger
@@ -18,7 +18,7 @@ public class FSLogger: BBLoggerProtocol {
         path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
         name: String = "BlackBox_FSLogger",
         levels: [BBLogLevel],
-        queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self)),
+        queue: DispatchQueue? = DispatchQueue(label: String(describing: FSLogger.self)),
         logFormat: BBLogFormat = BBLogFormat()
     ) {
         self.fullpath = path.appendingPathComponent(name)
@@ -28,26 +28,30 @@ public class FSLogger: BBLoggerProtocol {
     }
     
     public func log(_ event: BlackBox.GenericEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
     
     public func log(_ event: BlackBox.ErrorEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
     
     public func logStart(_ event: BlackBox.StartEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
     
     public func logEnd(_ event: BlackBox.EndEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
 }
 
 extension FSLogger {
-    private func fsLogAsync(_ event: BlackBox.GenericEvent) {
-        queue.async {
-            self.fsLog(event)
+    private func fsLogAsyncOrSync(_ event: BlackBox.GenericEvent) {
+        if let queue {
+            queue.async {
+                self.fsLog(event)
+            }
+        } else {
+            fsLog(event)
         }
     }
     
