@@ -3,7 +3,8 @@ import Foundation
 /// Redirects logs to text file
 /// > Warning: Doesn't support filesize limits, use at your own risk.
 public class FSLogger: BBLoggerProtocol {
-    private let fullpath: URL
+    /// Full path to log file
+    public let fullpath: URL
     private let levels: [BBLogLevel]
     private let queue: DispatchQueue?
     private let logFormat: BBLogFormat
