@@ -3,9 +3,10 @@ import Foundation
 /// Redirects logs to text file
 /// > Warning: Doesn't support filesize limits, use at your own risk.
 public class FSLogger: BBLoggerProtocol {
-    private let fullpath: URL
+    /// Full path to log file
+    public let fullpath: URL
     private let levels: [BBLogLevel]
-    private let queue: DispatchQueue
+    private let queue: DispatchQueue?
     private let logFormat: BBLogFormat
     
     /// Creates FS logger
@@ -14,6 +15,7 @@ public class FSLogger: BBLoggerProtocol {
     ///   - name: filename
     ///   - levels: levels to log
     ///   - queue: queue for logs to be prepared and stored at
+    @available(*, deprecated, message: "Use throwing init(path:name:levels:queue:logFormat:)")
     public init(
         path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
         name: String = "BlackBox_FSLogger",
@@ -25,29 +27,62 @@ public class FSLogger: BBLoggerProtocol {
         self.levels = levels
         self.queue = queue
         self.logFormat = logFormat
+        
+        try? createDirectory(at: path)
+    }
+    
+    /// Creates FS logger
+    /// - Parameters:
+    ///   - path: path to directory where log file will be stored
+    ///   - name: filename
+    ///   - levels: levels to log
+    ///   - queue: queue for logs to be prepared and stored at
+    public init(
+        path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
+        name: String = "BlackBox_FSLogger",
+        levels: [BBLogLevel],
+        queue: DispatchQueue? = DispatchQueue(label: String(describing: FSLogger.self)),
+        logFormat: BBLogFormat = BBLogFormat()
+    ) throws {
+        self.fullpath = path.appendingPathComponent(name)
+        self.levels = levels
+        self.queue = queue
+        self.logFormat = logFormat
+        
+        try createDirectory(at: path)
+    }
+    
+    private func createDirectory(at path: URL) throws {
+        let fileManager = FileManager.default
+        guard !fileManager.fileExists(atPath: path.path) else { return }
+        try fileManager.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
     }
     
     public func log(_ event: BlackBox.GenericEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
     
     public func log(_ event: BlackBox.ErrorEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
     
     public func logStart(_ event: BlackBox.StartEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
     
     public func logEnd(_ event: BlackBox.EndEvent) {
-        fsLogAsync(event)
+        fsLogAsyncOrSync(event)
     }
 }
 
 extension FSLogger {
-    private func fsLogAsync(_ event: BlackBox.GenericEvent) {
-        queue.async {
-            self.fsLog(event)
+    private func fsLogAsyncOrSync(_ event: BlackBox.GenericEvent) {
+        if let queue {
+            queue.async {
+                self.fsLog(event)
+            }
+        } else {
+            fsLog(event)
         }
     }
     
@@ -70,11 +105,13 @@ extension FSLogger {
     
     private func log(_ string: String) {
         if let handle = try? FileHandle(forWritingTo: fullpath) {
+            defer { handle.closeFile() }
+            guard let data = string.data(using: .utf8) else { return }
+            
             handle.seekToEndOfFile()
-            handle.write(string.data(using: .utf8)!)
-            handle.closeFile()
+            handle.write(data)
         } else {
-            try? string.data(using: .utf8)?.write(to: fullpath)
+            try? string.write(to: fullpath, atomically: true, encoding: .utf8)
         }
     }
 }
