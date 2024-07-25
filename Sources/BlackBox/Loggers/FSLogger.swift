@@ -26,6 +26,10 @@ public class FSLogger: BBLoggerProtocol {
         self.levels = levels
         self.queue = queue
         self.logFormat = logFormat
+        
+        if !FileManager.default.fileExists(atPath: path.path) {
+            try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+        }
     }
     
     public func log(_ event: BlackBox.GenericEvent) {
