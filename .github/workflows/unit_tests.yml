@@ -6,10 +6,6 @@ on:
       - 'main'
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: zsh {0}
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -22,7 +18,7 @@ env:
 
 jobs:
   unit-tests-spm:
-    runs-on: 'macos-13'
+    runs-on: 'macos-latest'
 
     timeout-minutes: 10
 
@@ -61,7 +57,7 @@ jobs:
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
-    runs-on: 'macos-latest'
+    runs-on: 'ubuntu-latest'
     needs: unit-tests-spm
     if: always()
     steps:
