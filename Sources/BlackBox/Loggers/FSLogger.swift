@@ -75,11 +75,13 @@ extension FSLogger {
     
     private func log(_ string: String) {
         if let handle = try? FileHandle(forWritingTo: fullpath) {
+            defer { handle.closeFile() }
+            guard let data = string.data(using: .utf8) else { return }
+            
             handle.seekToEndOfFile()
-            handle.write(string.data(using: .utf8)!)
-            handle.closeFile()
+            handle.write(data)
         } else {
-            try? string.data(using: .utf8)?.write(to: fullpath)
+            try? string.write(to: fullpath, atomically: true, encoding: .utf8)
         }
     }
 }
