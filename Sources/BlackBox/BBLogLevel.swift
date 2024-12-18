@@ -12,6 +12,7 @@ extension BBLogLevel {
     /// Icons used when formatting messages with loggers
     /// 
     /// See ``BBLogIcon`` for more details
+    @available(*, deprecated, message: "Use BBLogFormat.Icons")
     public var icon: String {
         switch self {
         case .debug: return BBLogIcon.debug
@@ -25,11 +26,12 @@ extension BBLogLevel {
 /// Icons optionally used in messages to improve readability
 /// 
 /// See ``BBLogFormat/levelsWithIcons`` for more details
+@available(*, deprecated, message: "Use struct BBLogFormat.Icons")
 public struct BBLogIcon {
-    public static var debug =  "🛠"
-    public static var info =  "ℹ️"
-    public static var warning =  "⚠️"
-    public static var error =  "❌"
+    nonisolated(unsafe) public static var debug =  "🛠"
+    nonisolated(unsafe) public static var info =  "ℹ️"
+    nonisolated(unsafe) public static var warning =  "⚠️"
+    nonisolated(unsafe) public static var error =  "❌"
 }
 
 public protocol BBLogLevelProvider where Self: Swift.Error {

@@ -91,7 +91,12 @@ extension FSLogger {
         
         let userInfo = event.userInfo?.bbLogDescription(with: logFormat.userInfoFormatOptions) ?? "nil"
         
-        let title = event.level.icon + " " + String(describing: Date())
+        let icon = logFormat.icon(for: event.level)
+        let timestamp = String(describing: event.timestamp)
+        let title = [icon, timestamp]
+            .compactMap { $0 }
+            .joined(separator: " ")
+        
         let subtitle = event.source.filename + ", " + event.source.function.description
         
         let content = event.messageWithFormattedDuration(using: logFormat.measurementFormatter)
