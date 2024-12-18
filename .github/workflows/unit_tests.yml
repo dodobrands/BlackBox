@@ -10,17 +10,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  LANG: "en_US.UTF-8"
-  LANGUAGE: "en_US.UTF-8"
-  LC_ALL: "en_US.UTF-8"
-  SCHEME: "BlackBox"
-
 jobs:
   unit-tests-spm:
     runs-on: 'macos-latest'
 
     timeout-minutes: 10
+
+    env:
+      SCHEME: "BlackBox"
 
     strategy:
       matrix:

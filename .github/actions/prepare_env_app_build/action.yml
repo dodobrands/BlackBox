@@ -5,7 +5,7 @@ runs:
 
   steps:
   - name: Get Xcode Version
-    shell: 'zsh {0}'
+    shell: bash
     run: echo "XCODE_VERSION=$(<.xcode-version)" >> $GITHUB_ENV
 
   - name: Select Xcode
