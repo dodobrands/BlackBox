@@ -86,6 +86,15 @@ class PublicApiTests: XCTestCase {
             function: #function,
             line: #line
         )
+        
+        BlackBox.debug("Message")
+        BlackBox.info("Message")
+        
+        let startEventDebug = BlackBox.debugStart("Message")
+        BlackBox.logEnd(startEventDebug)
+        
+        let startEventInfo = BlackBox.infoStart("Message")
+        BlackBox.logEnd(startEventInfo)
     }
     
     func test_events() {

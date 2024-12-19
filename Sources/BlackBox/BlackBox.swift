@@ -173,6 +173,142 @@ extension BlackBox {
     ) {
         BlackBox.instance.logEnd(event)
     }
+
+    // MARK: - Level in function name
+
+    /// Logs debug message
+    /// - Parameters:
+    ///   - message: Message to log
+    ///   - userInfo: Additional info you'd like to see alongside log
+    ///   - serviceInfo: to be deleted
+    ///   - category: Category of log. E.g. View Lifecycle.
+    ///   - parentEvent: Parent log of current log. May be useful for traces.
+    ///   - fileID: The fileID where the logs occurs. Containts module name and filename. The default is the fileID of the function where you call log.
+    ///   - function: The function where the logs occurs. The default is the function name from where you call log.
+    ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
+    public static func debug(
+        _ message: StaticString,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) {
+        BlackBox.instance.log(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: .debug,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+    }
+    
+    /// Logs info message
+    /// - Parameters:
+    ///   - message: Message to log
+    ///   - userInfo: Additional info you'd like to see alongside log
+    ///   - serviceInfo: to be deleted
+    ///   - category: Category of log. E.g. View Lifecycle.
+    ///   - parentEvent: Parent log of current log. May be useful for traces.
+    ///   - fileID: The fileID where the logs occurs. Containts module name and filename. The default is the fileID of the function where you call log.
+    ///   - function: The function where the logs occurs. The default is the function name from where you call log.
+    ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
+    public static func info(
+        _ message: StaticString,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) {
+        BlackBox.instance.log(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: .info,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+    }
+    
+    /// Logs measurement start with debug level
+    /// - Parameters:
+    ///   - message: Measurement name
+    ///   - userInfo: Additional info you'd like to see alongside log
+    ///   - serviceInfo: to be deleted
+    ///   - category: Category of log. E.g. View Lifecycle.
+    ///   - parentEvent: Parent log of current log. May be useful for traces.
+    ///   - fileID: The fileID where the logs occurs. Containts module name and filename. The default is the fileID of the function where you call log.
+    ///   - function: The function where the logs occurs. The default is the function name from where you call log.
+    ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
+    /// - Returns: Started measurement
+    public static func debugStart(
+        _ message: StaticString,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) -> StartEvent {
+        BlackBox.instance.logStart(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: .debug,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+    }
+    
+    /// Logs measurement start with info level
+    /// - Parameters:
+    ///   - message: Measurement name
+    ///   - userInfo: Additional info you'd like to see alongside log
+    ///   - serviceInfo: to be deleted
+    ///   - category: Category of log. E.g. View Lifecycle.
+    ///   - parentEvent: Parent log of current log. May be useful for traces.
+    ///   - fileID: The fileID where the logs occurs. Containts module name and filename. The default is the fileID of the function where you call log.
+    ///   - function: The function where the logs occurs. The default is the function name from where you call log.
+    ///   - line: The line where the logs occurs. The default is the line in function from where you call log.
+    /// - Returns: Started measurement
+    public static func infoStart(
+        _ message: StaticString,
+        userInfo: BBUserInfo? = nil,
+        serviceInfo: BBServiceInfo? = nil,
+        category: String? = nil,
+        parentEvent: GenericEvent? = nil,
+        fileID: StaticString = #fileID,
+        function: StaticString = #function,
+        line: UInt = #line
+    ) -> StartEvent {
+        BlackBox.instance.logStart(
+            message,
+            userInfo: userInfo,
+            serviceInfo: serviceInfo,
+            level: .info,
+            category: category,
+            parentEvent: parentEvent,
+            fileID: fileID,
+            function: function,
+            line: line
+        )
+    }
 }
 
 // MARK: - Instance

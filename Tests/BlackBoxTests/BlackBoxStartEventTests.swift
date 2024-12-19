@@ -39,6 +39,16 @@ class BlackBoxStartEventTests: BlackBoxTestCase {
         XCTAssertEqual(testableLogger.startEvent?.level, .warning)
     }
     
+    func test_levelInFuncNameDebug() {
+        let _ = BlackBox.debugStart("Test")
+        XCTAssertEqual(testableLogger.startEvent?.level, .debug)
+    }
+    
+    func test_levelInFuncNameInfo() {
+        let _ = BlackBox.infoStart("Test")
+        XCTAssertEqual(testableLogger.startEvent?.level, .info)
+    }
+    
     func test_defaultLevel() {
         let _ = BlackBox.logStart("Test")
         XCTAssertEqual(testableLogger.startEvent?.level, .debug)
@@ -77,7 +87,7 @@ class BlackBoxStartEventTests: BlackBoxTestCase {
     
     func test_line() {
         let _ = BlackBox.logStart("Test")
-        XCTAssertEqual(testableLogger.startEvent?.source.line, 79)
+        XCTAssertEqual(testableLogger.startEvent?.source.line, 89)
     }
     
     func test_durationFormattedIsNil() {
