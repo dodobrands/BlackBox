@@ -16,23 +16,28 @@ Moreover, you can redirect the logs wherever you want. Few destinations are supp
 For installation tips, see <doc:Installation>
 
 ## Writing logs
-Log plain message:
+Log debug message:
 ```swift
-BlackBox.log("Hello world")
+BlackBox.debug("Hello world")
+```
+
+Log info message:
+```swift
+BlackBox.info("Hello world")
 ```
 
 Provide additional information:
 ```swift
-BlackBox.log("Logged in", userInfo: ["userId": user.id])
+BlackBox.debug("Logged in", userInfo: ["userId": user.id])
 ```
 > Important: Do not include sensitive data in logs
 
 Categorize logs:
 ```swift
-BlackBox.log("Logged in", userInfo: ["userId": someUserId], category: "App lifecycle")
+BlackBox.debug("Logged in", userInfo: ["userId": someUserId], category: "App lifecycle")
 ```
 
-Provide custom log level:
+Provide log level using argument:
 ```swift
 BlackBox.log("Tried to open AuthScreen multiple times", level: .warning)
 ```
@@ -50,15 +55,20 @@ BlackBox.log(ParsingError.unknownCategoryInDTO(rawValue: 9))
 
 Measure your code:
 ```swift
-let log = BlackBox.logStart("Parse menu")
+let log = BlackBox.debugStart("Parse menu") // or infoStart
 let menuModel = MenuModel(dto: menuDto)
 // any other hard work
 BlackBox.logEnd(log)
 ```
 
+or provide log level using argument:
+```swift
+let log = BlackBox.logStart("Parse menu", level: .warning)
+```
+
 Mix all of the above altogether:
 ```swift
-BlackBox.log(
+BlackBox.info(
     "Geolocation service started",
     userInfo: ["accuracy": "low"]
     level: .info,
