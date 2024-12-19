@@ -30,6 +30,16 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
         XCTAssertEqual(testableLogger.genericEvent?.level, .warning)
     }
     
+    func test_levelInFuncNameDebug() {
+        BlackBox.debug("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.level, .debug)
+    }
+    
+    func test_levelInFuncNameInfo() {
+        BlackBox.info("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.level, .info)
+    }
+    
     func test_defaultLevel() {
         BlackBox.log("Test")
         XCTAssertEqual(testableLogger.genericEvent?.level, .debug)
@@ -73,7 +83,7 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
     
     func test_line() {
         BlackBox.log("Test")
-        XCTAssertEqual(testableLogger.genericEvent?.source.line, 75)
+        XCTAssertEqual(testableLogger.genericEvent?.source.line, 85)
     }
     
     func test_durationFormattedIsNil() {
