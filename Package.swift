@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -27,12 +27,15 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+        .package(url: "https://github.com/apple/swift-docc-plugin", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/dodobrands/DBThreadSafe-ios.git", .upToNextMajor(from: "2.0.0"))
     ],
     targets: [
         .target(
             name: targetName,
-            dependencies: []
+            dependencies: [
+                .product(name: "DBThreadSafe", package: "DBThreadSafe-ios")
+            ]
         ),
         .target(
             name: exampleModuleName,
@@ -47,6 +50,5 @@ let package = Package(
                 .init(stringLiteral: exampleModuleName)
             ]
         ),
-    ],
-    swiftLanguageVersions: [.v5]
+    ]
 )

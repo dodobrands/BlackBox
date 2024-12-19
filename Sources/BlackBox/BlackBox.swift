@@ -1,10 +1,16 @@
 import Foundation
+import DBThreadSafe
 
 public class BlackBox {
     /// Instance that holds loggers
     ///
     /// Create instance with desired loggers and replace this one
-    public static var instance = BlackBox.default
+    public static var instance: BlackBox {
+        get { _instance.read() }
+        set { _instance.write(newValue) }
+    }
+    
+    nonisolated(unsafe) private static var _instance = DBThreadSafeContainer(BlackBox.default)
     
     private let loggers: [BBLoggerProtocol]
     
@@ -298,7 +304,9 @@ extension BlackBox {
 }
 
 extension BlackBox {
-    static let `default` = BlackBox(loggers: BlackBox.defaultLoggers)
+    static var `default`: BlackBox {
+        BlackBox(loggers: BlackBox.defaultLoggers)
+    }
     
     public static var defaultLoggers: [BBLoggerProtocol] {
         [

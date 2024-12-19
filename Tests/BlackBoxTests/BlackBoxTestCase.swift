@@ -14,14 +14,14 @@ class BlackBoxTestCase: XCTestCase {
     var logger: BBLoggerProtocol!
     var testableLogger: TestableLoggerProtocol { logger as! TestableLoggerProtocol } 
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() async throws {
+        try await super.setUp()
         logger = LoggerMock()
         BlackBox.instance = .init(loggers: [logger])
     }
     
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         logger = nil
-        try super.tearDownWithError()
+        try await super.tearDown()
     }
 }

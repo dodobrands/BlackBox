@@ -226,13 +226,38 @@ class PublicApiTests: XCTestCase {
         let _ = BBLogLevel.error
         let _ = BBLogLevel.allCases
         let _:[BBLogLevel] = .allCases
-        
+    }
+    
+    
+    
+    func test_levelsIcons_deprected() {
         let _ = BBLogLevel.debug.icon
         
         BBLogIcon.debug = "❤️"
         BBLogIcon.info = "❤️"
         BBLogIcon.warning = "❤️"
         BBLogIcon.error = "❤️"
+    }
+    
+    func test_levelsIcons() {
+        // support optional values
+        _ = BBLogFormat.Icons(
+            debug: nil,
+            info: nil,
+            warning: nil,
+            error: nil
+        )
+        
+        // values are strings
+        let icons = BBLogFormat.Icons(
+            debug: "❤️",
+            info: "❤️",
+            warning: "❤️",
+            error: "❤️"
+        )
+        
+        let format = BBLogFormat(levelsIcons: icons)
+        _ = format.icon(for: .debug)
     }
     
     func test_loggerProtocol() {
