@@ -45,12 +45,10 @@ jobs:
         -resultBundlePath "${{ env.SCHEME }}-${{ matrix.DESTINATION }}"
         -quiet
 
-    - name: Report
-      uses: slidoapp/xcresulttool@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: "${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
-        title: "Xcode test results | ${{ matrix.DESTINATION }}"
-      if: success() || failure()
+        name: "${{ matrix.DESTINATION }}"
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
