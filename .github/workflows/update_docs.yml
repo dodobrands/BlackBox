@@ -17,11 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LANG: "en_US.UTF-8"
-  LANGUAGE: "en_US.UTF-8"
-  LC_ALL: "en_US.UTF-8"
   SCHEME: "BlackBox"
-  XCODE_VERSION: '~>14'
   DERIVED_DATA_PATH: './DerivedData/'
   DESTINATION: 'platform=iOS Simulator,name=iPhone 11'
   HOSTING_BASE_PATH: 'BlackBox'

@@ -10,21 +10,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  LANG: "en_US.UTF-8"
-  LANGUAGE: "en_US.UTF-8"
-  LC_ALL: "en_US.UTF-8"
-  SCHEME: "BlackBox"
-
 jobs:
-  unit-tests-spm:
+  tests:
     runs-on: 'macos-latest'
 
     timeout-minutes: 10
 
+    env:
+      SCHEME: "BlackBox"
+
     strategy:
       matrix:
-        DESTINATION: ["platform=iOS Simulator,name=iPhone 11", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Ultra (49mm)"]
+        DESTINATION: ["platform=iOS Simulator,name=iPhone 15", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)"]
 
     steps:
     - name: Get source code
@@ -41,29 +38,33 @@ jobs:
         -quiet
 
     - name: Test
-      run: >
-        xcodebuild test
-        -scheme ${{ env.SCHEME }}
-        -destination '${{ matrix.DESTINATION }}'
-        -resultBundlePath "${{ env.SCHEME }}-${{ matrix.DESTINATION }}"
+      id: test
+      run: |
+        xcresult="${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
+        xcodebuild test-without-building \
+        -scheme ${{ env.SCHEME }} \
+        -destination '${{ matrix.DESTINATION }}' \
+        -resultBundlePath "$xcresult" \
         -quiet
 
-    - name: Report
-      uses: kishikawakatsumi/xcresulttool@v1
+        echo "xcresult=$xcresult" >> $GITHUB_OUTPUT
+
+    - uses: actions/upload-artifact@v4
       with:
-        path: "${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
-        title: "Xcode test results | ${{ matrix.DESTINATION }}"
-      if: success() || failure()
+        path: "${{ steps.test.outputs.xcresult }}"
+        name: "${{ steps.test.outputs.xcresult }}"
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
     runs-on: 'ubuntu-latest'
-    needs: unit-tests-spm
+    needs: tests
     if: always()
     steps:
-      - name: Successful deploy
-        if: ${{ !(contains(needs.*.result, 'failure')) }}
-        run: exit 0
-      - name: Failing deploy
-        if: ${{ contains(needs.*.result, 'failure') }}
-        run: exit 1
+      - name: Calculate matrix result
+        run: |
+          result="${{ needs.tests.result }}"
+          if [[ $result == "success" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
