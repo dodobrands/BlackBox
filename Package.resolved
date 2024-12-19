@@ -1,5 +1,5 @@
 {
-  "originHash" : "ea8526cb126117cc5dbf1e7e8a353852795f51dfd60883e390528ac44c519852",
+  "originHash" : "5d149d280f7f168e1ed2852f2a457b1316bf69e4da195a560644335cd8b30503",
   "pins" : [
     {
       "identity" : "dbthreadsafe-ios",
@@ -15,7 +15,16 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",
       "state" : {
-        "revision" : "3303b164430d9a7055ba484c8ead67a52f7b74f6",
+        "revision" : "85e4bb4e1cd62cec64a4b8e769dcefdf0c5b9d64",
+        "version" : "1.4.3"
+      }
+    },
+    {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
         "version" : "1.0.0"
       }
     }
