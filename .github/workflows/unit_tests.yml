@@ -38,17 +38,21 @@ jobs:
         -quiet
 
     - name: Test
-      run: >
-        xcodebuild test
-        -scheme ${{ env.SCHEME }}
-        -destination '${{ matrix.DESTINATION }}'
-        -resultBundlePath "${{ env.SCHEME }}-${{ matrix.DESTINATION }}"
+      id: test
+      run: |
+        xcresults="${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresults"
+        xcodebuild test \
+        -scheme ${{ env.SCHEME }} \
+        -destination '${{ matrix.DESTINATION }}' \
+        -resultBundlePath "$xcresults" \
         -quiet
+
+        echo "xcresults=$xcresults" >> $GITHUB_OUTPUT
 
     - uses: actions/upload-artifact@v4
       with:
-        path: "${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
-        name: "${{ matrix.DESTINATION }}.xcresult"
+        path: "${{ steps.test.outputs.xcresults }}"
+        name: "${{ steps.test.outputs.xcresults }}"
 
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
