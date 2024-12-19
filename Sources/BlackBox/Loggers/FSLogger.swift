@@ -59,32 +59,23 @@ public class FSLogger: BBLoggerProtocol {
     }
     
     public func log(_ event: BlackBox.GenericEvent) {
-        fsLogAsyncOrSync(event)
+        fsLog(event)
     }
     
     public func log(_ event: BlackBox.ErrorEvent) {
-        fsLogAsyncOrSync(event)
+        fsLog(event)
     }
     
     public func logStart(_ event: BlackBox.StartEvent) {
-        fsLogAsyncOrSync(event)
+        fsLog(event)
     }
     
     public func logEnd(_ event: BlackBox.EndEvent) {
-        fsLogAsyncOrSync(event)
+        fsLog(event)
     }
 }
 
 extension FSLogger {
-    private func fsLogAsyncOrSync(_ event: BlackBox.GenericEvent) {
-        if let queue {
-            queue.async {
-                self.fsLog(event)
-            }
-        } else {
-            fsLog(event)
-        }
-    }
     
     private func fsLog(_ event: BlackBox.GenericEvent) {
         guard levels.contains(event.level) else { return }
@@ -105,18 +96,28 @@ extension FSLogger {
         
         let messageToLog = title + "\n" + subtitle + "\n\n" + content + "\n\n" + footer + "\n\n\n"
         
-        log(messageToLog)
+        log(messageToLog, fullpath: fullpath)
     }
     
-    private func log(_ string: String) {
-        if let handle = try? FileHandle(forWritingTo: fullpath) {
-            defer { handle.closeFile() }
-            guard let data = string.data(using: .utf8) else { return }
-            
-            handle.seekToEndOfFile()
-            handle.write(data)
+    private func log(_ string: String, fullpath: URL) {
+        let work: @Sendable () -> () = {
+            if let handle = try? FileHandle(forWritingTo: fullpath) {
+                defer { handle.closeFile() }
+                guard let data = string.data(using: .utf8) else { return }
+                
+                handle.seekToEndOfFile()
+                handle.write(data)
+            } else {
+                try? string.write(to: fullpath, atomically: true, encoding: .utf8)
+            }
+        }
+        
+        if let queue {
+            queue.async { [work] in
+                work()
+            }
         } else {
-            try? string.write(to: fullpath, atomically: true, encoding: .utf8)
+            work()
         }
     }
 }
