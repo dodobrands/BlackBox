@@ -19,7 +19,7 @@ concurrency:
 env:
   SCHEME: "BlackBox"
   DERIVED_DATA_PATH: './DerivedData/'
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 11'
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 15'
   HOSTING_BASE_PATH: 'BlackBox'
 
 jobs:
