@@ -46,7 +46,7 @@ jobs:
         -quiet
 
     - name: Report
-      uses: kishikawakatsumi/xcresulttool@v1
+      uses: slidoapp/xcresulttool@v3
       with:
         path: "${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
         title: "Xcode test results | ${{ matrix.DESTINATION }}"
