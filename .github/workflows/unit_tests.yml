@@ -60,9 +60,11 @@ jobs:
     needs: unit-tests-spm
     if: always()
     steps:
-      - name: Successful deploy
-        if: ${{ !(contains(needs.*.result, 'failure')) }}
-        run: exit 0
-      - name: Failing deploy
-        if: ${{ contains(needs.*.result, 'failure') }}
-        run: exit 1
+      - name: Calculate matrix result
+        run: |
+          result="${{ needs.unit-tests-chunk.result }}"
+          if [[ $result == "success" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
