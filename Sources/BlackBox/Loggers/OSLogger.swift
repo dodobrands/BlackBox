@@ -104,9 +104,9 @@ extension OSLogger {
             }
             
             let emptyLinePrefix: String? = logFormat.addEmptyLinePrefix ? "\n" : nil
-            let iconPrefix: String? = logFormat.levelsWithIcons.contains(event.level) ? event.level.icon + " " : nil
+            let iconPrefix = logFormat.icon(for: event.level).map { $0 + " " }
             
-            let prefix = [emptyLinePrefix, iconPrefix].compactMap { $0 }.joined()
+            let prefix = [emptyLinePrefix, iconPrefix].compactMap { $0 }.joined(separator: "")
             
             let message = prefix + event.messageWithFormattedDuration(using: logFormat.measurementFormatter)
             
