@@ -41,7 +41,7 @@ jobs:
       id: test
       run: |
         xcresult="${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
-        xcodebuild test \
+        xcodebuild test-without-building \
         -scheme ${{ env.SCHEME }} \
         -destination '${{ matrix.DESTINATION }}' \
         -resultBundlePath "$xcresult" \
