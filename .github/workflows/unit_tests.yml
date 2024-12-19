@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  unit-tests-spm:
+  tests:
     runs-on: 'macos-latest'
 
     timeout-minutes: 10
@@ -57,12 +57,12 @@ jobs:
   # This allows us to have a branch protection rule for tests and deploys with matrix
   status-for-matrix:
     runs-on: 'ubuntu-latest'
-    needs: unit-tests-spm
+    needs: tests
     if: always()
     steps:
       - name: Calculate matrix result
         run: |
-          result="${{ needs.unit-tests-chunk.result }}"
+          result="${{ needs.tests.result }}"
           if [[ $result == "success" ]]; then
             exit 0
           else
