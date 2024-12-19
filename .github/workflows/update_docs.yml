@@ -37,7 +37,7 @@ jobs:
           swift package --allow-writing-to-directory ${{ env.DERIVED_DATA_PATH }} generate-documentation --target ${{ env.SCHEME }} --disable-indexing --transform-for-static-hosting --hosting-base-path '${{ env.HOSTING_BASE_PATH }}' --output-path ${{ env.DERIVED_DATA_PATH }}
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.DERIVED_DATA_PATH }}
 
