@@ -50,5 +50,6 @@ let package = Package(
                 .init(stringLiteral: exampleModuleName)
             ]
         ),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
