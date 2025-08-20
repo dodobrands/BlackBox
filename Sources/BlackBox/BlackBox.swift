@@ -10,8 +10,9 @@ public class BlackBox {
         set { _instance.write(newValue) }
     }
     
-    nonisolated(unsafe) private static var _instance = DBThreadSafeContainer(BlackBox.default)
+    private static let _instance = DBThreadSafeContainer(BlackBox.default)
     
+    /// Currently enabled loggers
     private let loggers: [BBLoggerProtocol]
     
     /// Creates `BlackBox` instance
