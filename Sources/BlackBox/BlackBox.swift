@@ -13,7 +13,7 @@ public class BlackBox {
     private static let _instance = DBThreadSafeContainer(BlackBox.default)
     
     /// Currently enabled loggers
-    private let loggers: [BBLoggerProtocol]
+    public let loggers: [BBLoggerProtocol]
     
     /// Creates `BlackBox` instance
     /// - Parameters:
