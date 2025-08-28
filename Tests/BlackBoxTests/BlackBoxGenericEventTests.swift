@@ -95,6 +95,11 @@ class BlackBoxGenericEventTests: BlackBoxTestCase {
         BlackBox.log("Test")
         XCTAssertEqual(testableLogger.genericEvent?.message, testableLogger.genericEvent?.messageWithFormattedDuration(using: MeasurementFormatter()))
     }
+    
+    func test_isTrace() {
+        BlackBox.log("Test")
+        XCTAssertEqual(testableLogger.genericEvent?.isTrace, false)
+    }
 }
 
 

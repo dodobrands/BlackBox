@@ -99,4 +99,9 @@ class BlackBoxStartEventTests: BlackBoxTestCase {
         let _ = BlackBox.logStart("Test")
         XCTAssertEqual(testableLogger.startEvent?.message, testableLogger.startEvent?.messageWithFormattedDuration(using: MeasurementFormatter()))
     }
+    
+    func test_isTrace() {
+        let _ = BlackBox.logStart("Test")
+        XCTAssertEqual(testableLogger.startEvent?.isTrace, true)
+    }
 }
