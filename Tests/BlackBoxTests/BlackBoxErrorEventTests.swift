@@ -90,4 +90,9 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
         BlackBox.log(AnakinKills.maceWindu)
         XCTAssertEqual(testableLogger.errorEvent?.message, testableLogger.errorEvent?.messageWithFormattedDuration(using: MeasurementFormatter()))
     }
+    
+    func test_isTrace() {
+        BlackBox.log(AnakinKills.maceWindu)
+        XCTAssertEqual(testableLogger.errorEvent?.isTrace, false)
+    }
 }

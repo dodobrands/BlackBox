@@ -133,6 +133,7 @@ class PublicApiTests: XCTestCase {
         let _ = genericEvent.source
         let _ = genericEvent.formattedDuration(using: MeasurementFormatter())
         let _ = genericEvent.messageWithFormattedDuration(using: MeasurementFormatter())
+        let _ = genericEvent.isTrace
         
         let _ = BlackBox.GenericEvent(
             id: UUID(), 

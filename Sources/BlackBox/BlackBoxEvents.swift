@@ -338,3 +338,9 @@ extension String {
         return String(dropFirst(prefix.count))
     }
 }
+
+extension BlackBox.GenericEvent {
+    public var isTrace: Bool {
+        self is BlackBox.StartEvent || self is BlackBox.EndEvent
+    }
+}

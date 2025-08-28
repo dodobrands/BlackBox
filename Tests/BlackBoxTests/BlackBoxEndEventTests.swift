@@ -113,4 +113,9 @@ class BlackBoxEndEventTests: BlackBoxTestCase {
         XCTAssertEqual("10 sec", endEvent.formattedDuration(using: formatter))
         XCTAssertEqual("End: Test, duration: 10 sec", endEvent.messageWithFormattedDuration(using: formatter))
     }
+    
+    func test_isTrace() {
+        BlackBox.logEnd(event)
+        XCTAssertEqual(testableLogger.endEvent?.isTrace, true)
+    }
 }
