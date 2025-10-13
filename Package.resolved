@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dodobrands/DBThreadSafe-ios.git",
       "state" : {
-        "revision" : "19a7f347f721a5c18aa275fc2d5bc207c536d4a3",
-        "version" : "2.2.0"
+        "revision" : "98f11ae07f2764e4228bf55c18c48e04a16b18bd",
+        "version" : "2.3.0"
       }
     },
     {
