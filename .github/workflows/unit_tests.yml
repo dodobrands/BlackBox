@@ -49,7 +49,7 @@ jobs:
 
         echo "xcresult=$xcresult" >> $GITHUB_OUTPUT
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         path: "${{ steps.test.outputs.xcresult }}"
         name: "${{ steps.test.outputs.xcresult }}"
