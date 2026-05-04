@@ -240,6 +240,7 @@ class PublicApiTests: XCTestCase {
     
     
     
+    @available(*, deprecated)
     func test_levelsIcons_deprected() {
         let _ = BBLogLevel.debug.icon
         
@@ -310,6 +311,7 @@ class PublicApiTests: XCTestCase {
         logger.logEnd(endEvent)
     }
     
+    @available(*, deprecated)
     func test_fsLogger() {
         let logger = FSLogger(
             path: URL(fileURLWithPath: "~/Caches"),
@@ -330,6 +332,7 @@ class PublicApiTests: XCTestCase {
         logger.logEnd(endEvent)
     }
     
+    @available(*, deprecated)
     func test_format() {
         let format = BBLogFormat(
             userInfoFormatOptions: [.fragmentsAllowed],

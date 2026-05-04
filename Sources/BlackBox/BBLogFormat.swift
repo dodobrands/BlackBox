@@ -49,11 +49,14 @@ public struct BBLogFormat {
     /// ```
     public let sourceSectionInline: Bool
     
-    /// Messages with this levels should get appropriate ``BBLogIcon`` icon in message. 
-    /// 
+    private let legacyLevelsWithIcons: [BBLogLevel]
+    private let legacyIconProvider: ((BBLogLevel) -> String?)?
+
+    /// Messages with this levels should get appropriate ``BBLogIcon`` icon in message.
+    ///
     /// Icon position depends on formatter rules.
     @available(*, deprecated, message: "Use levelsIcons")
-    public let levelsWithIcons: [BBLogLevel]
+    public var levelsWithIcons: [BBLogLevel] { legacyLevelsWithIcons }
     
     public let levelsIcons: Icons
     
@@ -78,21 +81,55 @@ public struct BBLogFormat {
     /// - Parameters:
     ///   - userInfoFormatOptions:Options for output JSON data.
     ///   - sourceSectionInline: Print `Source` section in console inline
-    ///   - levelsWithIcons: Logs with this levels should have appropriate level icon
     ///   - levelsIcons: Icons for each log level
     ///   - measurementFormatter: Formatter used for traces durations output
     ///   - addEmptyLinePrefix: Logger should add empty line prefix before message
     public init(
         userInfoFormatOptions: JSONSerialization.WritingOptions = .prettyPrinted,
         sourceSectionInline: Bool = false,
-        levelsWithIcons: [BBLogLevel] = [],
         levelsIcons: Icons = Icons(),
         measurementFormatter: MeasurementFormatter = MeasurementFormatter(),
         addEmptyLinePrefix: Bool = false
     ) {
         self.userInfoFormatOptions = userInfoFormatOptions
         self.sourceSectionInline = sourceSectionInline
-        self.levelsWithIcons = levelsWithIcons
+        self.legacyLevelsWithIcons = []
+        self.legacyIconProvider = nil
+        self.levelsIcons = levelsIcons
+        self.measurementFormatter = measurementFormatter
+        self.addEmptyLinePrefix = addEmptyLinePrefix
+    }
+
+    /// Creates `BBLogFormat` instance
+    /// - Parameters:
+    ///   - userInfoFormatOptions: Options for output JSON data.
+    ///   - sourceSectionInline: Print `Source` section in console inline
+    ///   - levelsWithIcons: Logs with this levels should have appropriate level icon
+    ///   - levelsIcons: Icons for each log level
+    ///   - measurementFormatter: Formatter used for traces durations output
+    ///   - addEmptyLinePrefix: Logger should add empty line prefix before message
+    @available(*, deprecated, message: "Use init(userInfoFormatOptions:sourceSectionInline:levelsIcons:measurementFormatter:addEmptyLinePrefix:)")
+    public init(
+        userInfoFormatOptions: JSONSerialization.WritingOptions = .prettyPrinted,
+        sourceSectionInline: Bool = false,
+        levelsWithIcons: [BBLogLevel],
+        levelsIcons: Icons = Icons(),
+        measurementFormatter: MeasurementFormatter = MeasurementFormatter(),
+        addEmptyLinePrefix: Bool = false
+    ) {
+        self.userInfoFormatOptions = userInfoFormatOptions
+        self.sourceSectionInline = sourceSectionInline
+        self.legacyLevelsWithIcons = levelsWithIcons
+        self.legacyIconProvider = { level in
+            guard levelsWithIcons.contains(level) else { return nil }
+
+            switch level {
+            case .debug: return BBLogIcon.debug
+            case .info: return BBLogIcon.info
+            case .warning: return BBLogIcon.warning
+            case .error: return BBLogIcon.error
+            }
+        }
         self.levelsIcons = levelsIcons
         self.measurementFormatter = measurementFormatter
         self.addEmptyLinePrefix = addEmptyLinePrefix
@@ -101,8 +138,8 @@ public struct BBLogFormat {
 
 extension BBLogFormat {
     public func icon(for level: BBLogLevel) -> String? {
-        if levelsWithIcons.contains(level) {
-            return level.icon
+        if let icon = legacyIconProvider?(level) {
+            return icon
         } else if let icon = levelsIcons.icon(for: level) {
             return icon
         } else {

@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -35,12 +35,18 @@ let package = Package(
             name: targetName,
             dependencies: [
                 .product(name: "DBThreadSafe", package: "DBThreadSafe-ios")
+            ],
+            swiftSettings: [
+                .treatAllWarnings(as: .error)
             ]
         ),
         .target(
             name: exampleModuleName,
             dependencies: [
                 .init(stringLiteral: targetName)
+            ],
+            swiftSettings: [
+                .treatAllWarnings(as: .error)
             ]
         ),
         .testTarget(
@@ -48,6 +54,9 @@ let package = Package(
             dependencies: [
                 .init(stringLiteral: targetName),
                 .init(stringLiteral: exampleModuleName)
+            ],
+            swiftSettings: [
+                .treatAllWarnings(as: .error)
             ]
         ),
     ],
