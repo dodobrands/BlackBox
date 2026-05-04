@@ -322,23 +322,6 @@ test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
 }
 
 extension OSLoggerTests {
-    @available(*, deprecated)
-    func test_customLevelIcon_deprecated() {
-        let format = BBLogFormat(levelsWithIcons: [.info])
-        createOSLogger(levels: .allCases, logFormat: format)
-        BBLogIcon.info = "💎"
-        BlackBox.log("Hello there", level: .info)
-        
-        let expectedResult = """
-💎 Hello there
-
-[Source]
-OSLoggerTests:330
-test_customLevelIcon_deprecated()
-"""
-        XCTAssertEqual(osLogger.data?.message, expectedResult)
-    }
-    
     func test_customLevelIcon() {
         let format = BBLogFormat(levelsIcons: BBLogFormat.Icons(info: "💎"))
         createOSLogger(levels: .allCases, logFormat: format)
@@ -348,7 +331,7 @@ test_customLevelIcon_deprecated()
 💎 Hello there
 
 [Source]
-OSLoggerTests:345
+OSLoggerTests:328
 test_customLevelIcon()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
