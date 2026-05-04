@@ -240,7 +240,10 @@ class OSLoggerMock: OSLogger {
     // MARK: - BBLogFormat
 extension OSLoggerTests {
     func test_whenLogFormatApplied_showingLevelIcon() {
-        let customLogFormat = BBLogFormat(userInfoFormatOptions: [], levelsWithIcons: [.debug])
+        let customLogFormat = BBLogFormat(
+            userInfoFormatOptions: [],
+            levelsIcons: .withDefaultIcons
+        )
         createOSLogger(levels: .allCases, logFormat: customLogFormat)
 
         BlackBox.log("Hello there")
@@ -249,7 +252,7 @@ extension OSLoggerTests {
 🛠 Hello there
 
 [Source]
-OSLoggerTests:246
+OSLoggerTests:249
 test_whenLogFormatApplied_showingLevelIcon()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -265,13 +268,13 @@ test_whenLogFormatApplied_showingLevelIcon()
         let expectedResult = """
 Hello there
 
-[Source] OSLoggerTests:263 test_whenLogFormatApplied_outputSourceSectionInline()
+[Source] OSLoggerTests:266 test_whenLogFormatApplied_outputSourceSectionInline()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
 
     }
 
-    @available(iOS 13.0, tvOS 13.0, watchOS 13.0, *)
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     func test_whenLogFormatApplied_userInfoFormatted() {
         let customLogFormat = BBLogFormat(
             userInfoFormatOptions: [
@@ -287,7 +290,7 @@ Hello there
 Hello there
 
 [Source]
-OSLoggerTests:284
+OSLoggerTests:287
 test_whenLogFormatApplied_userInfoFormatted()
 
 [User Info]
@@ -310,7 +313,7 @@ test_whenLogFormatApplied_userInfoFormatted()
 Hello there
 
 [Source]
-OSLoggerTests:306
+OSLoggerTests:309
 test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)
@@ -319,22 +322,6 @@ test_whenLogFormatWithEmptyLinePrefix_messageHaveEmptyLine()
 }
 
 extension OSLoggerTests {
-    func test_customLevelIcon_deprecated() {
-        let format = BBLogFormat(levelsWithIcons: [.info])
-        createOSLogger(levels: .allCases, logFormat: format)
-        BBLogIcon.info = "💎"
-        BlackBox.log("Hello there", level: .info)
-        
-        let expectedResult = """
-💎 Hello there
-
-[Source]
-OSLoggerTests:326
-test_customLevelIcon_deprecated()
-"""
-        XCTAssertEqual(osLogger.data?.message, expectedResult)
-    }
-    
     func test_customLevelIcon() {
         let format = BBLogFormat(levelsIcons: BBLogFormat.Icons(info: "💎"))
         createOSLogger(levels: .allCases, logFormat: format)
@@ -344,7 +331,7 @@ test_customLevelIcon_deprecated()
 💎 Hello there
 
 [Source]
-OSLoggerTests:341
+OSLoggerTests:328
 test_customLevelIcon()
 """
         XCTAssertEqual(osLogger.data?.message, expectedResult)

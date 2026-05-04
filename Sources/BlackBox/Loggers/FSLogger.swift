@@ -15,28 +15,6 @@ public class FSLogger: BBLoggerProtocol {
     ///   - name: filename
     ///   - levels: levels to log
     ///   - queue: queue for logs to be prepared and stored at
-    @available(*, deprecated, message: "Use throwing init(path:name:levels:queue:logFormat:)")
-    public init(
-        path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
-        name: String = "BlackBox_FSLogger",
-        levels: [BBLogLevel],
-        queue: DispatchQueue = DispatchQueue(label: String(describing: FSLogger.self)),
-        logFormat: BBLogFormat = BBLogFormat()
-    ) {
-        self.fullpath = path.appendingPathComponent(name)
-        self.levels = levels
-        self.queue = queue
-        self.logFormat = logFormat
-        
-        try? createDirectory(at: path)
-    }
-    
-    /// Creates FS logger
-    /// - Parameters:
-    ///   - path: path to directory where log file will be stored
-    ///   - name: filename
-    ///   - levels: levels to log
-    ///   - queue: queue for logs to be prepared and stored at
     public init(
         path: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!,
         name: String = "BlackBox_FSLogger",

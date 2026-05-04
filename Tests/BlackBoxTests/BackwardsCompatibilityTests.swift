@@ -240,15 +240,6 @@ class PublicApiTests: XCTestCase {
     
     
     
-    func test_levelsIcons_deprected() {
-        let _ = BBLogLevel.debug.icon
-        
-        BBLogIcon.debug = "❤️"
-        BBLogIcon.info = "❤️"
-        BBLogIcon.warning = "❤️"
-        BBLogIcon.error = "❤️"
-    }
-    
     func test_levelsIcons() {
         // support optional values
         _ = BBLogFormat.Icons(
@@ -310,8 +301,8 @@ class PublicApiTests: XCTestCase {
         logger.logEnd(endEvent)
     }
     
-    func test_fsLogger() {
-        let logger = FSLogger(
+    func test_fsLogger() throws {
+        let logger = try FSLogger(
             path: URL(fileURLWithPath: "~/Caches"),
             name: "FSLogger",
             levels: [.debug],
@@ -334,14 +325,14 @@ class PublicApiTests: XCTestCase {
         let format = BBLogFormat(
             userInfoFormatOptions: [.fragmentsAllowed],
             sourceSectionInline: false,
-            levelsWithIcons: [.debug],
+            levelsIcons: .withDefaultIcons,
             measurementFormatter: MeasurementFormatter(),
             addEmptyLinePrefix: false
         )
         
         let _ = format.userInfoFormatOptions
         let _ = format.sourceSectionInline
-        let _ = format.levelsWithIcons
+        let _ = format.levelsIcons
         let _ = format.measurementFormatter
         let _ = format.addEmptyLinePrefix
     }
