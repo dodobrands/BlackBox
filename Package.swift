@@ -28,7 +28,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-docc-plugin", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/dodobrands/DBThreadSafe-ios.git", .upToNextMajor(from: "2.0.0"))
+        .package(url: "https://github.com/dodobrands/DBThreadSafe-ios.git", .upToNextMajor(from: "3.1.0"))
     ],
     targets: [
         .target(

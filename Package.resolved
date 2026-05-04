@@ -1,13 +1,13 @@
 {
-  "originHash" : "ba5d9f47ff47689e63598cb4c794401a0d9b7dbddf3c9b8c7a391e2e77453029",
+  "originHash" : "df1a917ddc2f37c60828b58f1766309673d4911ebed1b38d55225eb6742f3dfa",
   "pins" : [
     {
       "identity" : "dbthreadsafe-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dodobrands/DBThreadSafe-ios.git",
       "state" : {
-        "revision" : "98f11ae07f2764e4228bf55c18c48e04a16b18bd",
-        "version" : "2.3.0"
+        "revision" : "0548278893bb62afab333d697aaf0c80931401c7",
+        "version" : "3.1.0"
       }
     },
     {
