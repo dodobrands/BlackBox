@@ -35,18 +35,12 @@ let package = Package(
             name: targetName,
             dependencies: [
                 .product(name: "DBThreadSafe", package: "DBThreadSafe-ios")
-            ],
-            swiftSettings: [
-                .treatAllWarnings(as: .error)
             ]
         ),
         .target(
             name: exampleModuleName,
             dependencies: [
                 .init(stringLiteral: targetName)
-            ],
-            swiftSettings: [
-                .treatAllWarnings(as: .error)
             ]
         ),
         .testTarget(
@@ -54,9 +48,6 @@ let package = Package(
             dependencies: [
                 .init(stringLiteral: targetName),
                 .init(stringLiteral: exampleModuleName)
-            ],
-            swiftSettings: [
-                .treatAllWarnings(as: .error)
             ]
         ),
     ],

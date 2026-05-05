@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        DESTINATION: ["platform=iOS Simulator,name=iPhone 16e", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)"]
+        DESTINATION: ["platform=iOS Simulator,name=iPhone 16", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)"]
 
     steps:
     - name: Get source code
@@ -29,12 +29,12 @@ jobs:
 
     - name: Prepare Environment for App Build
       uses: ./.github/actions/prepare_env_app_build
-        
+
     - name: Build
-      run: >
-        xcodebuild build-for-testing
-        -scheme ${{ env.SCHEME }}
-        -destination '${{ matrix.DESTINATION }}'
+      run: |
+        xcodebuild build-for-testing \
+        -scheme ${{ env.SCHEME }} \
+        -destination "${{ matrix.DESTINATION }}" \
         -quiet
 
     - name: Test
@@ -43,7 +43,7 @@ jobs:
         xcresult="${{ env.SCHEME }}-${{ matrix.DESTINATION }}.xcresult"
         xcodebuild test-without-building \
         -scheme ${{ env.SCHEME }} \
-        -destination '${{ matrix.DESTINATION }}' \
+        -destination "${{ matrix.DESTINATION }}" \
         -resultBundlePath "$xcresult" \
         -quiet
 
