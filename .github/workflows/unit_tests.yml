@@ -34,17 +34,7 @@ jobs:
       if: startsWith(matrix.DESTINATION, 'platform=iOS Simulator')
       id: create_ios_simulator
       run: |
-        runtime=$(xcrun simctl list runtimes available -j | python3 -c 'import json, re, sys
-data = json.load(sys.stdin)
-best = None
-for runtime in data["runtimes"]:
-    if runtime.get("platform") != "iOS" or not runtime.get("isAvailable"):
-        continue
-    match = re.search(r"iOS[- ](\d+)(?:-(\d+))?", runtime["identifier"])
-    version = (int(match.group(1)), int(match.group(2) or 0)) if match else (0, 0)
-    if best is None or version > best[0]:
-        best = (version, runtime["identifier"])
-print(best[1])')
+        runtime=$(xcrun simctl list runtimes available | grep -Eo 'com\.apple\.CoreSimulator\.SimRuntime\.iOS-[0-9-]+' | tail -n1)
         uuid=$(xcrun simctl create "BlackBox-CI-iPhone" "iPhone 16" "$runtime")
         xcrun simctl boot "$uuid"
         echo "destination=platform=iOS Simulator,id=$uuid" >> "$GITHUB_OUTPUT"
