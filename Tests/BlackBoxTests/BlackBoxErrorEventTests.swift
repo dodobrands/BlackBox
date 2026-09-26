@@ -95,4 +95,15 @@ class BlackBoxErrorEventTests: BlackBoxTestCase {
         BlackBox.log(AnakinKills.maceWindu)
         XCTAssertEqual(testableLogger.errorEvent?.isTrace, false)
     }
+    
+    func test_message_fromMessageProvider() {
+        BlackBox.log(CustomMessageError.fetchFailed)
+        XCTAssertEqual(testableLogger.errorEvent?.message, "Fetch failed")
+    }
+}
+
+private enum CustomMessageError: Error, BBLogMessageProvider {
+    case fetchFailed
+    
+    var logMessage: String { "Fetch failed" }
 }
