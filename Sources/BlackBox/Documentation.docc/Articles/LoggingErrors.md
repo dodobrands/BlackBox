@@ -25,6 +25,21 @@ extension ParsingError: CustomNSError {
 }
 ```
 
+### Messages
+Error event message is built from error type and case name, e.g. `ParsingError.unknownCategoryInDTO`.
+
+Implement ``BBLogMessageProvider`` to provide custom message for your errors
+```swift
+extension ParsingError: BBLogMessageProvider {
+    var logMessage: String {
+        switch self {
+        case .unknownCategoryInDTO:
+            return "Unknown category in DTO"
+        }
+    }
+}
+```
+
 ### Levels
 Each `Swift.Error` is logged with `.error` log level by default.
 

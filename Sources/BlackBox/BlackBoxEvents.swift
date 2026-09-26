@@ -112,7 +112,7 @@ extension BlackBox {
                 return String(split)
             }
 
-            let message = [
+            let message = (error as? BBLogMessageProvider)?.logMessage ?? [
                 domainWithoutModuleName(source.module),
                 nameWithoutUserInfo()
             ].joined(separator: ".")
