@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   tests:
-    runs-on: macos-latest
+    runs-on: xcode-27
 
     timeout-minutes: 10
 
@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        DESTINATION: ["platform=iOS Simulator,name=iPhone 17", "platform=OS X", "platform=tvOS Simulator,name=Apple TV", "platform=watchOS Simulator,name=Apple Watch Ultra 3 (49mm)"]
+        DESTINATION: ["platform=iOS Simulator,name=iPhone 17", "platform=OS X", "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)", "platform=watchOS Simulator,name=Apple Watch Ultra 4 (49mm)"]
 
     steps:
     - name: Get source code
